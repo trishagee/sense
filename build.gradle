@@ -8,8 +8,14 @@ repositories {
 
 dependencies {
     compile 'org.eclipse.jetty.websocket:javax-websocket-server-impl:9.2.6.v20141205'
-    testCompile 'junit:junit:4.11'
+
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'cglib:cglib-nodep:3.1'
+    testCompile 'org.objenesis:objenesis:2.1'
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.0'
 }
+
+//TODO tell gradle where the tests are
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
