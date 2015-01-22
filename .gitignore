@@ -2,3 +2,4 @@
 .idea
 build
 gradle
+src/main/resources/com/mechanitis/demo/sense/twitter/connector/oauth.properties
