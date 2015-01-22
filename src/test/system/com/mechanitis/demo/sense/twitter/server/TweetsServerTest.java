@@ -3,6 +3,7 @@ package com.mechanitis.demo.sense.twitter.server;
 import com.mechanitis.demo.util.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.websocket.*;
@@ -18,8 +19,8 @@ public class TweetsServerTest {
     @Test
     public void shouldAllowAClientToConnectWithoutError() throws Exception {
         // start server
-//        TweetsServer server = new TweetsServer();
-//        executor.submit(server);
+        TweetsServer server = new TweetsServer();
+        executor.submit(server);
 
         // run a client that just connects to the server
         connectToServer(URI.create("ws://localhost:8081/tweets/"),
@@ -27,12 +28,13 @@ public class TweetsServerTest {
                         () -> { });
 
         // finally
-//        server.stop();
+        server.stop();
 
         Thread.sleep(5000);
     }
 
     @Test
+    @Ignore("Not implemented yet")
     public void shouldReceiveTwitterMessages() throws Exception {
         // start server
         TweetsServer server = new TweetsServer();

@@ -1,4 +1,4 @@
-apply plugin: 'java'
+apply plugin: 'groovy'
 
 version = '1.0'
 
@@ -15,7 +15,12 @@ dependencies {
     testCompile 'org.codehaus.groovy:groovy-all:2.4.0'
 }
 
-//TODO tell gradle where the tests are
+sourceSets {
+    test {
+        groovy.srcDirs = ['src/test/unit']
+        java.srcDirs = ['src/test/system']
+    }
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
