@@ -1,4 +1,4 @@
-package com.mechanitis.demo.sense.twitter;
+package com.mechanitis.demo.sense.twitter.server;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -7,12 +7,12 @@ import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainer
 
 import javax.websocket.server.ServerContainer;
 
-public class TwitterEventServer implements Runnable{
+public class TweetsServer implements Runnable{
     private static final int PORT = 8081;
     private Server server;
 
     public static void main(String[] args) {
-        new TwitterEventServer().run();
+        new TweetsServer().run();
     }
 
     public void run() {
@@ -27,7 +27,7 @@ public class TwitterEventServer implements Runnable{
 
         try {
             ServerContainer websocketContainer = WebSocketServerContainerInitializer.configureContext(context);
-            websocketContainer.addEndpoint(TwitterEventEndpoint.class);
+            websocketContainer.addEndpoint(TweetsEndpoint.class);
 
             server.start();
             server.join();

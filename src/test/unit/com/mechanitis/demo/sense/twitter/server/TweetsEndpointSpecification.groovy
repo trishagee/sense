@@ -1,4 +1,4 @@
-package com.mechanitis.demo.sense.twitter
+package com.mechanitis.demo.sense.twitter.server
 
 import spock.lang.Specification
 import spock.lang.Subject
@@ -6,9 +6,9 @@ import spock.lang.Subject
 import javax.websocket.RemoteEndpoint
 import javax.websocket.Session
 
-class TwitterEventEndpointSpecification extends Specification {
+class TweetsEndpointSpecification extends Specification {
     @Subject
-    def endpoint = new TwitterEventEndpoint()
+    def endpoint = new TweetsEndpoint()
 
     def 'should forward tweets to all open sessions'() {
         given:

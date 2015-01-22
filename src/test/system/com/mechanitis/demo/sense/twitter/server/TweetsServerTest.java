@@ -1,5 +1,6 @@
-package com.mechanitis.demo.sense.twitter;
+package com.mechanitis.demo.sense.twitter.server;
 
+import com.mechanitis.demo.util.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.junit.Test;
 
@@ -8,16 +9,15 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class TwitterEventServerTest {
+public class TweetsServerTest {
     private final ExecutorService executor = Executors.newSingleThreadExecutor(new DaemonThreadFactory());
 
     @Test
     public void shouldAllowAClientToConnectWithoutError() throws Exception {
         // start server
-        TwitterEventServer server = new TwitterEventServer();
+        TweetsServer server = new TweetsServer();
         executor.submit(server);
 
         // run a client that just connects to the server
@@ -32,10 +32,10 @@ public class TwitterEventServerTest {
     @Test
     public void shouldReceiveTwitterMessages() throws Exception {
         // start server
-        TwitterEventServer server = new TwitterEventServer();
+        TweetsServer server = new TweetsServer();
         executor.submit(server);
 
-        TwitterEventEndpoint endpoint = TwitterEndpointConfigurator.getEndpoint();
+        TweetsEndpoint endpoint = TweetsEndpointConfigurator.getEndpoint();
         Stream<String> tweets = Stream.of("first", "second", "third");
 
         // run a client that just connects to the server
@@ -51,7 +51,6 @@ public class TwitterEventServerTest {
         // ...and make sure it gets sent back to the client
 
     }
-
 
     private void connectToServer(URI path, Class<?> endpointClass, Runnable clientCode) throws Exception {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();

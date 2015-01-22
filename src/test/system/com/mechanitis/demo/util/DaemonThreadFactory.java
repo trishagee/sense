@@ -1,4 +1,4 @@
-package com.mechanitis.demo.sense.twitter;
+package com.mechanitis.demo.util;
 
 import java.util.concurrent.ThreadFactory;
 

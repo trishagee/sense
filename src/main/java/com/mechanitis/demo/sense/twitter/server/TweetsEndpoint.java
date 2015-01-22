@@ -1,4 +1,4 @@
-package com.mechanitis.demo.sense.twitter;
+package com.mechanitis.demo.sense.twitter.server;
 
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -6,10 +6,9 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
-@ServerEndpoint(value = "/tweets/", configurator = TwitterEndpointConfigurator.class)
-public class TwitterEventEndpoint {
+@ServerEndpoint(value = "/tweets/", configurator = TweetsEndpointConfigurator.class)
+public class TweetsEndpoint {
     private final List<Session> sessions = new ArrayList<>();
 
     @OnOpen
