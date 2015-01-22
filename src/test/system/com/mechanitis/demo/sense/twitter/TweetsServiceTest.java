@@ -44,7 +44,7 @@ public class TweetsServiceTest {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         try {
             Session session = container.connectToServer(endpointInstance, path);
-            success = latch.await(2, TimeUnit.SECONDS);
+            success = latch.await(10, TimeUnit.SECONDS);
             session.close();
         } finally {
             if (container instanceof LifeCycle) {
