@@ -1,4 +1,4 @@
-package com.mechanitis.demo.sense.twitter;
+package com.mechanitis.demo.sense.twitter.connector;
 
 public class TwitterConnectionException extends RuntimeException {
     public TwitterConnectionException(Exception e) {

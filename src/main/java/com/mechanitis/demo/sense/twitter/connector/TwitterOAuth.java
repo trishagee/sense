@@ -1,4 +1,4 @@
-package com.mechanitis.demo.sense.twitter;
+package com.mechanitis.demo.sense.twitter.connector;
 
 import sun.misc.BASE64Encoder;
 
@@ -14,7 +14,7 @@ import java.util.Random;
 
 import static java.net.URLEncoder.encode;
 
-public class OAuth {
+public class TwitterOAuth {
     private static final String HMAC_SHA1 = "HMAC-SHA1";
     private long nonce;
     private long timestampInSeconds;
@@ -25,7 +25,7 @@ public class OAuth {
     private String consumerKey;
     private String consumerSecret;
 
-    public OAuth() {
+    public TwitterOAuth() {
         this.timestampInSeconds = System.currentTimeMillis() / 1000;
         this.nonce = timestampInSeconds + (new Random()).nextInt();
         loadProperties();
