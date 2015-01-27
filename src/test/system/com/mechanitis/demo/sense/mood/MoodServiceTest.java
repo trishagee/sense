@@ -24,8 +24,8 @@ public class MoodServiceTest {
     @Test
     public void shouldStartupAndAllowAClientToConnectAndReceiveAMessage() throws Exception {
         // start the Tweet Service Server, needed because the Mood Service connects to this
-        TweetsService service = new TweetsService();
-        executor.submit(service);
+        TweetsService tweetsService = new TweetsService();
+        executor.submit(tweetsService);
 
         // start the mood service, the service under test
         MoodService moodService = new MoodService();
@@ -36,12 +36,12 @@ public class MoodServiceTest {
         MessageReceivedEndpoint clientEndpoint = new MessageReceivedEndpoint(latch);
 
         assertThat("Client endpoint should have received a message",
-                   connectAndWaitForSuccess(URI.create("ws://localhost:8081/tweets/"),
+                   connectAndWaitForSuccess(URI.create("ws://localhost:8082/moods/"),
                                             clientEndpoint,
                                             latch), is(true));
 
         // finally
-        service.stop();
+        tweetsService.stop();
         moodService.stop();
     }
 

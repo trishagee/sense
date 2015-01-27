@@ -44,7 +44,7 @@ public class TweetsServerTest {
         TweetsServer server = new TweetsServer();
         executor.submit(server);
 
-        TweetsEndpoint endpoint = TweetsEndpointConfigurator.getEndpoint();
+        TweetsEndpoint endpoint = SingletonEndpointConfigurator.getTweetsEndpoint();
         Stream<String> tweets = Stream.of("first", "second", "third");
 
         // run a client that just connects to the server

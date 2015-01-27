@@ -1,5 +1,7 @@
 package com.mechanitis.demo.sense.mood;
 
+import com.mechanitis.demo.sense.twitter.server.SingletonEndpointConfigurator;
+
 import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -14,7 +16,7 @@ import static com.mechanitis.demo.sense.mood.MoodAnalyser.analyseMood;
 import static com.mechanitis.demo.sense.mood.TweetExtractor.getTweetMessageFrom;
 
 @ClientEndpoint
-@ServerEndpoint(value = "/moods/")
+@ServerEndpoint(value = "/moods/", configurator = SingletonEndpointConfigurator.class)
 public class MoodyEndpoint {
     private final List<Session> sessions = new ArrayList<>();
 

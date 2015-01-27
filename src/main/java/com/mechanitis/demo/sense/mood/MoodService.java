@@ -1,6 +1,7 @@
 package com.mechanitis.demo.sense.mood;
 
 import com.mechanitis.demo.sense.WebSocketServer;
+import com.mechanitis.demo.sense.twitter.server.SingletonEndpointConfigurator;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
@@ -22,7 +23,8 @@ public class MoodService implements Runnable {
         try {
             // configure a websocket client that connects to the tweets service
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            session = container.connectToServer(MoodyEndpoint.class, URI.create("ws://localhost:8081/tweets/"));
+            session = container.connectToServer(SingletonEndpointConfigurator.getMoodyEndpoint(),
+                                                URI.create("ws://localhost:8081/tweets/"));
 
             // run the Jetty server for the server endpoint that clients will connect to
             webSocketServer = new WebSocketServer(8082, MoodyEndpoint.class);
