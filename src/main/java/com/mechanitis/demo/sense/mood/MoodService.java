@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.net.URI;
 
 public class MoodService implements Runnable {
+    private WebSocketServer webSocketServer;
+    private Session session;
+
     public static void main(String[] args) throws IOException, DeploymentException {
         new MoodService().run();
     }
@@ -17,20 +20,21 @@ public class MoodService implements Runnable {
     @Override
     public void run() {
         try {
+            // configure a websocket client that connects to the tweets service
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+            session = container.connectToServer(MoodyEndpoint.class, URI.create("ws://localhost:8081/tweets/"));
 
-            Session session = container.connectToServer(MoodyEndpoint.class,
-                                                        URI.create("ws://localhost:8081/tweets/"));
-
-            new WebSocketServer(8082, MoodyEndpoint.class).run();
-
+            // run the Jetty server for the server endpoint that clients will connect to
+            webSocketServer = new WebSocketServer(8082, MoodyEndpoint.class);
+            webSocketServer.run();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public void stop() {
-
+    public void stop() throws Exception {
+        session.close();
+        webSocketServer.stop();
     }
 }
