@@ -1,20 +1,15 @@
 package com.mechanitis.demo.sense.mood;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class MoodyMessage {
-    private final Set<Mood> moods = new HashSet<>();
+    private final Set<Mood> moods;
 
-    public void addMood(Mood mood) {
-        moods.add(mood);
+    public MoodyMessage(Set<Mood> moods) {
+        this.moods = moods;
     }
 
     public boolean hasMood(Mood mood) {
         return moods.contains(mood);
-    }
-
-    enum Mood {
-        Sad, Happy
     }
 }

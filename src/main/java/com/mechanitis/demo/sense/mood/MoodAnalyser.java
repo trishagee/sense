@@ -1,30 +1,47 @@
 package com.mechanitis.demo.sense.mood;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import static com.mechanitis.demo.sense.mood.MoodyMessage.Mood.Happy;
-import static com.mechanitis.demo.sense.mood.MoodyMessage.Mood.Sad;
+import static com.mechanitis.demo.sense.mood.Mood.HAPPY;
+import static com.mechanitis.demo.sense.mood.Mood.SAD;
 import static java.util.Arrays.asList;
 
 public class MoodAnalyser {
-    private static final List<String> YAY = asList("happy", "good", "great", "keen", "awesome", "marvelous", "yay", "pleased");
-    private static final List<String> BOO = asList("sad", "mad", "blargh", "boo", "terrible", "horrible", "bad", "awful");
-
+    private static final List<MoodIndicator> MOOD_INDICATORS = asList(new MoodIndicator("happy", HAPPY),
+                                                                      new MoodIndicator("good", HAPPY),
+                                                                      new MoodIndicator("great", HAPPY),
+                                                                      new MoodIndicator("keen", HAPPY),
+                                                                      new MoodIndicator("awesome", HAPPY),
+                                                                      new MoodIndicator("marvelous", HAPPY),
+                                                                      new MoodIndicator("yay", HAPPY),
+                                                                      new MoodIndicator("pleased", HAPPY),
+                                                                      new MoodIndicator("sad", SAD),
+                                                                      new MoodIndicator("mad", SAD),
+                                                                      new MoodIndicator("blargh", SAD),
+                                                                      new MoodIndicator("boo", SAD),
+                                                                      new MoodIndicator("terrible", SAD),
+                                                                      new MoodIndicator("horrible", SAD),
+                                                                      new MoodIndicator("bad", SAD),
+                                                                      new MoodIndicator("awful", SAD));
 
     public MoodyMessage analyse(String message) {
-        MoodyMessage moodyMessage = new MoodyMessage();
-        if (stringContainsSentiment(message, YAY)) {
-            moodyMessage.addMood(Happy);
-        }
-        if (stringContainsSentiment(message, BOO)) {
-            moodyMessage.addMood(Sad);
-        }
-        return moodyMessage;
+        Set<Mood> messageMoods = MOOD_INDICATORS.stream()
+                                                .filter(moodIndicator -> message.contains(moodIndicator.indicator))
+                                                .map((MoodIndicator moodIndicator) -> moodIndicator.mood)
+                                                .collect(Collectors.toSet());
+        return new MoodyMessage(messageMoods);
     }
 
-    static boolean stringContainsSentiment(final String sentence, final List<String> items) {
-        return items.stream().anyMatch(sentence::contains);
+    private static class MoodIndicator {
+        private final String indicator;
+        private final Mood mood;
+
+        public MoodIndicator(String indicator, Mood mood) {
+            this.indicator = indicator;
+            this.mood = mood;
+        }
     }
 
 }

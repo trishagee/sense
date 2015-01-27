@@ -4,8 +4,8 @@ import org.junit.Ignore
 import spock.lang.Specification
 import spock.lang.Subject
 
-import static com.mechanitis.demo.sense.mood.MoodyMessage.Mood.Happy
-import static com.mechanitis.demo.sense.mood.MoodyMessage.Mood.Sad
+import static Mood.HAPPY
+import static Mood.SAD
 
 class MoodAnalyserSpecification extends Specification {
     @Subject
@@ -26,8 +26,8 @@ class MoodAnalyserSpecification extends Specification {
         def mood = moodAnalyser.analyse("I am so happy today")
 
         then:
-        mood.hasMood(Happy)
-        !mood.hasMood(Sad)
+        mood.hasMood(HAPPY)
+        !mood.hasMood(SAD)
     }
 
     def 'should correctly identify sad messages'() {
@@ -35,8 +35,8 @@ class MoodAnalyserSpecification extends Specification {
         def mood = moodAnalyser.analyse("I am so sad today")
 
         then:
-        mood.hasMood(Sad)
-        !mood.hasMood(Happy)
+        mood.hasMood(SAD)
+        !mood.hasMood(HAPPY)
     }
 
     def 'should correctly identify mixed messages'() {
@@ -44,8 +44,8 @@ class MoodAnalyserSpecification extends Specification {
         def mood = moodAnalyser.analyse("I am so sad today it almost makes me happy")
 
         then:
-        mood.hasMood(Sad)
-        mood.hasMood(Happy)
+        mood.hasMood(SAD)
+        mood.hasMood(HAPPY)
     }
 
     def 'should not pass on messages that are neither happy nor sad'() {
@@ -53,8 +53,8 @@ class MoodAnalyserSpecification extends Specification {
         def mood = moodAnalyser.analyse("I don't care")
 
         then:
-        !mood.hasMood(Happy)
-        !mood.hasMood(Sad)
+        !mood.hasMood(HAPPY)
+        !mood.hasMood(SAD)
     }
 
 }
