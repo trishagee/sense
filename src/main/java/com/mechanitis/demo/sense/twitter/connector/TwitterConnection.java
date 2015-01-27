@@ -62,7 +62,7 @@ public class TwitterConnection implements Runnable {
     void processTweets(Stream<String> tweets) {
         tweets.filter(this::isNotDeleteEvent)
               .forEach(tweet -> {
-                  System.out.println("tweet = " + tweet);
+//                  System.out.println("tweet = " + tweet);
                   tweetListeners.forEach(tweetListener -> tweetListener.onTweet(tweet));
               });
         allDone.complete(true);

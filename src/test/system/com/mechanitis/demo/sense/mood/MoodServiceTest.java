@@ -1,11 +1,13 @@
-package com.mechanitis.demo.sense.twitter;
+package com.mechanitis.demo.sense.mood;
 
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
+import com.mechanitis.demo.sense.twitter.TweetsService;
 import com.mechanitis.demo.util.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.junit.Test;
 
 import javax.websocket.*;
+import java.io.IOException;
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -15,16 +17,20 @@ import java.util.concurrent.TimeUnit;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class TweetsServiceTest {
-    private final ExecutorService executor = Executors.newSingleThreadExecutor(new DaemonThreadFactory());
+public class MoodServiceTest {
+    private final ExecutorService executor = Executors.newFixedThreadPool(2, new DaemonThreadFactory());
 
     @Test
-    public void shouldMessageClientsWithTweetsReceived() throws Exception {
-        // start service
+    public void shouldStartupAndAllowAClientToConnectAndReceiveAMessage() throws Exception {
+        // start the Tweet Service Server, needed because the Mood Service connects to this
         TweetsService service = new TweetsService();
         executor.submit(service);
 
-        // run a client that connects to the server and finishes when it receives a message
+        // start the mood service, the service under test
+        MoodService moodService = new MoodService();
+        executor.submit(moodService);
+
+        // run a client that connects to the server and receives a message
         CountDownLatch latch = new CountDownLatch(1);
         MessageReceivedEndpoint clientEndpoint = new MessageReceivedEndpoint(latch);
 
@@ -35,6 +41,7 @@ public class TweetsServiceTest {
 
         // finally
         service.stop();
+        moodService.stop();
     }
 
     private boolean connectAndWaitForSuccess(URI path, Object endpointInstance, CountDownLatch latch) throws Exception {
@@ -51,5 +58,4 @@ public class TweetsServiceTest {
         }
         return success;
     }
-
 }
