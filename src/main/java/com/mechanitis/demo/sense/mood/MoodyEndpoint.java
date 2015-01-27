@@ -2,22 +2,15 @@ package com.mechanitis.demo.sense.mood;
 
 import com.mechanitis.demo.sense.twitter.server.SingletonEndpointConfigurator;
 
-import javax.websocket.ClientEndpoint;
-import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static com.mechanitis.demo.sense.mood.MoodAnalyser.analyseMood;
-import static com.mechanitis.demo.sense.mood.TweetExtractor.getTweetMessageFrom;
-
-@ClientEndpoint
 @ServerEndpoint(value = "/moods/", configurator = SingletonEndpointConfigurator.class)
-public class MoodyEndpoint {
+public class MoodyEndpoint implements MoodListener {
     private final List<Session> sessions = new ArrayList<>();
 
     @OnOpen
@@ -26,14 +19,11 @@ public class MoodyEndpoint {
         sessions.add(session);
     }
 
-    @OnMessage
-    public void onWebSocketText(String fullTweet) throws IOException {
-        Optional<MoodyMessage> moodyMessage = analyseMood(getTweetMessageFrom(fullTweet));
-        if (moodyMessage.isPresent()) {
-            sessions.stream()
-                    .filter(Session::isOpen)
-                    .forEach(session -> sendMessageToClient(moodyMessage.get(), session));
-        }
+    @Override
+    public void onEvent(MoodyMessage moodyMessage) {
+        sessions.stream()
+                .filter(Session::isOpen)
+                .forEach(session -> sendMessageToClient(moodyMessage, session));
     }
 
     private void sendMessageToClient(MoodyMessage moodOfTweet, Session session) {

@@ -23,7 +23,10 @@ public class MoodService implements Runnable {
         try {
             // configure a websocket client that connects to the tweets service
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            session = container.connectToServer(SingletonEndpointConfigurator.getMoodyEndpoint(),
+            MoodyEndpoint moodyServerEndpoint = SingletonEndpointConfigurator.getMoodyEndpoint();
+            TwitterServiceClient twitterServiceClient = new TwitterServiceClient();
+            twitterServiceClient.addListener(moodyServerEndpoint);
+            session = container.connectToServer(twitterServiceClient,
                                                 URI.create("ws://localhost:8081/tweets/"));
 
             // run the Jetty server for the server endpoint that clients will connect to
