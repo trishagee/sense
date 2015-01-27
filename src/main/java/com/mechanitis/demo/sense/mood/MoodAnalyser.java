@@ -3,6 +3,8 @@ package com.mechanitis.demo.sense.mood;
 import java.util.List;
 import java.util.Optional;
 
+import static com.mechanitis.demo.sense.mood.MoodyMessage.Mood.Happy;
+import static com.mechanitis.demo.sense.mood.MoodyMessage.Mood.Sad;
 import static java.util.Arrays.asList;
 
 public class MoodAnalyser {
@@ -10,13 +12,15 @@ public class MoodAnalyser {
     private static final List<String> BOO = asList("sad", "mad", "blargh", "boo", "terrible", "horrible", "bad", "awful");
 
 
-    public Optional<MoodyMessage> analyse(String message) {
+    public MoodyMessage analyse(String message) {
+        MoodyMessage moodyMessage = new MoodyMessage();
         if (stringContainsSentiment(message, YAY)) {
-            return Optional.of(new HappyMessage());
-        } else if (stringContainsSentiment(message, BOO)) {
-            return Optional.of(new SadMessage());
+            moodyMessage.addMood(Happy);
         }
-        return Optional.empty();
+        if (stringContainsSentiment(message, BOO)) {
+            moodyMessage.addMood(Sad);
+        }
+        return moodyMessage;
     }
 
     static boolean stringContainsSentiment(final String sentence, final List<String> items) {
