@@ -1,6 +1,7 @@
 package com.mechanitis.demo.sense.mood;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,12 +30,12 @@ public class MoodAnalyser {
     private MoodAnalyser() {
     }
 
-    public static MoodyMessage analyseMood(String message) {
+    public static Optional<MoodyMessage> analyseMood(String message) {
         Set<Mood> messageMoods = MOOD_INDICATORS.stream()
                                                 .filter(moodIndicator -> message.contains(moodIndicator.indicator))
                                                 .map((MoodIndicator moodIndicator) -> moodIndicator.mood)
                                                 .collect(Collectors.toSet());
-        return new MoodyMessage(messageMoods);
+        return MoodyMessage.Factory.createMessageFromMoods(messageMoods);
     }
 
     private static class MoodIndicator {

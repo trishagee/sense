@@ -20,29 +20,29 @@ class MoodAnalyserSpecification extends Specification {
 
     def 'should correctly identify happy messages'() {
         when:
-        def mood = MoodAnalyser.analyseMood("I am so happy today")
+        def moodyMessage = MoodAnalyser.analyseMood("I am so happy today")
 
         then:
-        mood.hasMood(HAPPY)
-        !mood.hasMood(SAD)
+        moodyMessage.get().hasMood(HAPPY)
+        !moodyMessage.get().hasMood(SAD)
     }
 
     def 'should correctly identify sad messages'() {
         when:
-        def mood = MoodAnalyser.analyseMood("I am so sad today")
+        def moodyMessage = MoodAnalyser.analyseMood("I am so sad today")
 
         then:
-        mood.hasMood(SAD)
-        !mood.hasMood(HAPPY)
+        moodyMessage.get().hasMood(SAD)
+        !moodyMessage.get().hasMood(HAPPY)
     }
 
     def 'should correctly identify mixed messages'() {
         when:
-        def mood = MoodAnalyser.analyseMood("I am so sad today it almost makes me happy")
+        def moodyMessage = MoodAnalyser.analyseMood("I am so sad today it almost makes me happy")
 
         then:
-        mood.hasMood(SAD)
-        mood.hasMood(HAPPY)
+        moodyMessage.get().hasMood(SAD)
+        moodyMessage.get().hasMood(HAPPY)
     }
 
     def 'should not pass on messages that are neither happy nor sad'() {
@@ -50,8 +50,7 @@ class MoodAnalyserSpecification extends Specification {
         def mood = MoodAnalyser.analyseMood("I don't care")
 
         then:
-        !mood.hasMood(HAPPY)
-        !mood.hasMood(SAD)
+        !mood.isPresent()
     }
 
 }
