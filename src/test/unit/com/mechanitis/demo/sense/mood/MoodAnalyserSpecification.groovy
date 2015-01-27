@@ -8,9 +8,6 @@ import static Mood.HAPPY
 import static Mood.SAD
 
 class MoodAnalyserSpecification extends Specification {
-    @Subject
-    def moodAnalyser = new MoodAnalyser()
-
     @Ignore("Not implemented yet")
     def 'should only analyse English messages'() {
 //        given:
@@ -23,7 +20,7 @@ class MoodAnalyserSpecification extends Specification {
 
     def 'should correctly identify happy messages'() {
         when:
-        def mood = moodAnalyser.analyse("I am so happy today")
+        def mood = MoodAnalyser.analyseMood("I am so happy today")
 
         then:
         mood.hasMood(HAPPY)
@@ -32,7 +29,7 @@ class MoodAnalyserSpecification extends Specification {
 
     def 'should correctly identify sad messages'() {
         when:
-        def mood = moodAnalyser.analyse("I am so sad today")
+        def mood = MoodAnalyser.analyseMood("I am so sad today")
 
         then:
         mood.hasMood(SAD)
@@ -41,7 +38,7 @@ class MoodAnalyserSpecification extends Specification {
 
     def 'should correctly identify mixed messages'() {
         when:
-        def mood = moodAnalyser.analyse("I am so sad today it almost makes me happy")
+        def mood = MoodAnalyser.analyseMood("I am so sad today it almost makes me happy")
 
         then:
         mood.hasMood(SAD)
@@ -50,7 +47,7 @@ class MoodAnalyserSpecification extends Specification {
 
     def 'should not pass on messages that are neither happy nor sad'() {
         when:
-        def mood = moodAnalyser.analyse("I don't care")
+        def mood = MoodAnalyser.analyseMood("I don't care")
 
         then:
         !mood.hasMood(HAPPY)

@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mechanitis.demo.sense.mood.MoodAnalyser.analyseMood;
+import static com.mechanitis.demo.sense.mood.TweetExtractor.getTweetMessageFrom;
+
 @ClientEndpoint
 @ServerEndpoint(value = "/moods/")
 public class MoodyEndpoint {
@@ -21,18 +24,17 @@ public class MoodyEndpoint {
     }
 
     @OnMessage
-    public void onWebSocketText(String tweet) throws IOException {
+    public void onWebSocketText(String fullTweet) throws IOException {
+        MoodyMessage moodyMessage = analyseMood(getTweetMessageFrom(fullTweet));
         sessions.stream()
                 .filter(Session::isOpen)
-                .forEach(session -> {
-                    sendMessageToClient(tweet, session);
-                    System.out.println("MoodyEndpoint sending: tweet = [" + tweet + "]");
-                });
+                .forEach(session -> sendMessageToClient(moodyMessage.toString(), session));
     }
 
-    private void sendMessageToClient(String tweet, Session session) {
+    private void sendMessageToClient(String moodOfTweet, Session session) {
         try {
-            session.getBasicRemote().sendText(tweet);
+            System.out.println("MoodyEndpoint sending: tweet = [" + moodOfTweet + "]");
+            session.getBasicRemote().sendText(moodOfTweet);
         } catch (IOException e) {
             e.printStackTrace();
         }

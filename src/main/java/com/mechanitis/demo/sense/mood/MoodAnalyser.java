@@ -26,7 +26,10 @@ public class MoodAnalyser {
                                                                       new MoodIndicator("bad", SAD),
                                                                       new MoodIndicator("awful", SAD));
 
-    public MoodyMessage analyse(String message) {
+    private MoodAnalyser() {
+    }
+
+    public static MoodyMessage analyseMood(String message) {
         Set<Mood> messageMoods = MOOD_INDICATORS.stream()
                                                 .filter(moodIndicator -> message.contains(moodIndicator.indicator))
                                                 .map((MoodIndicator moodIndicator) -> moodIndicator.mood)

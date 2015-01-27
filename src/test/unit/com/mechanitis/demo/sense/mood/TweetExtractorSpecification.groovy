@@ -22,11 +22,8 @@ class TweetExtractorSpecification extends Specification {
             "\"retweeted\":false,\"possibly_sensitive\":false,\"filter_level\":\"low\",\"lang\":\"en\",\"timestamp_ms\":\"1422362231657\"}";
 
     def 'should return the tweet itself from the full Twitter content'() {
-        given:
-        def tweetExtractor = new TweetExtractor()
-
         when:
-        def tweetContent = tweetExtractor.getTweetFrom(EXAMPLE_INPUT)
+        def tweetContent = TweetExtractor.getTweetMessageFrom(EXAMPLE_INPUT)
 
         then:
         tweetContent == "A simplistic approach to your life is a healthy antidote to yo... More for Sagittarius http:\\/\\/t.co\\/cRS9M0bneh"

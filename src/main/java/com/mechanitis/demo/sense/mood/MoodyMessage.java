@@ -12,4 +12,11 @@ public class MoodyMessage {
     public boolean hasMood(Mood mood) {
         return moods.contains(mood);
     }
+
+    @Override
+    public String toString() {
+        return "MoodyMessage{" +
+               "moods=" + moods +
+               '}';
+    }
 }

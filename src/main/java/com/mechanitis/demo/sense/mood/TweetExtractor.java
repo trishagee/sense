@@ -7,7 +7,7 @@ public final class TweetExtractor {
     private TweetExtractor() {
     }
 
-    public static String getTweetFrom(String fullTweet) {
+    public static String getTweetMessageFrom(String fullTweet) {
         //very crude
         int indexOfTextField = fullTweet.indexOf(TEXT_FIELD_NAME);
         int indexOfEndOfText = fullTweet.indexOf(NEXT_FIELD_NAME);
