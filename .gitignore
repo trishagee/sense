@@ -3,3 +3,4 @@
 build
 dashboard/build
 sense/build
+src/main/resources/com/mechanitis/demo/sense/twitter/connector/oauth.properties
