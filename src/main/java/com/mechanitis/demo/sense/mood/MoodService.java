@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.net.URI;
 
 import static com.mechanitis.demo.sense.mood.MoodAnalyser.analyseMood;
-import static com.mechanitis.demo.sense.mood.TweetExtractor.getTweetMessageFrom;
+import static com.mechanitis.demo.sense.twitter.TweetExtractor.getTweetMessageFrom;
 
 public class MoodService implements Runnable {
     private WebSocketServer webSocketServer;

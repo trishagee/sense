@@ -1,9 +1,8 @@
 package com.mechanitis.demo.sense.user;
 
-import com.mechanitis.demo.sense.sockets.WebSocketServer;
-import com.mechanitis.demo.sense.message.Message;
 import com.mechanitis.demo.sense.message.MessageBroadcaster;
 import com.mechanitis.demo.sense.message.MessageProcessingClient;
+import com.mechanitis.demo.sense.sockets.WebSocketServer;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
@@ -11,7 +10,10 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Optional;
+
+import static com.mechanitis.demo.sense.twitter.TweetExtractor.getUserInfoFrom;
+import static com.mechanitis.demo.sense.user.UserLocator.getLocation;
+import static com.mechanitis.demo.sense.user.UserMessage.Factory.createUserMessage;
 
 public class UserService implements Runnable {
     private Session session;
@@ -26,10 +28,9 @@ public class UserService implements Runnable {
         try {
             MessageBroadcaster messageBroadcaster = new MessageBroadcaster();
 
-            // create a client endpoint that takes the raw tweet and...
-            //TODO the meat here
+            // create a client endpoint that takes the raw tweet and returns the user location as a string
             MessageProcessingClient messageProcessingClient =
-                    new MessageProcessingClient(fullTweetAsString -> Optional.of(new StubMessage()));
+                    new MessageProcessingClient(fullTweetAsString -> createUserMessage(getLocation(getUserInfoFrom(fullTweetAsString))));
             messageProcessingClient.addListener(messageBroadcaster);
 
             // connect the client endpoint to the twitter service
@@ -50,7 +51,4 @@ public class UserService implements Runnable {
         webSocketServer.stop();
     }
 
-    private static class StubMessage implements Message {
-
-    }
 }
