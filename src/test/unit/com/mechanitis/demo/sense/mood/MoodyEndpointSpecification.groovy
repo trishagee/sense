@@ -7,7 +7,6 @@ import javax.websocket.RemoteEndpoint
 import javax.websocket.Session
 
 import static com.mechanitis.demo.sense.mood.Mood.HAPPY
-import static java.util.Arrays.asList
 
 class MoodyEndpointSpecification extends Specification {
     @Subject
@@ -24,7 +23,7 @@ class MoodyEndpointSpecification extends Specification {
         moodyEndpoint.onWebSocketConnect(session)
 
         when:
-        moodyEndpoint.onEvent(new MoodyMessage(new HashSet<Mood>(asList(HAPPY))))
+        moodyEndpoint.onEvent(MoodyMessage.Factory.createMessageFromMood(HAPPY))
 
         then:
         1 * remoteEndpoint.sendText('MoodyMessage{moods=[HAPPY]}');
