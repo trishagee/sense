@@ -1,34 +1,42 @@
-package com.mechanitis.demo.sense;
+package com.mechanitis.demo.sense.sockets;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
 
+import javax.websocket.Endpoint;
 import javax.websocket.server.ServerContainer;
+import javax.websocket.server.ServerEndpointConfig;
 
+/**
+ * This server will only create a singleton instance of any endpoint.
+ */
 public class WebSocketServer implements Runnable {
     private final int port;
-    private final Class<?> endpoint;
+    private final String path;
+    private final Endpoint endpoint;
 
     private Server server;
 
-    public WebSocketServer(final int port, Class<?> endpoint) {
+    public WebSocketServer(int port, String path, Endpoint endpoint) {
         this.port = port;
+        this.path = path;
         this.endpoint = endpoint;
-    }
-
-    public static void main(String[] args) throws Exception {
-        // TODO check value of args 0 and 1
-        new WebSocketServer(Integer.valueOf(args[0]),
-                            Class.forName(args[1])).run();
     }
 
     public void run() {
         ServletContextHandler context = initialiseJettyServer(port);
         try {
             ServerContainer websocketContainer = WebSocketServerContainerInitializer.configureContext(context);
-            websocketContainer.addEndpoint(endpoint);
+
+            // create a configuration to ensure a) there's only a single instance of the MessageBroadcaster
+            // and b) set the correct URI
+            SingletonEndpointConfigurator serverEndpointConfigurator = new SingletonEndpointConfigurator(endpoint);
+            ServerEndpointConfig config = ServerEndpointConfig.Builder.create(endpoint.getClass(), path)
+                                                                      .configurator(serverEndpointConfigurator)
+                                                                      .build();
+            websocketContainer.addEndpoint(config);
 
             server.start();
             server.join();

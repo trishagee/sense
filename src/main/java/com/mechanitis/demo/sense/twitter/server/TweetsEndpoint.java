@@ -1,21 +1,19 @@
 package com.mechanitis.demo.sense.twitter.server;
 
-import com.mechanitis.demo.sense.sockets.SingletonEndpointConfigurator;
 import com.mechanitis.demo.sense.twitter.TweetListener;
 
-import javax.websocket.OnOpen;
+import javax.websocket.Endpoint;
+import javax.websocket.EndpointConfig;
 import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@ServerEndpoint(value = "/tweets/", configurator = SingletonEndpointConfigurator.class)
-public class TweetsEndpoint implements TweetListener {
+public class TweetsEndpoint extends Endpoint implements TweetListener {
     private final List<Session> sessions = new ArrayList<>();
 
-    @OnOpen
-    public void onWebSocketConnect(Session session) {
+    @Override
+    public void onOpen(Session session, EndpointConfig config) {
         System.out.println("Socket Connected to TweetsEndpoint: " + session.getId());
         sessions.add(session);
     }

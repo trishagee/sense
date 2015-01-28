@@ -13,7 +13,7 @@ class TweetsEndpointSpecification extends Specification {
     def 'should forward tweets to all open sessions'() {
         given:
         def session = Mock(Session)
-        endpoint.onWebSocketConnect(session)
+        endpoint.onOpen(session, null)
         session.isOpen() >> true
 
         def remoteEndpoint = Mock(RemoteEndpoint.Basic)
@@ -31,7 +31,7 @@ class TweetsEndpointSpecification extends Specification {
     def 'should not try to forward tweets to closed sessions'() {
         given:
         def session = Mock(Session)
-        endpoint.onWebSocketConnect(session)
+        endpoint.onOpen(session, null)
 
         when:
         endpoint.onTweet("Some Tweet")

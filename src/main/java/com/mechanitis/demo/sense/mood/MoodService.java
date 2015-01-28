@@ -1,8 +1,8 @@
 package com.mechanitis.demo.sense.mood;
 
-import com.mechanitis.demo.sense.WebSocketServer;
+import com.mechanitis.demo.sense.sockets.WebSocketServer;
+import com.mechanitis.demo.sense.message.MessageBroadcaster;
 import com.mechanitis.demo.sense.message.MessageProcessingClient;
-import com.mechanitis.demo.sense.sockets.SingletonEndpointConfigurator;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
@@ -25,18 +25,19 @@ public class MoodService implements Runnable {
     @Override
     public void run() {
         try {
-            // configure a websocket client that connects to the tweets service
-            WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            MoodyEndpoint moodyMessageListener = SingletonEndpointConfigurator.getMoodyEndpoint();
+            MessageBroadcaster messageBroadcaster = new MessageBroadcaster();
+
             // create a client endpoint that takes the raw tweet and turns it into a MoodyMessage
             MessageProcessingClient messageProcessingClient = new MessageProcessingClient(fullTweetAsString -> analyseMood(getTweetMessageFrom(fullTweetAsString)));
-            messageProcessingClient.addListener(moodyMessageListener);
+            messageProcessingClient.addListener(messageBroadcaster);
+
             // connect the client endpoint to the twitter service
+            WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             session = container.connectToServer(messageProcessingClient,
                                                 URI.create("ws://localhost:8081/tweets/"));
 
             // run the Jetty server for the server endpoint that clients will connect to
-            webSocketServer = new WebSocketServer(8082, MoodyEndpoint.class);
+            webSocketServer = new WebSocketServer(8082, "/moods/", messageBroadcaster);
             webSocketServer.run();
         } catch (Exception e) {
             throw new RuntimeException(e);
