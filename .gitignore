@@ -1,4 +1,5 @@
 .gradle
 .idea
 build
-src/main/resources/com/mechanitis/demo/sense/twitter/connector/oauth.properties
+dashboard/build
+sense/build

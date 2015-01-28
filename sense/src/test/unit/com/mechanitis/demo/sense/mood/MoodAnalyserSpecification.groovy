@@ -2,7 +2,6 @@ package com.mechanitis.demo.sense.mood
 
 import org.junit.Ignore
 import spock.lang.Specification
-import spock.lang.Subject
 
 import static Mood.HAPPY
 import static Mood.SAD
