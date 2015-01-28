@@ -1,5 +1,6 @@
 package com.mechanitis.demo.sense.twitter.server;
 
+import com.mechanitis.demo.sense.sockets.SingletonEndpointConfigurator;
 import com.mechanitis.demo.util.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.junit.Assert;

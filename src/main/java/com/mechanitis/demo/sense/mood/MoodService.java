@@ -2,7 +2,7 @@ package com.mechanitis.demo.sense.mood;
 
 import com.mechanitis.demo.sense.WebSocketServer;
 import com.mechanitis.demo.sense.message.MessageProcessingClient;
-import com.mechanitis.demo.sense.twitter.server.SingletonEndpointConfigurator;
+import com.mechanitis.demo.sense.sockets.SingletonEndpointConfigurator;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;

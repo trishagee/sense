@@ -1,7 +1,7 @@
 package com.mechanitis.demo.sense.twitter;
 
 import com.mechanitis.demo.sense.twitter.connector.TwitterConnection;
-import com.mechanitis.demo.sense.twitter.server.SingletonEndpointConfigurator;
+import com.mechanitis.demo.sense.sockets.SingletonEndpointConfigurator;
 import com.mechanitis.demo.sense.twitter.server.TweetsServer;
 import com.mechanitis.demo.util.DaemonThreadFactory;
 

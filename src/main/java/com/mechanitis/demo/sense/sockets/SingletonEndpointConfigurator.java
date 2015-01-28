@@ -1,6 +1,8 @@
-package com.mechanitis.demo.sense.twitter.server;
+package com.mechanitis.demo.sense.sockets;
 
 import com.mechanitis.demo.sense.mood.MoodyEndpoint;
+import com.mechanitis.demo.sense.twitter.server.TweetsEndpoint;
+import com.mechanitis.demo.sense.user.UserEndpoint;
 
 import javax.websocket.server.ServerEndpointConfig;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ public final class SingletonEndpointConfigurator extends ServerEndpointConfig.Co
     static {
         CLASS_TO_SINGLETON.put(TweetsEndpoint.class, new TweetsEndpoint());
         CLASS_TO_SINGLETON.put(MoodyEndpoint.class, new MoodyEndpoint());
+        CLASS_TO_SINGLETON.put(UserEndpoint.class, new UserEndpoint());
     }
 
     @Override
@@ -32,5 +35,10 @@ public final class SingletonEndpointConfigurator extends ServerEndpointConfig.Co
     //blargh again
     public static MoodyEndpoint getMoodyEndpoint() {
         return (MoodyEndpoint) CLASS_TO_SINGLETON.get(MoodyEndpoint.class);
+    }
+
+    //we have to stop doing this
+    public static UserEndpoint getUserEndpoint() {
+        return (UserEndpoint) CLASS_TO_SINGLETON.get(UserEndpoint.class);
     }
 }
