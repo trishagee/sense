@@ -1,5 +1,7 @@
 package com.mechanitis.demo.sense.mood;
 
+import com.mechanitis.demo.sense.message.Message;
+import com.mechanitis.demo.sense.message.MessageListener;
 import com.mechanitis.demo.sense.twitter.server.SingletonEndpointConfigurator;
 
 import javax.websocket.OnOpen;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ServerEndpoint(value = "/moods/", configurator = SingletonEndpointConfigurator.class)
-public class MoodyEndpoint implements MoodListener {
+public class MoodyEndpoint implements MessageListener {
     private final List<Session> sessions = new ArrayList<>();
 
     @OnOpen
@@ -20,13 +22,13 @@ public class MoodyEndpoint implements MoodListener {
     }
 
     @Override
-    public void onEvent(MoodyMessage moodyMessage) {
+    public void onMessage(Message moodyMessage) {
         sessions.stream()
                 .filter(Session::isOpen)
                 .forEach(session -> sendMessageToClient(moodyMessage, session));
     }
 
-    private void sendMessageToClient(MoodyMessage moodOfTweet, Session session) {
+    private void sendMessageToClient(Message moodOfTweet, Session session) {
         try {
             System.out.println("MoodyEndpoint sending: tweet = [" + moodOfTweet + "]");
             session.getBasicRemote().sendText(moodOfTweet.toString());

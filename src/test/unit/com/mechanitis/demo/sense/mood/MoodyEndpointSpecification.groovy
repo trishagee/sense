@@ -23,7 +23,7 @@ class MoodyEndpointSpecification extends Specification {
         moodyEndpoint.onWebSocketConnect(session)
 
         when:
-        moodyEndpoint.onEvent(MoodyMessage.Factory.createMessageFromMood(HAPPY))
+        moodyEndpoint.onMessage(MoodyMessage.Factory.createMessageFromMood(HAPPY))
 
         then:
         1 * remoteEndpoint.sendText('MoodyMessage{moods=[HAPPY]}');
