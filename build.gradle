@@ -1,4 +1,4 @@
-configure(subprojects.findAll { it.name != 'util' }) {
+configure(subprojects.findAll()) {
     apply plugin: 'java'
 
     repositories {

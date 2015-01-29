@@ -1,0 +1,15 @@
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      spacing="10" alignment="CENTER"
+      style="-fx-border-color: blue" fx:controller="com.mechanitis.demo.sense.client.HappinessController">
+    <LineChart fx:id="happinessOverTime" title="Happiness over Time" prefHeight="500">
+        <xAxis>
+            <NumberAxis fx:id="xAxis" label="Time" forceZeroInRange="false"/>
+        </xAxis>
+        <yAxis>
+            <NumberAxis fx:id="yAxis" label="Count" autoRanging="true"/>
+        </yAxis>
+    </LineChart>
+</VBox>

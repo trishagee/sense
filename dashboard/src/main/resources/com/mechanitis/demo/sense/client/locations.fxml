@@ -1,0 +1,16 @@
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      spacing="10" alignment="CENTER"
+      style="-fx-border-color: yellow" fx:controller="com.mechanitis.demo.sense.client.LocationController">
+    <LineChart fx:id="countries" title="Countries">
+        <xAxis>
+            <NumberAxis fx:id="xAxis" label="Country" autoRanging="true"/>
+        </xAxis>
+        <yAxis>
+            <NumberAxis fx:id="yAxis" label="Count" autoRanging="true"/>
+        </yAxis>
+    </LineChart>
+</VBox>
