@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
@@ -32,6 +33,33 @@ public class TwitterOAuth {
     }
 
     private void loadProperties() {
+        Map<String, String> prop = System.getenv();
+        consumerSecret = prop.get("CONSUMER_SECRET");
+        accessTokenSecret = prop.get("ACCESS_TOKEN_SECRET");
+        token = prop.get("TOKEN");
+        consumerKey = prop.get("CONSUMER_KEY");
+        if (!validateProperties()) {
+            //if there aren't any environment variables, looks for the properties file
+            loadFromPropertiesFile();
+        }
+        if (!validateProperties()) {
+            throw new TwitterConnectionException("You must define the Twitter security tokens either as environment " +
+                                                 "variables or in oauth.properties");
+        }
+    }
+
+    private boolean validateProperties() {
+        System.out.println("consumerKey = " + consumerKey);
+        System.out.println("consumerSecret = " + consumerSecret);
+        System.out.println("token = " + token);
+        System.out.println("accessTokenSecret = " + accessTokenSecret);
+        return !(consumerKey == null ||
+                 accessTokenSecret == null ||
+                 token == null ||
+                 consumerSecret == null);
+    }
+
+    private void loadFromPropertiesFile() {
         Properties prop = new Properties();
         InputStream in = getClass().getResourceAsStream("oauth.properties");
         try {

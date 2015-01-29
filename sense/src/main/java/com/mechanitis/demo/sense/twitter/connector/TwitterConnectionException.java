@@ -8,4 +8,8 @@ public class TwitterConnectionException extends RuntimeException {
     public TwitterConnectionException(String message, Exception e) {
         super(message, e);
     }
+
+    public TwitterConnectionException(String message) {
+        super(message);
+    }
 }
