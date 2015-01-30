@@ -10,9 +10,13 @@
             <TableColumn text="Twitter Handle" >
                 <cellValueFactory><PropertyValueFactory property="twitterHandle" /></cellValueFactory>
             </TableColumn>
-            <TableColumn text="Location">
-                <cellValueFactory><PropertyValueFactory property="location" /></cellValueFactory>
+            <TableColumn text="Count" fx:id="countColumn">
+                <cellValueFactory><PropertyValueFactory property="tweets" /></cellValueFactory>
             </TableColumn>
         </columns>
+        <sortOrder>
+            <fx:reference source="countColumn"/>
+        </sortOrder>
     </TableView>
+
 </VBox>

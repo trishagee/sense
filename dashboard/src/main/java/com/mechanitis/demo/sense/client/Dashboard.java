@@ -3,6 +3,7 @@ package com.mechanitis.demo.sense.client;
 import com.mechanitis.demo.sense.client.mood.HappinessChartData;
 import com.mechanitis.demo.sense.client.mood.MoodChartData;
 import com.mechanitis.demo.sense.client.mood.MoodSocketClient;
+import com.mechanitis.demo.sense.client.user.LeaderboardData;
 import com.mechanitis.demo.sense.client.user.UserSocketClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +37,9 @@ public class Dashboard extends Application {
     }
 
     private void wireUpUserModelToController(UserSocketClient userSocketClient, DashboardController controller) {
-        userSocketClient.addListener(controller.getLeaderboardController());
+        LeaderboardData leaderboardData = new LeaderboardData();
+        userSocketClient.addListener(leaderboardData);
+        controller.getLeaderboardController().setData(leaderboardData);
     }
 
     private void wireUpMoodModelToController(MoodSocketClient moodSocketClient, DashboardController controller) {

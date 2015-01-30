@@ -23,7 +23,7 @@ class TwitterServiceClientSpecification extends Specification {
 
         then:
         // this is not the prettiest way to check the event is a happy event, but it will do for now
-        1 * listener.onMessage({ it.toString() == 'MoodyMessage{moods=[HAPPY]}' });
+        1 * listener.onMessage({ it.toString() == '{"moods": ["HAPPY"]}' });
     }
 
     def 'should not send messages with no mood'() {
