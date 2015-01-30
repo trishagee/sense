@@ -5,24 +5,24 @@ import javafx.scene.chart.XYChart;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
 
-public class HappinessData implements MoodListener {
+import static java.util.stream.IntStream.range;
+
+public class HappinessChartData implements MoodListener {
     private final XYChart.Series<String, Long> dataSeries = new XYChart.Series<>();
     private final Map<Integer, Integer> minuteToDataPosition = new HashMap<>();
 
-    public HappinessData() {
+    public HappinessChartData() {
         int nowMinute = LocalTime.now().getMinute();
-        IntStream sixtyMinutes = IntStream.range(nowMinute, nowMinute + 10);
-        sixtyMinutes.forEach(i -> {
-            dataSeries.getData().add(new XYChart.Data<>(String.valueOf(i), 0L));
-            minuteToDataPosition.put(i, dataSeries.getData().size() - 1);
+        range(nowMinute, nowMinute + 10).forEach(minute -> {
+            dataSeries.getData().add(new XYChart.Data<>(String.valueOf(minute), 0L));
+            minuteToDataPosition.put(minute, dataSeries.getData().size() - 1);
         });
     }
 
     @Override
-    public void onMessage(String message) {
-        if (message.equals("[HAPPY]")) {
+    public void onMessage(TweetMood message) {
+        if (message.isHappy()) {
             LocalTime now = LocalTime.now();
             int x = now.getMinute();
 

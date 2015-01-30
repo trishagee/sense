@@ -10,13 +10,12 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-@ClientEndpoint
+@ClientEndpoint(decoders = {TweetMoodCodec.class})
 public class MoodSocketClient {
     private List<MoodListener> listeners = new ArrayList<>();
 
     @OnMessage
-    public void onWebSocketText(String message) throws IOException {
-        System.out.println("Mood Received: " + message);
+    public void onMessage(TweetMood message) throws IOException {
         listeners.stream().forEach(moodListener -> moodListener.onMessage(message));
     }
 

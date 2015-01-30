@@ -1,7 +1,7 @@
 package com.mechanitis.demo.sense.client;
 
-import com.mechanitis.demo.sense.client.mood.HappinessData;
-import com.mechanitis.demo.sense.client.mood.MoodData;
+import com.mechanitis.demo.sense.client.mood.HappinessChartData;
+import com.mechanitis.demo.sense.client.mood.MoodChartData;
 import com.mechanitis.demo.sense.client.mood.MoodSocketClient;
 import com.mechanitis.demo.sense.client.user.UserSocketClient;
 import javafx.application.Application;
@@ -40,13 +40,13 @@ public class Dashboard extends Application {
     }
 
     private void wireUpMoodModelToController(MoodSocketClient moodSocketClient, DashboardController controller) {
-        MoodData moodData = new MoodData();
+        MoodChartData moodData = new MoodChartData();
         moodSocketClient.addListener(moodData);
         controller.getMoodController().setData(moodData);
     }
 
     private void wireUpHappinessModelToController(MoodSocketClient moodSocketClient, DashboardController controller) {
-        HappinessData happinessData = new HappinessData();
+        HappinessChartData happinessData = new HappinessChartData();
         moodSocketClient.addListener(happinessData);
         controller.getHappinessController().setData(happinessData);
     }

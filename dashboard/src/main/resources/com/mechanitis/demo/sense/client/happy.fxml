@@ -5,7 +5,8 @@
 <VBox xmlns:fx="http://javafx.com/fxml"
       spacing="10" alignment="CENTER"
       style="-fx-border-color: blue" fx:controller="com.mechanitis.demo.sense.client.mood.HappinessController">
-    <BarChart fx:id="happinessOverTime" title="Happiness over Time" prefHeight="500">
+    <BarChart fx:id="happinessOverTime" title="Happiness over Time" prefHeight="500" legendVisible="false"
+            barGap="1">
         <xAxis>
             <CategoryAxis label="Minute" animated="false"/>
         </xAxis>

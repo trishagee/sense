@@ -6,7 +6,7 @@ import javafx.scene.chart.PieChart;
 public class MoodController {
     @FXML private PieChart overallMood;
 
-    public void setData(MoodData data) {
+    public void setData(MoodChartData data) {
         overallMood.setData(data.getPieChartData());
     }
 }

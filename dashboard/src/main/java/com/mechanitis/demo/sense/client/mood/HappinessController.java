@@ -1,6 +1,5 @@
 package com.mechanitis.demo.sense.client.mood;
 
-import com.mechanitis.demo.sense.client.mood.HappinessData;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -14,7 +13,7 @@ public class HappinessController implements Initializable {
     @FXML private NumberAxis yAxis;
     @FXML private BarChart<String, Long> happinessOverTime;
 
-    public void setData(HappinessData data) {
+    public void setData(HappinessChartData data) {
         happinessOverTime.getData().add(data.getDataSeries());
     }
 

@@ -18,7 +18,7 @@ public class MoodyMessage implements Message {
 
     @Override
     public String toString() {
-        return moods.toString();
+        return "{\"moods\": "+moods.toString()+"}";
     }
 
     public static class Factory {
