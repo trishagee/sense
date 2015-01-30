@@ -3,7 +3,7 @@
           xmlns:fx="http://javafx.com/fxml"
           alignment="center" hgap="10" vgap="10" style="-fx-border-color: black">
     <fx:include source="mood.fxml" fx:id="mood" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <fx:include source="happy.fxml" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <fx:include source="happy.fxml" fx:id="happy" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     <fx:include source="leaderboard.fxml" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
     <fx:include source="locations.fxml" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 </GridPane>
