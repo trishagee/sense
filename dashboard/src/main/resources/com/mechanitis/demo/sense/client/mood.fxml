@@ -2,7 +2,8 @@
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       spacing="10" alignment="CENTER"
-      style="-fx-border-color: red" fx:controller="com.mechanitis.demo.sense.client.MoodController">
+      style="-fx-border-color: red"
+      fx:controller="com.mechanitis.demo.sense.client.MoodController">
     <PieChart fx:id="overallMood" title="Overall Mood">
     </PieChart>
 </VBox>

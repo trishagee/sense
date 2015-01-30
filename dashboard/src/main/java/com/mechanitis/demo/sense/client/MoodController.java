@@ -1,7 +1,6 @@
 package com.mechanitis.demo.sense.client;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.mechanitis.demo.sense.client.mood.OverallMood;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
@@ -14,10 +13,9 @@ public class MoodController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Happy", 2),
-                        new PieChart.Data("Sad", 1));
-        overallMood.setData(pieChartData);
+    }
+
+    public void setOverallMood(OverallMood data) {
+        overallMood.setData(data.getPieChartData());
     }
 }
