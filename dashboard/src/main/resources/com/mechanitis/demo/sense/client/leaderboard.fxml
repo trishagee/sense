@@ -1,19 +1,17 @@
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       spacing="10" alignment="CENTER"
-      style="-fx-border-color: red" fx:controller="com.mechanitis.demo.sense.client.LeaderboardController">
+      style="-fx-border-color: red" fx:controller="com.mechanitis.demo.sense.client.user.LeaderboardController">
     <TableView fx:id="leaders">
         <columns>
             <TableColumn text="Twitter Handle" >
-
+                <cellValueFactory><PropertyValueFactory property="twitterHandle" /></cellValueFactory>
             </TableColumn>
-            <TableColumn text="Count">
-
-            </TableColumn>
-            <TableColumn text="Retweets">
-
+            <TableColumn text="Location">
+                <cellValueFactory><PropertyValueFactory property="location" /></cellValueFactory>
             </TableColumn>
         </columns>
     </TableView>

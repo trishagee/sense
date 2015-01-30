@@ -3,6 +3,7 @@ package com.mechanitis.demo.sense.client;
 import com.mechanitis.demo.sense.client.mood.HappinessData;
 import com.mechanitis.demo.sense.client.mood.MoodData;
 import com.mechanitis.demo.sense.client.mood.MoodSocketClient;
+import com.mechanitis.demo.sense.client.user.UserSocketClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,18 +17,26 @@ public class Dashboard extends Application {
         MoodSocketClient moodSocketClient = new MoodSocketClient();
         moodSocketClient.connectToWebSocket();
 
+        UserSocketClient userSocketClient = new UserSocketClient();
+        userSocketClient.connectToWebSocket();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
         Parent root = loader.load();
         DashboardController controller = loader.getController();
 
         wireUpMoodModelToController(moodSocketClient, controller);
         wireUpHappinessModelToController(moodSocketClient, controller);
+        wireUpUserModelToController(userSocketClient, controller);
 
         primaryStage.setTitle("Twitter Dashboard");
         Scene scene = new Scene(root, 1024, 1024);
         scene.getStylesheets().add("com/mechanitis/demo/sense/client/dashboard.css");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void wireUpUserModelToController(UserSocketClient userSocketClient, DashboardController controller) {
+        userSocketClient.addListener(controller.getLeaderboardController());
     }
 
     private void wireUpMoodModelToController(MoodSocketClient moodSocketClient, DashboardController controller) {

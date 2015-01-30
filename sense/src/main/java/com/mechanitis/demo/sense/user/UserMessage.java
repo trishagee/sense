@@ -13,9 +13,7 @@ class UserMessage implements Message {
 
     @Override
     public String toString() {
-        return "UserMessage{" +
-               "location='" + location + '\'' +
-               '}';
+        return location;
     }
 
     static final class Factory {
