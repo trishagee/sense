@@ -1,11 +1,8 @@
-package com.mechanitis.demo.sense.client.sockets;
-
-import com.mechanitis.demo.sense.client.mood.MoodListener;
+package com.mechanitis.demo.sense.client.mood;
 
 import javax.websocket.ClientEndpoint;
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
-import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.WebSocketContainer;
 import java.io.IOException;
@@ -19,13 +16,8 @@ public class MoodSocketClient {
 
     @OnMessage
     public void onWebSocketText(String message) throws IOException {
-        System.out.println("WebSocket message Received! "+message);
-        listeners.stream().forEach(moodListener -> moodListener.onEvent(message));
-    }
-
-    @OnClose
-    public void onClose() {
-        connectToWebSocket();
+        System.out.println("Mood Received: " + message);
+        listeners.stream().forEach(moodListener -> moodListener.onMessage(message));
     }
 
     public void connectToWebSocket() {
