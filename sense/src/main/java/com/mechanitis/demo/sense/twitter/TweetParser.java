@@ -1,11 +1,11 @@
 package com.mechanitis.demo.sense.twitter;
 
-public final class TweetExtractor {
+public final class TweetParser {
     private static final String TEXT_FIELD_NAME = "\"text\":\"";
     private static final String NEXT_FIELD_NAME = "\",\"source\":\"";
-    private static final String USER_FIELD_NAME = "\"user\":{";
+    private static final String TWITTER_HANDLE_FIELD_NAME = "\"screen_name\":\"";
 
-    private TweetExtractor() {
+    private TweetParser() {
     }
 
     public static String getTweetMessageFrom(String fullTweet) {
@@ -15,9 +15,9 @@ public final class TweetExtractor {
         return fullTweet.substring(indexOfTextField + TEXT_FIELD_NAME.length(), indexOfEndOfText);
     }
 
-    public static String getUserInfoFrom(String fullTweet) {
-        int indexOfUserField = fullTweet.indexOf(USER_FIELD_NAME);
-        int indexOfEndOfUser = fullTweet.indexOf("}", indexOfUserField);
-        return fullTweet.substring(indexOfUserField + USER_FIELD_NAME.length(), indexOfEndOfUser);
+    public static String getTwitterHandle(String allLocationText) {
+        int indexOfLocationField = allLocationText.indexOf(TWITTER_HANDLE_FIELD_NAME)+ TWITTER_HANDLE_FIELD_NAME.length();
+        int indexOfEndOfLocation = allLocationText.indexOf("\"", indexOfLocationField);
+        return allLocationText.substring(indexOfLocationField, indexOfEndOfLocation);
     }
 }

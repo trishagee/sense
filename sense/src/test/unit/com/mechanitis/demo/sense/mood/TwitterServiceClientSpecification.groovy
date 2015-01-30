@@ -6,7 +6,7 @@ import spock.lang.Specification
 import spock.lang.Subject
 
 import static com.mechanitis.demo.sense.mood.MoodAnalyser.analyseMood
-import static com.mechanitis.demo.sense.twitter.TweetExtractor.getTweetMessageFrom
+import static com.mechanitis.demo.sense.twitter.TweetParser.getTweetMessageFrom
 
 class TwitterServiceClientSpecification extends Specification {
     @Subject

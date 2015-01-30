@@ -49,10 +49,6 @@ public class TwitterOAuth {
     }
 
     private boolean validateProperties() {
-        System.out.println("consumerKey = " + consumerKey);
-        System.out.println("consumerSecret = " + consumerSecret);
-        System.out.println("token = " + token);
-        System.out.println("accessTokenSecret = " + accessTokenSecret);
         return !(consumerKey == null ||
                  accessTokenSecret == null ||
                  token == null ||

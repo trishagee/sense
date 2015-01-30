@@ -4,22 +4,22 @@ import com.mechanitis.demo.sense.message.Message;
 
 import java.util.Optional;
 
-class UserMessage implements Message {
-    private String location;
+class Twitterer implements Message {
+    private String twitterer;
 
-    public UserMessage(String location) {
-        this.location = location;
+    public Twitterer(String twitterer) {
+        this.twitterer = twitterer;
     }
 
     @Override
     public String toString() {
-        return location;
+        return twitterer;
     }
 
     static final class Factory {
-        static Optional<UserMessage> createUserMessage(String location) {
+        static Optional<Twitterer> createUserMessage(String location) {
             return location == null || location.length() == 0 ? Optional.empty()
-                    : Optional.of(new UserMessage(location));
+                    : Optional.of(new Twitterer(location));
         }
     }
 }
