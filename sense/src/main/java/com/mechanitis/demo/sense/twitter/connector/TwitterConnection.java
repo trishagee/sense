@@ -1,6 +1,6 @@
 package com.mechanitis.demo.sense.twitter.connector;
 
-import com.mechanitis.demo.sense.twitter.TweetListener;
+import com.mechanitis.demo.sense.message.MessageListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public class TwitterConnection implements Runnable {
     private static final URI TWITTER_URI = URI.create("https://stream.twitter.com/1.1/statuses/sample.json");
 
-    private final List<TweetListener> tweetListeners = new ArrayList<>();
+    private final List<MessageListener<String>> tweetListeners = new ArrayList<>();
     private final CompletableFuture<Object> allDone = new CompletableFuture<>();
     private InputStream twitterInputStream;
     private BufferedReader reader;
@@ -26,11 +26,11 @@ public class TwitterConnection implements Runnable {
         new TwitterConnection().run();
     }
 
-    public void addListener(TweetListener listener) {
+    public void addListener(MessageListener<String> listener) {
         tweetListeners.add(listener);
     }
 
-    public boolean removeListener(TweetListener listener) {
+    public boolean removeListener(MessageListener<String> listener) {
         return tweetListeners.remove(listener);
     }
 
@@ -61,7 +61,7 @@ public class TwitterConnection implements Runnable {
         tweets.filter(this::isNotDeleteEvent)
               .forEach(tweet -> {
                   System.out.println("tweet = " + tweet);
-                  tweetListeners.forEach(tweetListener -> tweetListener.onTweet(tweet));
+                  tweetListeners.forEach(tweetListener -> tweetListener.onMessage(tweet));
               });
         allDone.complete(true);
     }

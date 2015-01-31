@@ -4,13 +4,12 @@ import com.mechanitis.demo.sense.twitter.connector.TwitterConnection;
 import com.mechanitis.demo.sense.twitter.server.TweetsServer;
 import com.mechanitis.demo.util.DaemonThreadFactory;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 public class TweetsService implements Runnable {
-    private final ExecutorService executor = Executors.newFixedThreadPool(2, new DaemonThreadFactory());
+    private final ExecutorService executor = newSingleThreadExecutor(new DaemonThreadFactory());
     private final TweetsServer tweetsServer = new TweetsServer();
     private final TwitterConnection twitterConnection = new TwitterConnection();
 
@@ -22,12 +21,7 @@ public class TweetsService implements Runnable {
         twitterConnection.addListener(tweetsServer.getMessageListener());
 
         executor.submit(tweetsServer);
-        Future<?> twitterConnectionResult = executor.submit(twitterConnection);
-        try {
-            twitterConnectionResult.get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        twitterConnection.run();
     }
 
     public void stop() throws Exception {

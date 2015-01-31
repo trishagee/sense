@@ -1,15 +1,16 @@
 package com.mechanitis.demo.sense.twitter.server;
 
+import com.mechanitis.demo.sense.message.MessageBroadcaster;
+import com.mechanitis.demo.sense.message.MessageListener;
 import com.mechanitis.demo.sense.sockets.WebSocketServer;
-import com.mechanitis.demo.sense.twitter.TweetListener;
 
 public class TweetsServer implements Runnable {
     private static final int PORT = 8081;
     private WebSocketServer server;
-    private final TweetsEndpoint tweetsEndpoint;
+    private final MessageBroadcaster<String> tweetsEndpoint;
 
     public TweetsServer() {
-        tweetsEndpoint = new TweetsEndpoint();
+        tweetsEndpoint = new MessageBroadcaster<>();
     }
 
     public static void main(String[] args) {
@@ -26,7 +27,7 @@ public class TweetsServer implements Runnable {
         server.stop();
     }
 
-    public TweetListener getMessageListener() {
+    public MessageListener<String> getMessageListener() {
         return tweetsEndpoint;
     }
 }

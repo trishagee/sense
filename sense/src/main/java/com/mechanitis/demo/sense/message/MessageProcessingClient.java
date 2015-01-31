@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @ClientEndpoint
 public class MessageProcessingClient {
-    private List<MessageListener> listeners = new ArrayList<>();
+    private List<MessageListener<Message>> listeners = new ArrayList<>();
     private MessageProcessor messageProcessor;
 
     public MessageProcessingClient(MessageProcessor messageProcessor) {
@@ -25,7 +25,7 @@ public class MessageProcessingClient {
         }
     }
 
-    public void addListener(MessageListener listener) {
+    public void addListener(MessageListener<Message> listener) {
         listeners.add(listener);
     }
 }
