@@ -8,24 +8,24 @@ import java.util.List;
 import java.util.Optional;
 
 @ClientEndpoint
-public class MessageProcessingClient {
-    private List<MessageListener<Message>> listeners = new ArrayList<>();
-    private MessageProcessor messageProcessor;
+public class MessageProcessingClient<T> {
+    private List<MessageListener<T>> listeners = new ArrayList<>();
+    private MessageProcessor<T> messageProcessor;
 
-    public MessageProcessingClient(MessageProcessor messageProcessor) {
+    public MessageProcessingClient(MessageProcessor<T> messageProcessor) {
         this.messageProcessor = messageProcessor;
     }
 
     @OnMessage
     public void onWebSocketText(String fullTweet) throws IOException {
-        Optional<? extends Message> message = messageProcessor.processMessage(fullTweet);
+        Optional<T> message = messageProcessor.processMessage(fullTweet);
         if (message.isPresent()) {
             listeners.stream()
-                     .forEach(moodListener -> moodListener.onMessage(message.get()));
+                     .forEach(messageListener -> messageListener.onMessage(message.get()));
         }
     }
 
-    public void addListener(MessageListener<Message> listener) {
+    public void addListener(MessageListener<T> listener) {
         listeners.add(listener);
     }
 }

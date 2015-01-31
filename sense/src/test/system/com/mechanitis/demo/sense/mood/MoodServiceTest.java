@@ -1,7 +1,7 @@
 package com.mechanitis.demo.sense.mood;
 
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
-import com.mechanitis.demo.sense.twitter.TweetsService;
+import com.mechanitis.demo.sense.twitter.LiveTweetsService;
 import com.mechanitis.demo.util.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.junit.Test;
@@ -24,8 +24,8 @@ public class MoodServiceTest {
     @Test
     public void shouldStartupAndAllowAClientToConnectAndReceiveAMessage() throws Exception {
         // start the Tweet Service Server, needed because the Mood Service connects to this
-        TweetsService tweetsService = new TweetsService();
-        executor.submit(tweetsService);
+        LiveTweetsService liveTweetsService = new LiveTweetsService();
+        executor.submit(liveTweetsService);
 
         // start the mood service, the service under test
         MoodService moodService = new MoodService();
@@ -41,7 +41,7 @@ public class MoodServiceTest {
                                             latch), is(true));
 
         // finally
-        tweetsService.stop();
+        liveTweetsService.stop();
         moodService.stop();
     }
 

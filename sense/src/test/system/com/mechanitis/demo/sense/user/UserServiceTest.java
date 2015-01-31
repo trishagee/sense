@@ -1,7 +1,7 @@
 package com.mechanitis.demo.sense.user;
 
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
-import com.mechanitis.demo.sense.twitter.TweetsService;
+import com.mechanitis.demo.sense.twitter.LiveTweetsService;
 import com.mechanitis.demo.util.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class UserServiceTest {
     @Test
     public void shouldStartupAndAllowAClientToConnectAndReceiveAMessage() throws Exception {
         // start the Tweet Service Server, needed because the User Service connects to this
-        TweetsService service = new TweetsService();
+        LiveTweetsService service = new LiveTweetsService();
         executor.submit(service);
 
         // start the mood service, the service under test
@@ -50,7 +50,7 @@ public class UserServiceTest {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         try {
             Session session = container.connectToServer(endpointInstance, path);
-            success = latch.await(10, TimeUnit.SECONDS);
+            success = latch.await(30, TimeUnit.SECONDS);
             session.close();
         } finally {
             if (container instanceof LifeCycle) {

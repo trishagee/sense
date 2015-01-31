@@ -1,84 +1,74 @@
 package com.mechanitis.demo.sense.twitter.connector;
 
-import com.mechanitis.demo.sense.message.MessageListener;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class TwitterConnection implements Runnable {
     private static final URI TWITTER_URI = URI.create("https://stream.twitter.com/1.1/statuses/sample.json");
 
-    private final List<MessageListener<String>> tweetListeners = new ArrayList<>();
-    private final CompletableFuture<Object> allDone = new CompletableFuture<>();
-    private InputStream twitterInputStream;
-    private BufferedReader reader;
-    private Stream<String> inputStream;
+    private final Consumer<String> tweetConsumer;
+
+    public TwitterConnection(Consumer<String> tweetConsumer) {
+        this.tweetConsumer = tweetConsumer;
+    }
 
     public static void main(String[] args) {
-        new TwitterConnection().run();
-    }
-
-    public void addListener(MessageListener<String> listener) {
-        tweetListeners.add(listener);
-    }
-
-    public boolean removeListener(MessageListener<String> listener) {
-        return tweetListeners.remove(listener);
+        new TwitterConnection(System.out::println).run();
     }
 
     @Override
     public void run() {
         try {
-            HttpURLConnection httpURLConnection = (HttpURLConnection) TWITTER_URI.toURL().openConnection();
-            httpURLConnection.setDoInput(true);
-            httpURLConnection.setRequestMethod("GET");
-
-            TwitterOAuth oauth = new TwitterOAuth();
-            String signature = oauth.generateSignature();
-            httpURLConnection.addRequestProperty("Authorization", "OAuth " + oauth.getAuthParams()
-                                                                  + ", oauth_signature=\"" + signature + "\"");
-
-            twitterInputStream = httpURLConnection.getInputStream();
-            reader = new BufferedReader(new InputStreamReader(twitterInputStream));
-
-            inputStream = reader.lines();
-            processTweets(inputStream);
-
-        } catch (IOException e) {
-            throw new TwitterConnectionException(e);
+            drinkFromTheFirehose();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 
-    void processTweets(Stream<String> tweets) {
-        tweets.filter(this::isNotDeleteEvent)
-              .forEach(tweet -> {
-                  System.out.println("tweet = " + tweet);
-                  tweetListeners.forEach(tweetListener -> tweetListener.onMessage(tweet));
-              });
-        allDone.complete(true);
+    private void drinkFromTheFirehose() throws IOException, InterruptedException {
+        HttpURLConnection httpURLConnection = connectToTwitter();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()))) {
+            processTweets(reader.lines());
+        } catch (Exception e) {
+            System.out.printf("Exception Thrown: %s\nRetrying....\n", e.getMessage());
+            retryConnection();
+        }
+    }
+
+    /* package for testing. could theoretically be injected */
+    void processTweets(Stream<String> stream) {
+        stream.filter(this::isNotDeleteEvent)
+              .forEach(tweetConsumer);
     }
 
     private boolean isNotDeleteEvent(String tweet) {
         return !tweet.startsWith("{\"delete\"");
     }
 
+    private void retryConnection() throws IOException, InterruptedException {
+        Thread.sleep(2000);
+        drinkFromTheFirehose();
+    }
+
+    private HttpURLConnection connectToTwitter() throws IOException {
+        HttpURLConnection httpURLConnection = (HttpURLConnection) TWITTER_URI.toURL().openConnection();
+        httpURLConnection.setDoInput(true);
+        httpURLConnection.setRequestMethod("GET");
+
+        TwitterOAuth oauth = new TwitterOAuth();
+        String signature = oauth.generateSignature();
+        httpURLConnection.addRequestProperty("Authorization", "OAuth " + oauth.getAuthParams()
+                                                              + ", oauth_signature=\"" + signature + "\"");
+        return httpURLConnection;
+    }
+
     public void stop() {
-        // this can't actually stop the infinite stream, that needs forcibly closing
-        tweetListeners.removeAll(tweetListeners);
-        try {
-            twitterInputStream.close();
-            reader.close();
-            inputStream.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to close Twitter input stream", e);
-        }
+//        I'm unstoppable!!
     }
 }

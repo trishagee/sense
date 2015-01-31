@@ -1,9 +1,8 @@
 package com.mechanitis.demo.sense.mood;
 
-import com.mechanitis.demo.sense.message.Message;
-import com.mechanitis.demo.sense.sockets.WebSocketServer;
 import com.mechanitis.demo.sense.message.MessageBroadcaster;
 import com.mechanitis.demo.sense.message.MessageProcessingClient;
+import com.mechanitis.demo.sense.sockets.WebSocketServer;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
@@ -26,10 +25,10 @@ public class MoodService implements Runnable {
     @Override
     public void run() {
         try {
-            MessageBroadcaster<Message> messageBroadcaster = new MessageBroadcaster<>();
+            MessageBroadcaster<MoodyMessage> messageBroadcaster = new MessageBroadcaster<>();
 
             // create a client endpoint that takes the raw tweet and turns it into a MoodyMessage
-            MessageProcessingClient messageProcessingClient = new MessageProcessingClient(fullTweetAsString -> analyseMood(getTweetMessageFrom(fullTweetAsString)));
+            MessageProcessingClient<MoodyMessage> messageProcessingClient = new MessageProcessingClient<>(fullTweetAsString -> analyseMood(getTweetMessageFrom(fullTweetAsString)));
             messageProcessingClient.addListener(messageBroadcaster);
 
             // connect the client endpoint to the twitter service

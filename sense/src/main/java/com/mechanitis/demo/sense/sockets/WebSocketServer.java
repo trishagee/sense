@@ -16,13 +16,13 @@ public class WebSocketServer implements Runnable {
     private final int port;
     private final String path;
     private final Endpoint endpoint;
-
-    private Server server;
+    private final Server server;
 
     public WebSocketServer(int port, String path, Endpoint endpoint) {
         this.port = port;
         this.path = path;
         this.endpoint = endpoint;
+        server = new Server();
     }
 
     public void run() {
@@ -51,7 +51,6 @@ public class WebSocketServer implements Runnable {
     }
 
     private ServletContextHandler initialiseJettyServer(int port) {
-        server = new Server();
         ServerConnector connector = new ServerConnector(server);
         connector.setPort(port);
         server.addConnector(connector);

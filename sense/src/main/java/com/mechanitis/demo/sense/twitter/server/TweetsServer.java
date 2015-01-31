@@ -11,6 +11,7 @@ public class TweetsServer implements Runnable {
 
     public TweetsServer() {
         tweetsEndpoint = new MessageBroadcaster<>();
+        server = new WebSocketServer(PORT, "/tweets/", tweetsEndpoint);
     }
 
     public static void main(String[] args) {
@@ -19,7 +20,6 @@ public class TweetsServer implements Runnable {
 
     @Override
     public void run() {
-        server = new WebSocketServer(PORT, "/tweets/", tweetsEndpoint);
         server.run();
     }
 

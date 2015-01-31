@@ -57,7 +57,7 @@ class MessageBroadcasterSpecification extends Specification {
         0 * session./get.*Remote/()
     }
 
-    private static class StubMessage implements Message {
+    private static class StubMessage {
         @Override
         public String toString() {
             return "StubMessage{}";

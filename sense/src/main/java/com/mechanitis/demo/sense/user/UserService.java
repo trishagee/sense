@@ -25,11 +25,11 @@ public class UserService implements Runnable {
     @Override
     public void run() {
         try {
-            MessageBroadcaster messageBroadcaster = new MessageBroadcaster();
+            MessageBroadcaster<Twitterer> messageBroadcaster = new MessageBroadcaster<>();
 
             // create a client endpoint that takes the raw tweet and returns the user location as a string
-            MessageProcessingClient messageProcessingClient =
-                    new MessageProcessingClient(fullTweetAsString -> createUserMessage(getTwitterHandle(fullTweetAsString)));
+            MessageProcessingClient<Twitterer> messageProcessingClient =
+                    new MessageProcessingClient<>(fullTweetAsString -> createUserMessage(getTwitterHandle(fullTweetAsString)));
             messageProcessingClient.addListener(messageBroadcaster);
 
             // connect the client endpoint to the twitter service
