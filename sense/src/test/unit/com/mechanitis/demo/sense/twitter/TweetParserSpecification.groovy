@@ -2,7 +2,7 @@ package com.mechanitis.demo.sense.twitter
 
 import spock.lang.Specification
 
-class TweetExtractorSpecification extends Specification {
+class TweetParserSpecification extends Specification {
     private static final String EXAMPLE_INPUT = "tweet = {\"created_at\":\"Tue Jan 27 12:37:11 +0000 2015\"," +
             "\"id\":560053908144275456,\"id_str\":\"560053908144275456\"," +
             "\"text\":\"A simplistic approach to your life is a healthy antidote to yo... More for Sagittarius http:\\/\\/t.co\\/cRS9M0bneh\",\"source\":\"\\u003ca href=\\\"http:\\/\\/www.twittascope.com\\\" rel=\\\"nofollow\\\"\\u003eTwittascope\\u003c\\/a\\u003e\"," +
