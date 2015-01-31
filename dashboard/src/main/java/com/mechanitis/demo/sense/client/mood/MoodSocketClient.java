@@ -25,7 +25,8 @@ public class MoodSocketClient {
             URI uri = URI.create("ws://localhost:8082/moods/");
             container.connectToServer(this, uri);
         } catch (DeploymentException | IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 

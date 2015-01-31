@@ -27,7 +27,8 @@ public class MessageBroadcaster<T> extends Endpoint implements MessageListener<T
             System.out.println("MessageBroadcastingEndpoint sending: tweet = [" + message + "]");
             session.getBasicRemote().sendText(message);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 

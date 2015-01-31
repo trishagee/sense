@@ -16,7 +16,6 @@ public class UserSocketClient {
 
     @OnMessage
     public void onWebSocketText(String message) throws IOException {
-        System.out.println("User Received: " + message);
         listeners.stream().forEach(userListener -> userListener.onMessage(message));
     }
 
@@ -26,7 +25,8 @@ public class UserSocketClient {
             URI uri = URI.create("ws://localhost:8083/users/");
             container.connectToServer(this, uri);
         } catch (DeploymentException | IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 

@@ -41,8 +41,8 @@ public class WebSocketServer implements Runnable {
             server.start();
             server.join();
         } catch (Exception e) {
-            //not great error handling...
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 
