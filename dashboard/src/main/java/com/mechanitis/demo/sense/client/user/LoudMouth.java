@@ -18,12 +18,22 @@ public class LoudMouth {
         return twitterHandle.get();
     }
 
+    public SimpleStringProperty twitterHandleProperty() {
+        return twitterHandle;
+    }
+
     public int getTweets() {
         return tweets.get();
     }
 
-    public void incrementCount() {
-        tweets.set(count.incrementAndGet());
+    public SimpleIntegerProperty tweetsProperty() {
+        return tweets;
+    }
+
+    public int incrementCount() {
+        int newValue = count.incrementAndGet();
+        tweets.set(newValue);
+        return newValue;
     }
 
 }
