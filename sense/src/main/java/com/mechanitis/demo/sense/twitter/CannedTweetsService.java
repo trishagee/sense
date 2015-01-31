@@ -39,7 +39,7 @@ public class CannedTweetsService {
                  .forEach(messageListener::onMessage);
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(1);
+//            System.exit(1);
         }
     }
 

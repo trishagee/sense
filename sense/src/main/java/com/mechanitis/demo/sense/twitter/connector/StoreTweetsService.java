@@ -24,7 +24,7 @@ public class StoreTweetsService {
                         Files.write(destination, (tweet + "\n").getBytes(), APPEND, CREATE);
                     } catch (IOException e) {
                         e.printStackTrace();
-                        System.exit(1);
+//                        System.exit(1);
                     }
                 });
         Future<?> twitterConnectionResult = newSingleThreadExecutor().submit(twitterConnection);
@@ -32,7 +32,7 @@ public class StoreTweetsService {
             twitterConnectionResult.get(1, TimeUnit.HOURS);
         } catch (Throwable e) {
             e.printStackTrace();
-            System.exit(0);
+//            System.exit(0);
         }
     }
 }

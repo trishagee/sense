@@ -41,7 +41,7 @@ public class MoodService implements Runnable {
             webSocketServer.run();
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(1);
+//            System.exit(1);
         }
 
     }

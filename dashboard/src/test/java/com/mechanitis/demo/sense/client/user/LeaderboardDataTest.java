@@ -1,11 +1,23 @@
 package com.mechanitis.demo.sense.client.user;
 
+import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.concurrent.Executors;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class LeaderboardDataTest {
+
+    @BeforeClass
+    public static void setup() throws InterruptedException {
+        Executors.newSingleThreadExecutor().execute(() -> Application.launch(StubApplication.class));
+    }
+
     @Test
     public void shouldCountNumberOfTweetsByTheSamePerson() {
         LeaderboardData leaderboardData = new LeaderboardData();
@@ -21,4 +33,11 @@ public class LeaderboardDataTest {
         assertThat(leaderboardData.getItems().get(1).getTwitterHandle(), is("Someone else"));
     }
 
+
+    public static class StubApplication extends Application {
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+        }
+    }
 }
+

@@ -27,7 +27,7 @@ public class TwitterConnection implements Runnable {
             drinkFromTheFirehose();
         } catch (Throwable e) {
             e.printStackTrace();
-            System.exit(1);
+//            System.exit(1);
         }
     }
 

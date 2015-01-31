@@ -42,7 +42,7 @@ public class WebSocketServer implements Runnable {
             server.join();
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(1);
+//            System.exit(1);
         }
     }
 
