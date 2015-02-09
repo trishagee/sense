@@ -14,10 +14,7 @@ public class HappinessChartData implements MoodListener {
 
     public HappinessChartData() {
         int nowMinute = LocalTime.now().getMinute();
-        range(nowMinute, nowMinute + 10).forEach(minute -> {
-            dataSeries.getData().add(new XYChart.Data<>(String.valueOf(minute), 0L));
-            minuteToDataPosition.put(minute, dataSeries.getData().size() - 1);
-        });
+        range(nowMinute, nowMinute + 10).forEach(this::initialiseBarToZero);
     }
 
     @Override
@@ -34,6 +31,11 @@ public class HappinessChartData implements MoodListener {
 
     public XYChart.Series<String, Long> getDataSeries() {
         return dataSeries;
+    }
+
+    private void initialiseBarToZero(int minute) {
+        dataSeries.getData().add(new XYChart.Data<>(String.valueOf(minute), 0L));
+        minuteToDataPosition.put(minute, dataSeries.getData().size() - 1);
     }
 
 }

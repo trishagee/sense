@@ -5,12 +5,12 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class LoudMouth {
+public class TwitterUser {
     private final SimpleStringProperty twitterHandle = new SimpleStringProperty();
     private final SimpleIntegerProperty tweets = new SimpleIntegerProperty(0);
     private AtomicInteger count = new AtomicInteger(0);
 
-    public LoudMouth(String twitterHandle) {
+    public TwitterUser(String twitterHandle) {
         this.twitterHandle.set(twitterHandle);
     }
 
