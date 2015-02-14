@@ -1,0 +1,7 @@
+
+
+dependencies {
+    testCompile 'cglib:cglib-nodep:3.1'
+    testCompile 'org.objenesis:objenesis:2.1'
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.0'
+}
