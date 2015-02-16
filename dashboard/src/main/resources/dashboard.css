@@ -1,3 +1,7 @@
+.default-color0.chart-pie { -fx-pie-color: red; }
+.default-color1.chart-pie { -fx-pie-color: green; }
+.default-color2.chart-pie { -fx-pie-color: yellow; }
+
 .table-view {
     -fx-font-size: 20pt;
 }

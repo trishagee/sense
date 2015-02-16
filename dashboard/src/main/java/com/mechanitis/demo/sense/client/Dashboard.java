@@ -1,5 +1,7 @@
 package com.mechanitis.demo.sense.client;
 
+import com.mechanitis.demo.sense.client.mood.MoodChartData;
+import com.mechanitis.demo.sense.client.mood.MoodSocketClient;
 import com.mechanitis.demo.sense.client.user.LeaderboardData;
 import com.mechanitis.demo.sense.client.user.UserSocketClient;
 import javafx.application.Application;
@@ -12,6 +14,9 @@ public class Dashboard extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        MoodSocketClient moodSocketClient = new MoodSocketClient();
+        moodSocketClient.connectToWebSocket();
+
         UserSocketClient userSocketClient = new UserSocketClient();
         userSocketClient.connectToWebSocket();
 
@@ -19,6 +24,7 @@ public class Dashboard extends Application {
         Parent root = loader.load();
         DashboardController controller = loader.getController();
 
+        wireUpMoodModelToController(moodSocketClient, controller);
         wireUpUserModelToController(userSocketClient, controller);
 
         primaryStage.setTitle("Twitter Dashboard");
@@ -32,6 +38,12 @@ public class Dashboard extends Application {
         LeaderboardData leaderboardData = new LeaderboardData();
         userSocketClient.addListener(leaderboardData);
         controller.getLeaderboardController().setData(leaderboardData);
+    }
+
+    private void wireUpMoodModelToController(MoodSocketClient moodSocketClient, DashboardController controller) {
+        MoodChartData moodData = new MoodChartData();
+        moodSocketClient.addListener(moodData);
+        controller.getMoodController().setData(moodData);
     }
 
     public static void main(String[] args) {
