@@ -1,0 +1,7 @@
+<?import javafx.scene.layout.GridPane?>
+<GridPane fx:controller="com.mechanitis.demo.sense.client.DashboardController"
+          xmlns:fx="http://javafx.com/fxml"
+          alignment="center" hgap="10" vgap="10">
+    <fx:include source="leaderboard.fxml" fx:id="leaderboard"
+                GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2"/>
+</GridPane>
