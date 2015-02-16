@@ -1,5 +1,6 @@
 package com.mechanitis.demo.sense.client;
 
+import com.mechanitis.demo.sense.client.mood.HappinessChartData;
 import com.mechanitis.demo.sense.client.mood.MoodChartData;
 import com.mechanitis.demo.sense.client.mood.MoodSocketClient;
 import com.mechanitis.demo.sense.client.user.LeaderboardData;
@@ -25,6 +26,7 @@ public class Dashboard extends Application {
         DashboardController controller = loader.getController();
 
         wireUpMoodModelToController(moodSocketClient, controller);
+        wireUpHappinessModelToController(moodSocketClient, controller);
         wireUpUserModelToController(userSocketClient, controller);
 
         primaryStage.setTitle("Twitter Dashboard");
@@ -44,6 +46,12 @@ public class Dashboard extends Application {
         MoodChartData moodData = new MoodChartData();
         moodSocketClient.addListener(moodData);
         controller.getMoodController().setData(moodData);
+    }
+
+    private void wireUpHappinessModelToController(MoodSocketClient moodSocketClient, DashboardController controller) {
+        HappinessChartData happinessData = new HappinessChartData();
+        moodSocketClient.addListener(happinessData);
+        controller.getHappinessController().setData(happinessData);
     }
 
     public static void main(String[] args) {
