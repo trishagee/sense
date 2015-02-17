@@ -1,7 +1,7 @@
 package com.mechanitis.demo.sense.twitter;
 
 import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
-import com.mechanitis.demo.sense.message.MessageBroadcaster;
+import com.mechanitis.demo.sense.message.BroadcastingServerEndpoint;
 import com.mechanitis.demo.sense.twitter.connector.TwitterConnection;
 import com.mechanitis.demo.util.DaemonThreadFactory;
 
@@ -17,8 +17,8 @@ public class LiveTweetsService implements Runnable {
     private static final String URI = "/tweets/";
 
     private final ExecutorService executor = newSingleThreadExecutor(new DaemonThreadFactory());
-    private final MessageBroadcaster<String> tweetsEndpoint = new MessageBroadcaster<>();
-    private final WebSocketServer server = new WebSocketServer(PORT, URI, tweetsEndpoint);
+    private final BroadcastingServerEndpoint<String> tweetsEndpoint = new BroadcastingServerEndpoint<>();
+    private final WebSocketServer server = new WebSocketServer(URI, PORT, tweetsEndpoint);
     private TwitterConnection twitterConnection;
 
     public static void main(String[] args) {

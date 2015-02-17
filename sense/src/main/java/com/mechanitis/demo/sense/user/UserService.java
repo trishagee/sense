@@ -1,19 +1,17 @@
 package com.mechanitis.demo.sense.user;
 
 import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
-import com.mechanitis.demo.sense.message.MessageBroadcaster;
-import com.mechanitis.demo.sense.message.MessageProcessingClient;
+import com.mechanitis.demo.sense.message.BroadcastingServerEndpoint;
+import com.mechanitis.demo.sense.message.ClientEndpoint;
 
-import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
 import java.io.IOException;
 import java.net.URI;
 
 public class UserService implements Runnable {
-    private Session session;
+    private static final URI TWEETS_SERVER_URI = URI.create("ws://localhost:8081/tweets/");
     private WebSocketServer webSocketServer;
+    private ClientEndpoint<TwitterUser> clientEndpoint;
 
     public static void main(String[] args) {
         new UserService().run();
@@ -22,20 +20,15 @@ public class UserService implements Runnable {
     @Override
     public void run() {
         try {
-            MessageBroadcaster<TwitterUser> messageBroadcaster = new MessageBroadcaster<>();
+            BroadcastingServerEndpoint<TwitterUser> broadcastingServerEndpoint = new BroadcastingServerEndpoint<>();
 
             // create a client endpoint that takes the raw tweet and returns the user location as a string
-            MessageProcessingClient<TwitterUser> messageProcessingClient =
-                    new MessageProcessingClient<>(TwitterUser.Factory::twitterUserFromTweet);
-            messageProcessingClient.addListener(messageBroadcaster);
-
-            // connect the client endpoint to the twitter service
-            WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            session = container.connectToServer(messageProcessingClient,
-                                                URI.create("ws://localhost:8081/tweets/"));
+            clientEndpoint = new ClientEndpoint<>(TWEETS_SERVER_URI, TwitterUser.Factory::twitterUserFromTweet);
+            clientEndpoint.addListener(broadcastingServerEndpoint);
+            clientEndpoint.connect();
 
             // configure a web socket server that will provide clients with information about twitter users
-            webSocketServer = new WebSocketServer(8083, "/users/", messageBroadcaster);
+            webSocketServer = new WebSocketServer("/users/", 8083, broadcastingServerEndpoint);
             webSocketServer.run();
         } catch (DeploymentException | IOException e) {
             e.printStackTrace();
@@ -43,7 +36,7 @@ public class UserService implements Runnable {
     }
 
     public void stop() throws Exception {
-        session.close();
+        clientEndpoint.close();
         webSocketServer.stop();
     }
 

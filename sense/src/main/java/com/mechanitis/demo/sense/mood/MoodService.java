@@ -1,19 +1,18 @@
 package com.mechanitis.demo.sense.mood;
 
 import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
-import com.mechanitis.demo.sense.message.MessageBroadcaster;
-import com.mechanitis.demo.sense.message.MessageProcessingClient;
+import com.mechanitis.demo.sense.message.BroadcastingServerEndpoint;
+import com.mechanitis.demo.sense.message.ClientEndpoint;
 
-import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
 import java.io.IOException;
 import java.net.URI;
 
 public class MoodService implements Runnable {
+    private static final URI TWEETS_SERVER_URI = URI.create("ws://localhost:8081/tweets/");
+
     private WebSocketServer webSocketServer;
-    private Session session;
+    private ClientEndpoint<MoodyMessage> clientEndpoint;
 
     public static void main(String[] args) throws IOException, DeploymentException {
         new MoodService().run();
@@ -22,28 +21,23 @@ public class MoodService implements Runnable {
     @Override
     public void run() {
         try {
-            MessageBroadcaster<MoodyMessage> messageBroadcaster = new MessageBroadcaster<>();
+            BroadcastingServerEndpoint<MoodyMessage> broadcastingServerEndpoint = new BroadcastingServerEndpoint<>();
 
             // create a client endpoint that takes the raw tweet and turns it into a MoodyMessage
-            MessageProcessingClient<MoodyMessage> messageProcessingClient = new MessageProcessingClient<>(MoodAnalyser::analyseMood);
-            messageProcessingClient.addListener(messageBroadcaster);
-
-            // connect the client endpoint to the twitter service
-            WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            session = container.connectToServer(messageProcessingClient,
-                                                URI.create("ws://localhost:8081/tweets/"));
+            clientEndpoint = new ClientEndpoint<>(TWEETS_SERVER_URI, MoodAnalyser::analyseMood);
+            clientEndpoint.addListener(broadcastingServerEndpoint);
+            clientEndpoint.connect();
 
             // run the Jetty server for the server endpoint that clients will connect to
-            webSocketServer = new WebSocketServer(8082, "/moods/", messageBroadcaster);
+            webSocketServer = new WebSocketServer("/moods/", 8082, broadcastingServerEndpoint);
             webSocketServer.run();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void stop() throws Exception {
-        session.close();
+        clientEndpoint.close();
         webSocketServer.stop();
     }
 }

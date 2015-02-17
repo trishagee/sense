@@ -1,16 +1,15 @@
 package com.mechanitis.demo.sense.mood
 
 import com.mechanitis.demo.sense.message.MessageListener
-import com.mechanitis.demo.sense.message.MessageProcessingClient
+import com.mechanitis.demo.sense.message.ClientEndpoint
 import spock.lang.Specification
 import spock.lang.Subject
 
 import static com.mechanitis.demo.sense.mood.MoodAnalyser.analyseMood
-import static com.mechanitis.demo.sense.twitter.TweetParser.getTweetMessageFrom
 
 class TwitterServiceClientSpecification extends Specification {
     @Subject
-    def twitterServiceClient = new MessageProcessingClient({ rawTweet -> analyseMood(rawTweet) })
+    def twitterServiceClient = new ClientEndpoint(null, { rawTweet -> analyseMood(rawTweet) })
 
     //TODO neither of these tests will be needed
     def 'should turn full tweets into messages with mood annotations'() {

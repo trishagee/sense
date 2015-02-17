@@ -6,9 +6,9 @@ import spock.lang.Subject
 import javax.websocket.RemoteEndpoint
 import javax.websocket.Session
 
-class MessageBroadcasterSpecification extends Specification {
+class BroadcastingServerEndpointSpecification extends Specification {
     @Subject
-    def endpoint = new MessageBroadcaster()
+    def endpoint = new BroadcastingServerEndpoint()
 
     def 'should accept messages and publish the toString() representation'() {
         given:

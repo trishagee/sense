@@ -9,8 +9,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MessageBroadcaster<T> extends Endpoint implements MessageListener<T> {
-    private static final Logger LOGGER = Logger.getLogger(MessageBroadcaster.class.getName());
+public class BroadcastingServerEndpoint<T> extends Endpoint implements MessageListener<T> {
+    private static final Logger LOGGER = Logger.getLogger(BroadcastingServerEndpoint.class.getName());
     private final List<Session> sessions = new CopyOnWriteArrayList<>();
 
     @Override

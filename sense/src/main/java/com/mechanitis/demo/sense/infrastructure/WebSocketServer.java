@@ -18,9 +18,9 @@ public class WebSocketServer implements Runnable {
     private final Endpoint endpoint;
     private final Server server;
 
-    public WebSocketServer(int port, String path, Endpoint endpoint) {
-        this.port = port;
+    public WebSocketServer(String path, int port, Endpoint endpoint) {
         this.path = path;
+        this.port = port;
         this.endpoint = endpoint;
         server = new Server();
     }
@@ -28,8 +28,6 @@ public class WebSocketServer implements Runnable {
     public void run() {
         ServletContextHandler context = initialiseJettyServer(port);
         try {
-            ServerContainer websocketContainer = WebSocketServerContainerInitializer.configureContext(context);
-
             // create a configuration to ensure
             // a) there's only a single instance of the MessageBroadcaster and
             // b) set the correct URI
@@ -37,7 +35,7 @@ public class WebSocketServer implements Runnable {
             ServerEndpointConfig config = ServerEndpointConfig.Builder.create(endpoint.getClass(), path)
                                                                       .configurator(serverEndpointConfigurator)
                                                                       .build();
-            websocketContainer.addEndpoint(config);
+            WebSocketServerContainerInitializer.configureContext(context).addEndpoint(config);
 
             server.start();
             server.join();
