@@ -1,4 +1,4 @@
-package com.mechanitis.demo.sense.message;
+package com.mechanitis.demo.sense.infrastructure;
 
 import javax.websocket.Endpoint;
 import javax.websocket.EndpointConfig;

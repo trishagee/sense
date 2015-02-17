@@ -1,5 +1,6 @@
 package com.mechanitis.demo.sense.message
 
+import com.mechanitis.demo.sense.infrastructure.BroadcastingServerEndpoint
 import spock.lang.Specification
 import spock.lang.Subject
 

@@ -11,7 +11,7 @@ public interface TweetParser {
         return fullTweet.substring(indexOfTextField, indexOfEndOfText);
     }
 
-    static String getTwitterHandle(String allLocationText) {
+    static String getTwitterHandleFrom(String allLocationText) {
         String twitterHandleFieldName = "\"screen_name\":\"";
         int indexOfLocationField = allLocationText.indexOf(twitterHandleFieldName)+ twitterHandleFieldName.length();
         int indexOfEndOfLocation = allLocationText.indexOf("\"", indexOfLocationField);

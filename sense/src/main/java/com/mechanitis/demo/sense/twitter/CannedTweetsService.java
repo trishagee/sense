@@ -1,8 +1,8 @@
 package com.mechanitis.demo.sense.twitter;
 
 import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
-import com.mechanitis.demo.sense.message.BroadcastingServerEndpoint;
-import com.mechanitis.demo.util.DaemonThreadFactory;
+import com.mechanitis.demo.sense.infrastructure.BroadcastingServerEndpoint;
+import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

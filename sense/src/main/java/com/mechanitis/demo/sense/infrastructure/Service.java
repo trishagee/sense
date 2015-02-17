@@ -1,13 +1,8 @@
 package com.mechanitis.demo.sense.infrastructure;
 
-import com.mechanitis.demo.sense.message.BroadcastingServerEndpoint;
-import com.mechanitis.demo.sense.message.ClientEndpoint;
-import com.mechanitis.demo.sense.message.MessageHandler;
-
 import javax.websocket.DeploymentException;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.FINE;
@@ -31,7 +26,7 @@ public class Service<T> implements Runnable {
     }
 
     public static void main(String[] args) throws IOException, DeploymentException {
-        new Service<>(URI.create("ws://localhost:8081/tweets/"), "/testing/", 8090, Optional::ofNullable).run();
+        new Service<>(URI.create("ws://localhost:8081/tweets/"), "/testing/", 8090, originalText -> originalText).run();
     }
 
     @Override

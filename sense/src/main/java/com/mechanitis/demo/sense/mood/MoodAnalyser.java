@@ -31,13 +31,13 @@ public class MoodAnalyser {
     private MoodAnalyser() {
     }
 
-    public static Optional<MoodyMessage> analyseMood(String fullMessage) {
+    public static MoodyMessage analyseMood(String fullMessage) {
         String message = getTweetMessageFrom(fullMessage);
         Set<Mood> messageMoods = MOOD_INDICATORS.stream()
                                                 .filter(moodIndicator -> message.contains(moodIndicator.indicator))
                                                 .map((MoodIndicator moodIndicator) -> moodIndicator.mood)
                                                 .collect(Collectors.toSet());
-        return MoodyMessage.Factory.createMessageFromMoods(messageMoods);
+        return new MoodyMessage(messageMoods);
     }
 
     private static class MoodIndicator {

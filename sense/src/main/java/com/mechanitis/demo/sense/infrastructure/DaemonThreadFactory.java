@@ -1,4 +1,4 @@
-package com.mechanitis.demo.util;
+package com.mechanitis.demo.sense.infrastructure;
 
 import java.util.concurrent.ThreadFactory;
 

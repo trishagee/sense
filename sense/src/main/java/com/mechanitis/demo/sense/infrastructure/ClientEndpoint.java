@@ -1,4 +1,4 @@
-package com.mechanitis.demo.sense.message;
+package com.mechanitis.demo.sense.infrastructure;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @javax.websocket.ClientEndpoint
 public class ClientEndpoint<T> {
@@ -25,11 +24,9 @@ public class ClientEndpoint<T> {
 
     @OnMessage
     public void onWebSocketText(String fullTweet) throws IOException {
-        Optional<T> message = messageHandler.processMessage(fullTweet);
-        if (message.isPresent()) {
-            listeners.stream()
-                     .forEach(messageListener -> messageListener.onMessage(message.get()));
-        }
+        T message = messageHandler.processMessage(fullTweet);
+        listeners.stream()
+                 .forEach(messageListener -> messageListener.onMessage(message));
     }
 
     public void addListener(MessageListener<T> listener) {

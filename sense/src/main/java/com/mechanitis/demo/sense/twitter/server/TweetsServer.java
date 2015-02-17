@@ -1,8 +1,8 @@
 package com.mechanitis.demo.sense.twitter.server;
 
-import com.mechanitis.demo.sense.message.BroadcastingServerEndpoint;
-import com.mechanitis.demo.sense.message.MessageListener;
-import com.mechanitis.demo.sense.sockets.WebSocketServer;
+import com.mechanitis.demo.sense.infrastructure.BroadcastingServerEndpoint;
+import com.mechanitis.demo.sense.infrastructure.MessageListener;
+import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
 
 public class TweetsServer implements Runnable {
     private static final int PORT = 8081;
@@ -11,7 +11,7 @@ public class TweetsServer implements Runnable {
 
     public TweetsServer() {
         tweetsEndpoint = new BroadcastingServerEndpoint<>();
-        server = new WebSocketServer(PORT, "/tweets/", tweetsEndpoint);
+        server = new WebSocketServer("/tweets/", PORT, tweetsEndpoint);
     }
 
     public static void main(String[] args) {

@@ -17,8 +17,8 @@ class MoodAnalyserSpecification extends Specification {
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so happy today"))
 
         then:
-        moodyMessage.get().hasMood(HAPPY)
-        !moodyMessage.get().hasMood(SAD)
+        moodyMessage.hasMood(HAPPY)
+        !moodyMessage.hasMood(SAD)
     }
 
     def 'should correctly identify sad messages'() {
@@ -26,8 +26,8 @@ class MoodAnalyserSpecification extends Specification {
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so sad today"))
 
         then:
-        moodyMessage.get().hasMood(SAD)
-        !moodyMessage.get().hasMood(HAPPY)
+        moodyMessage.hasMood(SAD)
+        !moodyMessage.hasMood(HAPPY)
     }
 
     def 'should correctly identify mixed messages'() {
@@ -35,16 +35,17 @@ class MoodAnalyserSpecification extends Specification {
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so sad today it almost makes me happy"))
 
         then:
-        moodyMessage.get().hasMood(SAD)
-        moodyMessage.get().hasMood(HAPPY)
+        moodyMessage.hasMood(SAD)
+        moodyMessage.hasMood(HAPPY)
     }
 
-    def 'should not pass on messages that are neither happy nor sad'() {
+    def 'should not have any mood for messages that are neither happy or sad'() {
         when:
-        def mood = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I don't care"))
+        def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I don't care"))
 
         then:
-        !mood.isPresent()
+        !moodyMessage.hasMood(SAD)
+        !moodyMessage.hasMood(HAPPY)
     }
 
 }

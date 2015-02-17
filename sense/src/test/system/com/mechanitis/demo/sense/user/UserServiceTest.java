@@ -2,7 +2,7 @@ package com.mechanitis.demo.sense.user;
 
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
 import com.mechanitis.demo.sense.twitter.CannedTweetsService;
-import com.mechanitis.demo.util.DaemonThreadFactory;
+import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.junit.Test;
 

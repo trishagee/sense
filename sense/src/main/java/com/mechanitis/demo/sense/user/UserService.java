@@ -4,13 +4,15 @@ import com.mechanitis.demo.sense.infrastructure.Service;
 
 import java.net.URI;
 
+import static com.mechanitis.demo.sense.twitter.TweetParser.getTwitterHandleFrom;
+
 public class UserService implements Runnable {
     private final Service<TwitterUser> service;
 
     public UserService() {
         this.service = new Service<>(URI.create("ws://localhost:8081/tweets/"),
                                      "/users/", 8083,
-                                     TwitterUser.Factory::twitterUserFromTweet);
+                                     originalText -> new TwitterUser(getTwitterHandleFrom(originalText)));
     }
 
     @Override
