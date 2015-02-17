@@ -25,9 +25,9 @@ public class LeaderboardData implements UserListener {
 
 
         List<TwitterUser> top10 = leaders.values().stream()
-                                       .sorted((o1, o2) -> o2.getTweets() - o1.getTweets())
-                                       .limit(NUMBER_OF_LEADERS)
-                                       .collect(toList());
+                                         .sorted((o1, o2) -> o2.getTweets() - o1.getTweets())
+                                         .limit(NUMBER_OF_LEADERS)
+                                         .collect(toList());
         runLater(() -> items.setAll(top10));
     }
 

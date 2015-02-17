@@ -6,8 +6,11 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MessageBroadcaster<T> extends Endpoint implements MessageListener<T> {
+    private static final Logger LOGGER = Logger.getLogger(MessageBroadcaster.class.getName());
     private final List<Session> sessions = new CopyOnWriteArrayList<>();
 
     @Override
@@ -24,11 +27,10 @@ public class MessageBroadcaster<T> extends Endpoint implements MessageListener<T
 
     private void sendMessageToClient(String message, Session session) {
         try {
-            System.out.println("MessageBroadcastingEndpoint sending: tweet = [" + message + "]");
+            LOGGER.log(Level.FINE, "MessageBroadcastingEndpoint sending: tweet = [" + message + "]");
             session.getBasicRemote().sendText(message);
         } catch (IOException e) {
-            e.printStackTrace();
-//            System.exit(1);
+            throw new RuntimeException(e);
         }
     }
 

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import static com.mechanitis.demo.sense.mood.Mood.HAPPY;
 import static com.mechanitis.demo.sense.mood.Mood.SAD;
+import static com.mechanitis.demo.sense.twitter.TweetParser.getTweetMessageFrom;
 import static java.util.Arrays.asList;
 
 public class MoodAnalyser {
@@ -30,7 +31,8 @@ public class MoodAnalyser {
     private MoodAnalyser() {
     }
 
-    public static Optional<MoodyMessage> analyseMood(String message) {
+    public static Optional<MoodyMessage> analyseMood(String fullMessage) {
+        String message = getTweetMessageFrom(fullMessage);
         Set<Mood> messageMoods = MOOD_INDICATORS.stream()
                                                 .filter(moodIndicator -> message.contains(moodIndicator.indicator))
                                                 .map((MoodIndicator moodIndicator) -> moodIndicator.mood)

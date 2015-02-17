@@ -6,9 +6,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+import static java.lang.String.format;
+
 public class TwitterConnection implements Runnable {
+    private static final Logger LOGGER = Logger.getLogger(TwitterConnection.class.getName());
     private static final URI TWITTER_URI = URI.create("https://stream.twitter.com/1.1/statuses/sample.json");
 
     private final Consumer<String> tweetConsumer;
@@ -18,7 +22,7 @@ public class TwitterConnection implements Runnable {
     }
 
     public static void main(String[] args) {
-        new TwitterConnection(System.out::println).run();
+        new TwitterConnection(LOGGER::info).run();
     }
 
     @Override
@@ -27,7 +31,6 @@ public class TwitterConnection implements Runnable {
             drinkFromTheFirehose();
         } catch (Throwable e) {
             e.printStackTrace();
-//            System.exit(1);
         }
     }
 
@@ -36,7 +39,7 @@ public class TwitterConnection implements Runnable {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()))) {
             processTweets(reader.lines());
         } catch (Exception e) {
-            System.out.printf("Exception Thrown: %s\nRetrying....\n", e.getMessage());
+            LOGGER.info(format("Exception Thrown: %s\nRetrying....\n", e.getMessage()));
             retryConnection();
         }
     }

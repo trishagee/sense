@@ -4,8 +4,8 @@ import java.util.concurrent.ThreadFactory;
 
 public final class DaemonThreadFactory implements ThreadFactory {
     @Override
-    public Thread newThread(final Runnable r) {
-        Thread t = new Thread(r);
+    public Thread newThread(final Runnable runnable) {
+        Thread t = new Thread(runnable);
         t.setDaemon(true);
         return t;
     }

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -19,6 +20,7 @@ public class LeaderboardDataTest {
     @BeforeClass
     public static void setup() throws InterruptedException {
         Executors.newSingleThreadExecutor().execute(() -> Application.launch(StubApplication.class));
+        TimeUnit.SECONDS.sleep(1);
     }
 
     @Test

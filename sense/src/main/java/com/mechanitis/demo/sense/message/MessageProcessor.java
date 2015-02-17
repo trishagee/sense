@@ -4,5 +4,5 @@ import java.util.Optional;
 
 @FunctionalInterface
 public interface MessageProcessor<T> {
-    public Optional<T> processMessage(String originalText);
+    Optional<T> processMessage(String originalText);
 }

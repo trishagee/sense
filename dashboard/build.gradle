@@ -1,5 +1,3 @@
-
-
 dependencies {
     compile 'javax.websocket:javax.websocket-api:1.1'
     compile 'org.eclipse.jetty.websocket:javax-websocket-server-impl:9.2.6.v20141205'

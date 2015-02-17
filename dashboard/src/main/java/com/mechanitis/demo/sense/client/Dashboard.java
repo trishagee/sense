@@ -31,7 +31,7 @@ public class Dashboard extends Application {
 
         primaryStage.setTitle("Twitter Dashboard");
         Scene scene = new Scene(root, 1024, 1024);
-        scene.getStylesheets().add("com/mechanitis/demo/sense/client/dashboard.css");
+        scene.getStylesheets().add("dashboard.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

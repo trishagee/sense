@@ -6,10 +6,16 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.FINE;
+import static java.util.logging.Logger.getLogger;
 
 @ClientEndpoint
 public class MessageReceivedEndpoint {
+    private static final Logger LOGGER = getLogger(MessageReceivedEndpoint.class.getName());
     private CountDownLatch latch;
+    private String message;
 
     public MessageReceivedEndpoint(CountDownLatch latch) {
         this.latch = latch;
@@ -17,12 +23,17 @@ public class MessageReceivedEndpoint {
 
     @OnOpen
     public void onWebSocketConnect(Session session) {
-        System.out.println("MessageReceivedEndpoint connected: " + session.hashCode());
+        LOGGER.log(FINE, "MessageReceivedEndpoint connected: " + session.hashCode());
     }
 
     @OnMessage
     public void onWebSocketText(String message) throws IOException {
+        this.message = message;
         latch.countDown();
-        System.out.println("Received TEXT message: " + message);
+        LOGGER.log(FINE, "Received TEXT message: " + message);
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

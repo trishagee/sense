@@ -10,7 +10,7 @@ import static com.mechanitis.demo.sense.twitter.TweetParser.getTweetMessageFrom
 
 class TwitterServiceClientSpecification extends Specification {
     @Subject
-    def twitterServiceClient = new MessageProcessingClient({ rawTweet -> analyseMood(getTweetMessageFrom(rawTweet)) })
+    def twitterServiceClient = new MessageProcessingClient({ rawTweet -> analyseMood(rawTweet) })
 
     //TODO neither of these tests will be needed
     def 'should turn full tweets into messages with mood annotations'() {

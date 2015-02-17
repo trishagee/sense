@@ -43,8 +43,8 @@ public class TwitterOAuth {
             loadFromPropertiesFile();
         }
         if (!validateProperties()) {
-            throw new TwitterConnectionException("You must define the Twitter security tokens either as environment " +
-                                                 "variables or in oauth.properties");
+            throw new RuntimeException("You must define the Twitter security tokens either as environment " +
+                                       "variables or in oauth.properties");
         }
     }
 
@@ -62,7 +62,7 @@ public class TwitterOAuth {
             prop.load(in);
             in.close();
         } catch (IOException e) {
-            throw new TwitterConnectionException("Could not load oauth.properties", e);
+            throw new RuntimeException("Could not load oauth.properties", e);
         }
         consumerSecret = prop.getProperty("consumerSecret");
         accessTokenSecret = prop.getProperty("accessTokenSecret");
@@ -94,7 +94,7 @@ public class TwitterOAuth {
                    + encode("https://stream.twitter.com/1.1/statuses/sample.json", "UTF-8") + "&"
                    + encode(getBaseParams(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new TwitterConnectionException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -111,7 +111,7 @@ public class TwitterOAuth {
             byteHMAC = mac.doFinal(getBaseString().getBytes());
             return encode(new BASE64Encoder().encode(byteHMAC), "UTF-8");
         } catch (InvalidKeyException | NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            throw new TwitterConnectionException("Failed to authenticate against Twitter", e);
+            throw new RuntimeException("Failed to authenticate against Twitter", e);
         }
     }
 }

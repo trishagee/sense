@@ -1,7 +1,5 @@
 .gradle
 .idea
 build
-dashboard/build
-sense/build
-src/main/resources/com/mechanitis/demo/sense/twitter/connector/oauth.properties
 tweetdata60-mins.txt
+oauth.properties

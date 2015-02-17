@@ -1,7 +1,7 @@
 package com.mechanitis.demo.sense.mood;
 
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
-import com.mechanitis.demo.sense.twitter.LiveTweetsService;
+import com.mechanitis.demo.sense.twitter.CannedTweetsService;
 import com.mechanitis.demo.util.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.junit.Test;
@@ -10,11 +10,15 @@ import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.ClassLoader.getSystemResource;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -23,9 +27,7 @@ public class MoodServiceTest {
 
     @Test
     public void shouldStartupAndAllowAClientToConnectAndReceiveAMessage() throws Exception {
-        // start the Tweet Service Server, needed because the Mood Service connects to this
-        LiveTweetsService liveTweetsService = new LiveTweetsService();
-        executor.submit(liveTweetsService);
+        CannedTweetsService tweetsService = startCannedTweetsService();
 
         // start the mood service, the service under test
         MoodService moodService = new MoodService();
@@ -41,8 +43,15 @@ public class MoodServiceTest {
                                             latch), is(true));
 
         // finally
-        liveTweetsService.stop();
+        tweetsService.stop();
         moodService.stop();
+    }
+
+    private CannedTweetsService startCannedTweetsService() throws URISyntaxException {
+        Path path = Paths.get(getSystemResource("./tweetdata-for-testing.txt").toURI());
+        CannedTweetsService service = new CannedTweetsService(path);
+        executor.submit(service);
+        return service;
     }
 
     private boolean connectAndWaitForSuccess(URI path, Object endpointInstance, CountDownLatch latch) throws Exception {

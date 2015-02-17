@@ -1,17 +1,24 @@
 package com.mechanitis.demo.sense.twitter;
 
-import com.mechanitis.demo.sense.message.MessageListener;
+import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
+import com.mechanitis.demo.sense.message.MessageBroadcaster;
 import com.mechanitis.demo.sense.twitter.connector.TwitterConnection;
-import com.mechanitis.demo.sense.twitter.server.TweetsServer;
 import com.mechanitis.demo.util.DaemonThreadFactory;
 
 import java.util.concurrent.ExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 public class LiveTweetsService implements Runnable {
+    private static final Logger LOGGER = Logger.getLogger("com.mechanitis.demo.sense.twitter");
+    private static final int PORT = 8081;
+    private static final String URI = "/tweets/";
+
     private final ExecutorService executor = newSingleThreadExecutor(new DaemonThreadFactory());
-    private final TweetsServer tweetsServer = new TweetsServer();
+    private final MessageBroadcaster<String> tweetsEndpoint = new MessageBroadcaster<>();
+    private final WebSocketServer server = new WebSocketServer(PORT, URI, tweetsEndpoint);
     private TwitterConnection twitterConnection;
 
     public static void main(String[] args) {
@@ -19,15 +26,15 @@ public class LiveTweetsService implements Runnable {
     }
 
     public void run() {
-        MessageListener<String> messageListener = tweetsServer.getMessageListener();
-        twitterConnection = new TwitterConnection(messageListener::onMessage);
+        LOGGER.setLevel(Level.FINE);
+        executor.submit(server);
 
-        executor.submit(tweetsServer);
+        twitterConnection = new TwitterConnection(tweetsEndpoint::onMessage);
         twitterConnection.run();
     }
 
     public void stop() throws Exception {
-        tweetsServer.stop();
+        server.stop();
         twitterConnection.stop();
         executor.shutdownNow();
     }

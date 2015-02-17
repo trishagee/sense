@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       spacing="10" alignment="CENTER"
-      style="-fx-border-color: red" fx:controller="com.mechanitis.demo.sense.client.user.LeaderboardController">
+      fx:controller="com.mechanitis.demo.sense.client.user.LeaderboardController">
     <TableView fx:id="leaders" prefHeight="1000" prefWidth="500">
         <columns>
             <TableColumn text="Twitter Handle" prefWidth="300" >
