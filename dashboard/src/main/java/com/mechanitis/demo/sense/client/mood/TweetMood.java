@@ -1,16 +1,15 @@
 package com.mechanitis.demo.sense.client.mood;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import static com.mechanitis.demo.sense.client.mood.Mood.HAPPY;
 import static com.mechanitis.demo.sense.client.mood.Mood.SAD;
 
 public class TweetMood {
-    private final Set<Mood> moods = new HashSet<>();
+    private final Set<Mood> moods;
 
-    public void add(Mood mood) {
-        moods.add(mood);
+    public TweetMood(Set<Mood> moods) {
+        this.moods = moods;
     }
 
     public boolean isHappy() {

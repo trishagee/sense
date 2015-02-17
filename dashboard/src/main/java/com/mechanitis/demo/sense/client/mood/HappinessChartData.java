@@ -1,5 +1,6 @@
 package com.mechanitis.demo.sense.client.mood;
 
+import com.mechanitis.demo.sense.infrastructure.MessageListener;
 import javafx.scene.chart.XYChart;
 
 import java.time.LocalTime;
@@ -8,8 +9,8 @@ import java.util.Map;
 
 import static java.util.stream.IntStream.range;
 
-public class HappinessChartData implements MoodListener {
-    private final XYChart.Series<String, Long> dataSeries = new XYChart.Series<>();
+public class HappinessChartData implements MessageListener<TweetMood> {
+    private final XYChart.Series<String, Double> dataSeries = new XYChart.Series<>();
     private final Map<Integer, Integer> minuteToDataPosition = new HashMap<>();
 
     public HappinessChartData() {
@@ -24,17 +25,17 @@ public class HappinessChartData implements MoodListener {
             int x = now.getMinute();
 
             Integer dataIndex = minuteToDataPosition.get(x);
-            XYChart.Data<String, Long> barForNow = dataSeries.getData().get(dataIndex);
+            XYChart.Data<String, Double> barForNow = dataSeries.getData().get(dataIndex);
             barForNow.setYValue(barForNow.getYValue() + 1);
         }
     }
 
-    public XYChart.Series<String, Long> getDataSeries() {
+    public XYChart.Series<String, Double> getDataSeries() {
         return dataSeries;
     }
 
     private void initialiseBarToZero(int minute) {
-        dataSeries.getData().add(new XYChart.Data<>(String.valueOf(minute), 0L));
+        dataSeries.getData().add(new XYChart.Data<>(String.valueOf(minute), 0.0));
         minuteToDataPosition.put(minute, dataSeries.getData().size() - 1);
     }
 

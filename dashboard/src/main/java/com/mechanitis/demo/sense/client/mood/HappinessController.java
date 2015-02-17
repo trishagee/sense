@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 
 public class HappinessController implements Initializable {
     @FXML private NumberAxis yAxis;
-    @FXML private BarChart<String, Long> happinessOverTime;
+    @FXML private BarChart<String, Double> happinessOverTime;
 
     public void setData(HappinessChartData data) {
         happinessOverTime.getData().add(data.getDataSeries());
