@@ -19,8 +19,8 @@ class MoodAnalyserSpecification extends Specification {
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so happy today"))
 
         then:
-        moodyMessage.get().hasMood(HAPPY)
-        !moodyMessage.get().hasMood(SAD)
+        moodyMessage.hasMood(HAPPY)
+        !moodyMessage.hasMood(SAD)
     }
 
     @Ignore("4")
@@ -29,8 +29,8 @@ class MoodAnalyserSpecification extends Specification {
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so sad today"))
 
         then:
-        moodyMessage.get().hasMood(SAD)
-        !moodyMessage.get().hasMood(HAPPY)
+        moodyMessage.hasMood(SAD)
+        !moodyMessage.hasMood(HAPPY)
     }
 
     @Ignore("4")
@@ -39,8 +39,8 @@ class MoodAnalyserSpecification extends Specification {
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so sad today it almost makes me happy"))
 
         then:
-        moodyMessage.get().hasMood(SAD)
-        moodyMessage.get().hasMood(HAPPY)
+        moodyMessage.hasMood(SAD)
+        moodyMessage.hasMood(HAPPY)
     }
 
     @Ignore("4")
@@ -49,7 +49,8 @@ class MoodAnalyserSpecification extends Specification {
         def mood = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I don't care"))
 
         then:
-        !mood.isPresent()
+        !moodyMessage.hasMood(SAD)
+        !moodyMessage.hasMood(HAPPY)
     }
 
 }

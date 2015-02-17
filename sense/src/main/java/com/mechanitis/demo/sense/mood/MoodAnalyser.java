@@ -1,7 +1,6 @@
 package com.mechanitis.demo.sense.mood;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.mechanitis.demo.sense.mood.Mood.HAPPY;
 import static com.mechanitis.demo.sense.mood.Mood.SAD;
@@ -28,7 +27,7 @@ public class MoodAnalyser {
     private MoodAnalyser() {
     }
 
-    public static Optional<MoodyMessage> analyseMood(String fullMessage) {
+    public static MoodyMessage analyseMood(String fullMessage) {
         // TODO: extract message body
 
         // TODO: find the mood
