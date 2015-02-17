@@ -21,8 +21,7 @@ public class HappinessChartData implements MessageListener<TweetMood> {
     @Override
     public void onMessage(TweetMood message) {
         if (message.isHappy()) {
-            LocalTime now = LocalTime.now();
-            int x = now.getMinute();
+            int x = LocalTime.now().getMinute();
 
             Integer dataIndex = minuteToDataPosition.get(x);
             XYChart.Data<String, Double> barForNow = dataSeries.getData().get(dataIndex);

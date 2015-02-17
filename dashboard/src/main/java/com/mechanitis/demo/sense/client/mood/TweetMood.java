@@ -23,9 +23,4 @@ public class TweetMood {
     public boolean isConfused() {
         return isHappy() && isSad();
     }
-
-    public Set<Mood> getMoods() {
-        return moods;
-    }
-
 }
