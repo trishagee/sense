@@ -15,17 +15,17 @@ import java.util.Optional;
 public class ClientEndpoint<T> {
     private final List<MessageListener<T>> listeners = new ArrayList<>();
     private final URI serverEndpoint;
-    private final MessageProcessor<T> messageProcessor;
+    private final MessageHandler<T> messageHandler;
     private Session session;
 
-    public ClientEndpoint(URI serverEndpoint, MessageProcessor<T> messageProcessor) {
+    public ClientEndpoint(URI serverEndpoint, MessageHandler<T> messageHandler) {
         this.serverEndpoint = serverEndpoint;
-        this.messageProcessor = messageProcessor;
+        this.messageHandler = messageHandler;
     }
 
     @OnMessage
     public void onWebSocketText(String fullTweet) throws IOException {
-        Optional<T> message = messageProcessor.processMessage(fullTweet);
+        Optional<T> message = messageHandler.processMessage(fullTweet);
         if (message.isPresent()) {
             listeners.stream()
                      .forEach(messageListener -> messageListener.onMessage(message.get()));
