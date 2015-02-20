@@ -19,16 +19,5 @@ public class HappinessController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        yAxis.setTickLabelFormatter(new StringConverter<Number>() {
-            @Override
-            public String toString(Number object) {
-                return String.format("%.0f", object);
-            }
-
-            @Override
-            public Number fromString(String string) {
-                return Integer.valueOf(string);
-            }
-        });
     }
 }
