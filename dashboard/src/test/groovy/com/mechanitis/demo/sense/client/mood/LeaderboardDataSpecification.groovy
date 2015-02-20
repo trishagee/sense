@@ -1,32 +1,31 @@
-package com.mechanitis.demo.sense.client.user;
+package com.mechanitis.demo.sense.client.mood
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import com.mechanitis.demo.sense.client.user.LeaderboardData
+import javafx.application.Application
+import javafx.stage.Stage
+import org.junit.Ignore
+import org.junit.Test
+import spock.lang.Specification
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.Executors
+import java.util.function.Predicate
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static java.util.concurrent.TimeUnit.MILLISECONDS
+import static java.util.concurrent.TimeUnit.SECONDS
+import static org.hamcrest.CoreMatchers.is
+import static org.junit.Assert.assertThat
 
-public class LeaderboardDataTest {
+class LeaderboardDataSpecification extends Specification {
 
-    @BeforeClass
-    public static void setup() throws InterruptedException {
-        Executors.newSingleThreadExecutor().execute(() -> Application.launch(StubApplication.class));
-        TimeUnit.SECONDS.sleep(1);
+    def setupSpec() throws InterruptedException {
+        Executors.newSingleThreadExecutor().execute({ Application.launch(StubApplication.class) });
+        SECONDS.sleep(1);
     }
 
     @Test
     @Ignore("6")
-    public void shouldCountNumberOfTweetsByTheSamePerson() {
+    def 'should count number of tweets by the same person'() {
         LeaderboardData leaderboardData = new LeaderboardData();
 
         // when
@@ -35,7 +34,7 @@ public class LeaderboardDataTest {
         leaderboardData.onMessage("Trisha");
 
         // then
-        waitFor("Timed out waiting for the right number of leaders", 2, expectedValue -> leaderboardData.getItems().size() == expectedValue);
+        waitFor("Timed out waiting for the right number of leaders", 2, {expectedValue -> leaderboardData.getItems().size() == expectedValue});
 
         assertThat(leaderboardData.getItems().get(0).getTweets(), is(2));
         assertThat(leaderboardData.getItems().get(0).getTwitterHandle(), is("Trisha"));
@@ -47,7 +46,7 @@ public class LeaderboardDataTest {
     private void waitFor(String reason, Integer expectedValue, Predicate<Integer> condition) {
         try {
             CountDownLatch latch = new CountDownLatch(1);
-            Runnable poller = () -> {
+            Runnable poller = {
                 try {
                     if (condition.test(expectedValue)) {
                         latch.countDown();
@@ -70,5 +69,5 @@ public class LeaderboardDataTest {
         public void start(Stage primaryStage) throws Exception {
         }
     }
-}
 
+}
