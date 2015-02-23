@@ -24,7 +24,9 @@ public class ClientEndpoint<T> {
 
     @OnMessage
     public void onWebSocketText(String fullTweet) throws IOException {
-        // TODO: use a messageProcessor (field) to process the message, and alert all listeners
+        T message = messageHandler.processMessage(fullTweet);
+        listeners.stream()
+                 .forEach(messageListener -> messageListener.onMessage(message));
     }
 
     public void addListener(MessageListener<T> listener) {
