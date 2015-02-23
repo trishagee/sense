@@ -16,12 +16,14 @@ public class BroadcastingServerEndpoint<T> extends Endpoint implements MessageLi
 
     @Override
     public void onOpen(Session session, EndpointConfig config) {
-        // TODO: add this session to the list of sessions
+        sessions.add(session);
     }
 
     @Override
     public void onMessage(T message) {
-        // TODO: send the message to all open sessions
+        sessions.stream()
+                .filter(Session::isOpen)
+                .forEach(session -> sendMessageToClient(message.toString(), session));
     }
 
     private void sendMessageToClient(String message, Session session) {
