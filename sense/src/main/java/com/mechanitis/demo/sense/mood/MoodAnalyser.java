@@ -32,16 +32,16 @@ public class MoodAnalyser {
 
         // TODO: find the mood
 
-        // TODO: return an optional of MoodyMessage
+        // TODO: return a MoodyMessage
         return null;
     }
 
     private static class MoodIndicator {
-        private final String indicator;
+        private final String word;
         private final Mood mood;
 
-        public MoodIndicator(String indicator, Mood mood) {
-            this.indicator = indicator;
+        public MoodIndicator(String word, Mood mood) {
+            this.word = word;
             this.mood = mood;
         }
     }

@@ -20,12 +20,10 @@ import static java.util.logging.Level.WARNING;
  */
 public class CannedTweetsService implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(CannedTweetsService.class.getName());
-    private static final int PORT = 8081;
-    private static final String URI = "/tweets/";
 
     private final ExecutorService executor = newSingleThreadExecutor(new DaemonThreadFactory());
     private final BroadcastingServerEndpoint<String> tweetsEndpoint = new BroadcastingServerEndpoint<>();
-    private final WebSocketServer server = new WebSocketServer(URI, PORT, tweetsEndpoint);
+    private final WebSocketServer server = new WebSocketServer("/tweets/", 8081, tweetsEndpoint);
     private final Path filePath;
 
     public CannedTweetsService(Path filePath) {
@@ -38,6 +36,11 @@ public class CannedTweetsService implements Runnable {
 
     @Override
     public void run() {
+        // TODO: start the server endpoint running
+
+        // TODO: get a stream of lines in the file
+        // TODO: filter out "OK" noise
+        // TODO: send each line to be broadcast via websockets
 
     }
 
