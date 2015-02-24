@@ -11,23 +11,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.URI;
+
 import static java.net.URI.create;
 
 public class Dashboard extends Application {
-    private final ClientEndpoint<String> userClientEndpoint = new ClientEndpoint<>(create("ws://localhost:8083/users/"),
-                                                                 message -> message);
-    private final ClientEndpoint<TweetMood> moodClientEndpoint = new ClientEndpoint<>(create("ws://localhost:8082/moods/"),
-                                                                                      MoodsParser::parse);
-    private final MoodChartData moodData = new MoodChartData();
-    private final HappinessChartData happinessData = new HappinessChartData();
-    private final LeaderboardData leaderboardData = new LeaderboardData();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         // wire up the models to the services they're getting the data from
+        LeaderboardData leaderboardData = new LeaderboardData();
+        ClientEndpoint<String> userClientEndpoint = new ClientEndpoint<>(URI.create("ws://localhost:8083/users/"), message -> message);
         userClientEndpoint.addListener(leaderboardData);
         userClientEndpoint.connect();
 
+        MoodChartData moodData = new MoodChartData();
+        HappinessChartData happinessData = new HappinessChartData();
+        ClientEndpoint<TweetMood> moodClientEndpoint = new ClientEndpoint<TweetMood>(create("ws://localhost:8082/moods/"), MoodsParser::parse);
         moodClientEndpoint.addListener(moodData);
         moodClientEndpoint.addListener(happinessData);
         moodClientEndpoint.connect();

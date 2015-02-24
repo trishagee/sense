@@ -11,10 +11,10 @@ public interface TweetParser {
         return fullTweet.substring(indexOfTextField, indexOfEndOfText);
     }
 
-    static String getTwitterHandleFrom(String allLocationText) {
+    static String getTwitterHandleFrom(String fullTweet) {
         String twitterHandleFieldName = "\"screen_name\":\"";
-        int indexOfLocationField = allLocationText.indexOf(twitterHandleFieldName)+ twitterHandleFieldName.length();
-        int indexOfEndOfLocation = allLocationText.indexOf("\"", indexOfLocationField);
-        return allLocationText.substring(indexOfLocationField, indexOfEndOfLocation);
+        int indexOfTwitterHandleField = fullTweet.indexOf(twitterHandleFieldName)+ twitterHandleFieldName.length();
+        int indexOfEndOfTwitterHandle = fullTweet.indexOf("\"", indexOfTwitterHandleField);
+        return fullTweet.substring(indexOfTwitterHandleField, indexOfEndOfTwitterHandle);
     }
 }

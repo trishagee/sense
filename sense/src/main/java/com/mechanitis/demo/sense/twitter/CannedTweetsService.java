@@ -1,8 +1,8 @@
 package com.mechanitis.demo.sense.twitter;
 
-import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
 import com.mechanitis.demo.sense.infrastructure.BroadcastingServerEndpoint;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
+import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -25,12 +25,10 @@ import static java.util.logging.Level.WARNING;
  */
 public class CannedTweetsService implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(CannedTweetsService.class.getName());
-    private static final int PORT = 8081;
-    private static final String URI = "/tweets/";
 
     private final ExecutorService executor = newSingleThreadExecutor(new DaemonThreadFactory());
     private final BroadcastingServerEndpoint<String> tweetsEndpoint = new BroadcastingServerEndpoint<>();
-    private final WebSocketServer server = new WebSocketServer(URI, PORT, tweetsEndpoint);
+    private final WebSocketServer server = new WebSocketServer("/tweets/", 8081, tweetsEndpoint);
     private final Path filePath;
 
     public CannedTweetsService(Path filePath) {

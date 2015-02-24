@@ -6,8 +6,9 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.logging.Level.FINE;
 
 public class BroadcastingServerEndpoint<T> extends Endpoint implements MessageListener<T> {
     private static final Logger LOGGER = Logger.getLogger(BroadcastingServerEndpoint.class.getName());
@@ -27,7 +28,7 @@ public class BroadcastingServerEndpoint<T> extends Endpoint implements MessageLi
 
     private void sendMessageToClient(String message, Session session) {
         try {
-            LOGGER.log(Level.FINE, "MessageBroadcastingEndpoint sending: tweet = [" + message + "]");
+            LOGGER.log(FINE, "MessageBroadcastingEndpoint sending: tweet = [" + message + "]");
             session.getBasicRemote().sendText(message);
         } catch (IOException e) {
             throw new RuntimeException(e);
