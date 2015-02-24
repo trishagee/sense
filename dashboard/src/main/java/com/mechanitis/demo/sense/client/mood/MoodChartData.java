@@ -1,5 +1,6 @@
 package com.mechanitis.demo.sense.client.mood;
 
+import com.mechanitis.demo.sense.client.javafx.PieSlice;
 import com.mechanitis.demo.sense.infrastructure.MessageListener;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
@@ -7,25 +8,26 @@ import javafx.scene.chart.PieChart;
 import static javafx.collections.FXCollections.observableArrayList;
 
 public class MoodChartData implements MessageListener<TweetMood> {
-    private final PieChart.Data sadPortion = new PieChart.Data("Sad", 0);
-    private final PieChart.Data happyPortion = new PieChart.Data("Happy", 0);
-    private final PieChart.Data confusedPortion = new PieChart.Data("Errr...", 0);
-    private final ObservableList<PieChart.Data> pieChartData = observableArrayList(sadPortion, happyPortion, confusedPortion);
+    private final PieSlice sadPortion = new PieSlice("Sad");
+    private final PieSlice happyPortion = new PieSlice("Happy");
+    private final PieSlice confusedPortion = new PieSlice("Errr...");
 
     public ObservableList<PieChart.Data> getPieChartData() {
-        return pieChartData;
+        return observableArrayList(sadPortion.getPieChartData(),
+                                   happyPortion.getPieChartData(),
+                                   confusedPortion.getPieChartData());
     }
 
     @Override
     public void onMessage(TweetMood message) {
-        if (message.isSad()) {//this has to be used in a single threaded way
-            sadPortion.setPieValue(sadPortion.getPieValue() + 1);
+        if (message.isSad()) {
+            sadPortion.increment();
         }
         if (message.isHappy()) {
-            happyPortion.setPieValue(happyPortion.getPieValue() + 1);
+            happyPortion.increment();
         }
         if (message.isConfused()) {
-            confusedPortion.setPieValue(confusedPortion.getPieValue() + 1);
+            confusedPortion.increment();
         }
     }
 }
