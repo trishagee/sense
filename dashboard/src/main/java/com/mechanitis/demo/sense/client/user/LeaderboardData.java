@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.toList;
 import static javafx.application.Platform.runLater;
 import static javafx.collections.FXCollections.observableArrayList;
@@ -26,7 +27,7 @@ public class LeaderboardData implements MessageListener<String> {
 
 
         List<TwitterUser> leaders = allTwitterUsers.values().stream()
-                                                   .sorted((o1, o2) -> o2.getTweets() - o1.getTweets())
+                                                   .sorted(comparingInt(TwitterUser::getTweets).reversed())
                                                    .limit(NUMBER_OF_LEADERS)
                                                    .collect(toList());
         runLater(() -> items.setAll(leaders));
