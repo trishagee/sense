@@ -1,49 +1,42 @@
 package com.mechanitis.demo.sense.mood;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import static com.mechanitis.demo.sense.mood.Mood.HAPPY;
 import static com.mechanitis.demo.sense.mood.Mood.SAD;
-import static java.util.Arrays.asList;
+import static com.mechanitis.demo.sense.twitter.TweetParser.getTweetMessageFrom;
 
 public class MoodAnalyser {
-    private static final List<MoodIndicator> MOOD_INDICATORS = asList(new MoodIndicator("happy", HAPPY),
-                                                                      new MoodIndicator("good", HAPPY),
-                                                                      new MoodIndicator("great", HAPPY),
-                                                                      new MoodIndicator("keen", HAPPY),
-                                                                      new MoodIndicator("awesome", HAPPY),
-                                                                      new MoodIndicator("marvelous", HAPPY),
-                                                                      new MoodIndicator("yay", HAPPY),
-                                                                      new MoodIndicator("pleased", HAPPY),
-                                                                      new MoodIndicator("sad", SAD),
-                                                                      new MoodIndicator("mad", SAD),
-                                                                      new MoodIndicator("blargh", SAD),
-                                                                      new MoodIndicator("boo", SAD),
-                                                                      new MoodIndicator("terrible", SAD),
-                                                                      new MoodIndicator("horrible", SAD),
-                                                                      new MoodIndicator("bad", SAD),
-                                                                      new MoodIndicator("awful", SAD));
+    private static final Map<String, Mood> WORD_TO_MOOD = new HashMap<>();
+
+    static {
+        WORD_TO_MOOD.put("happy", HAPPY);
+        WORD_TO_MOOD.put("good", HAPPY);
+        WORD_TO_MOOD.put("great", HAPPY);
+        WORD_TO_MOOD.put("keen", HAPPY);
+        WORD_TO_MOOD.put("awesome", HAPPY);
+        WORD_TO_MOOD.put("marvelous", HAPPY);
+        WORD_TO_MOOD.put("yay", HAPPY);
+        WORD_TO_MOOD.put("pleased", HAPPY);
+        WORD_TO_MOOD.put("sad", SAD);
+        WORD_TO_MOOD.put("mad", SAD);
+        WORD_TO_MOOD.put("blargh", SAD);
+        WORD_TO_MOOD.put("boo", SAD);
+        WORD_TO_MOOD.put("terrible", SAD);
+        WORD_TO_MOOD.put("horrible", SAD);
+        WORD_TO_MOOD.put("bad", SAD);
+        WORD_TO_MOOD.put("awful", SAD);
+    }
 
     private MoodAnalyser() {
     }
 
     public static MoodyMessage analyseMood(String fullMessage) {
-        // TODO: extract message body
-
-        // TODO: find the mood
-
-        // TODO: return a MoodyMessage
-        return null;
+        String[] wordsInMessage = getTweetMessageFrom(fullMessage).split(" ");
+        //TODO: figure out the moods in this message
+        Set<Mood> moods = null;
+        return new MoodyMessage(moods);
     }
-
-    private static class MoodIndicator {
-        private final String word;
-        private final Mood mood;
-
-        public MoodIndicator(String word, Mood mood) {
-            this.word = word;
-            this.mood = mood;
-        }
-    }
-
 }

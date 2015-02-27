@@ -24,6 +24,16 @@ class MoodAnalyserSpecification extends Specification {
     }
 
     @Ignore("4")
+    def 'should correctly identify happy messages that are not lower case'() {
+        when:
+        def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so Awesome today"))
+
+        then:
+        moodyMessage.hasMood(HAPPY)
+        !moodyMessage.hasMood(SAD)
+    }
+
+    @Ignore("4")
     def 'should correctly identify sad messages'() {
         when:
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so sad today"))
@@ -44,13 +54,14 @@ class MoodAnalyserSpecification extends Specification {
     }
 
     @Ignore("4")
-    def 'should not pass on messages that are neither happy nor sad'() {
+    def 'should not have any mood for messages that are neither happy or sad'() {
         when:
-        def mood = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I don't care"))
+        def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I don't care"))
 
         then:
         !moodyMessage.hasMood(SAD)
         !moodyMessage.hasMood(HAPPY)
+        !moodyMessage.hasMood(null)
     }
 
 }
