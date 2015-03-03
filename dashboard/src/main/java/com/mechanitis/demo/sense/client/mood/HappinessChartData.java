@@ -2,10 +2,12 @@ package com.mechanitis.demo.sense.client.mood;
 
 import com.mechanitis.demo.sense.infrastructure.MessageListener;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.time.LocalTime.now;
 
 public class HappinessChartData implements MessageListener<TweetMood> {
     private final XYChart.Series<String, Double> dataSeries = new XYChart.Series<>();
@@ -19,11 +21,13 @@ public class HappinessChartData implements MessageListener<TweetMood> {
 
     @Override
     public void onMessage(TweetMood message) {
-        // TODO: if it's a happy message..
+        if (message.isHappy()) {
+            int x = now().getMinute();
 
-        // TODO: find out which minute we are in and get the bar
-
-        // TODO: increment this bar value
+            Integer dataIndex = minuteToDataPosition.get(x);
+            Data<String, Double> barForNow = dataSeries.getData().get(dataIndex);
+            barForNow.setYValue(barForNow.getYValue() + 1);
+        }
     }
 
     public XYChart.Series<String, Double> getDataSeries() {
@@ -31,7 +35,7 @@ public class HappinessChartData implements MessageListener<TweetMood> {
     }
 
     private void initialiseBarToZero(int minute) {
-        dataSeries.getData().add(new XYChart.Data<>(String.valueOf(minute), 0.0));
+        dataSeries.getData().add(new Data<>(String.valueOf(minute), 0.0));
         minuteToDataPosition.put(minute, dataSeries.getData().size() - 1);
     }
 
