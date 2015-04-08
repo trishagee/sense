@@ -20,14 +20,19 @@ public class MoodChartData implements MessageListener<TweetMood> {
 
     @Override
     public void onMessage(TweetMood message) {
-        if (message.isSad()) {
-            sadPortion.increment();
+        doIf(message.isSad(), sadPortion::increment);
+        doIf(message.isHappy(), happyPortion::increment);
+        doIf(message.isConfused(), confusedPortion::increment);
+    }
+
+    private void doIf(boolean criteria, Incrementable incrementable) {
+        if (criteria) {
+            incrementable.increment();
         }
-        if (message.isHappy()) {
-            happyPortion.increment();
-        }
-        if (message.isConfused()) {
-            confusedPortion.increment();
-        }
+    }
+
+    @FunctionalInterface
+    private interface Incrementable {
+        void increment();
     }
 }
