@@ -4,21 +4,21 @@ import com.mechanitis.demo.sense.infrastructure.BroadcastingServerEndpoint;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
 
-import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledFuture;
+import java.util.function.Supplier;
 
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class StubService implements Runnable {
-    private final BroadcastingServerEndpoint<String> fakeUserDataEndpoint = new BroadcastingServerEndpoint<>();
+    private final BroadcastingServerEndpoint<String> serverEndpoint = new BroadcastingServerEndpoint<>();
     private final WebSocketServer server;
-    private final MessageGenerator messageGenerator;
+    private final Supplier<String> messageGenerator;
 
-    public StubService(String path, int port, MessageGenerator messageGenerator) {
-        this.server = new WebSocketServer(path, port, fakeUserDataEndpoint);
+    public StubService(String path, int port, Supplier<String> messageGenerator) {
+        this.server = new WebSocketServer(path, port, serverEndpoint);
         this.messageGenerator = messageGenerator;
     }
 
@@ -29,7 +29,7 @@ public class StubService implements Runnable {
 
         // periodically call the message generator
         ScheduledFuture<?> scheduledFuture = newScheduledThreadPool(1).scheduleAtFixedRate(
-                () -> fakeUserDataEndpoint.onMessage(messageGenerator.generateMessage()),
+                () -> serverEndpoint.onMessage(messageGenerator.get()),
                 0, 500, MILLISECONDS);
         try {
             // sit around and run the message generator for eternity
@@ -37,11 +37,6 @@ public class StubService implements Runnable {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-    }
-
-    @FunctionalInterface
-    public interface MessageGenerator {
-        String generateMessage();
     }
 
 }
