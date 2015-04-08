@@ -9,6 +9,8 @@ import javax.websocket.Endpoint;
 import javax.websocket.server.ServerEndpointConfig;
 
 /**
+ * Starts a Jetty server designed to work with websockets.
+ *
  * This server will only create a singleton instance of any endpoint.
  */
 public class WebSocketServer implements Runnable {
@@ -28,7 +30,7 @@ public class WebSocketServer implements Runnable {
         ServletContextHandler context = initialiseJettyServer(port);
         try {
             // create a configuration to ensure
-            // a) there's only a single instance of the MessageBroadcaster and
+            // a) there's only a single instance of the Endpoint and
             // b) set the correct URI
             SingletonEndpointConfigurator serverEndpointConfigurator = new SingletonEndpointConfigurator(endpoint);
             ServerEndpointConfig config = ServerEndpointConfig.Builder.create(endpoint.getClass(), path)
