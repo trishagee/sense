@@ -4,11 +4,15 @@ import com.mechanitis.demo.sense.infrastructure.BroadcastingServerEndpoint;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import static java.lang.ClassLoader.getSystemResource;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
@@ -36,12 +40,18 @@ public class CannedTweetsService implements Runnable {
 
     @Override
     public void run() {
-        // TODO: start the server endpoint running
+        executor.submit(server);
 
         // TODO: get a stream of lines in the file
-        // TODO: filter out "OK" noise
-        // TODO: send each line to be broadcast via websockets
+        try (Stream<String> lines = Files.lines(filePath)) {
+            lines.filter(s -> !s.equals("OK"))
+                    .peek(s1 -> addArtificialDelay())
+                    .forEach(tweetsEndpoint::onMessage);
 
+        } catch (IOException e) {
+            //TODO do something much better here
+            e.printStackTrace();
+        }
     }
 
     private void addArtificialDelay() {
