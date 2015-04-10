@@ -1,5 +1,6 @@
 package com.mechanitis.demo.sense.client;
 
+import com.mechanitis.demo.sense.client.mood.HappinessChartData;
 import com.mechanitis.demo.sense.client.mood.MoodChartData;
 import com.mechanitis.demo.sense.client.mood.MoodsParser;
 import com.mechanitis.demo.sense.client.mood.TweetMood;
@@ -27,6 +28,9 @@ public class Dashboard extends Application {
         ClientEndpoint<TweetMood> moodEndpoint = new ClientEndpoint<>(create("ws://localhost:8082/moods/"),
                 MoodsParser::parse);
         moodEndpoint.addListener(moodChartData);
+        HappinessChartData happinessChartData = new HappinessChartData();
+        moodEndpoint.addListener(happinessChartData);
+
         moodEndpoint.connect();
 
         // initialise the UI
@@ -39,7 +43,7 @@ public class Dashboard extends Application {
         DashboardController dashboardController = loader.getController();
         dashboardController.getLeaderboardController().setData(leaderboardData);
         dashboardController.getMoodController().setData(moodChartData);
-
+        dashboardController.getHappinessController().setData(happinessChartData);
         // let's go!
         primaryStage.setScene(scene);
         primaryStage.show();
