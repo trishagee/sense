@@ -41,4 +41,8 @@ public class ClientEndpoint<T> {
     public void close() throws IOException {
         session.close();
     }
+
+    public static ClientEndpoint<String> createPassthroughEndpoint(String serverEndpoint) {
+        return new ClientEndpoint<>(serverEndpoint, originalText -> originalText);
+    }
 }
