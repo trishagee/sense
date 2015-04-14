@@ -1,5 +1,8 @@
 package com.mechanitis.demo.sense.client;
 
+import com.mechanitis.demo.sense.client.mood.HappinessChartData;
+import com.mechanitis.demo.sense.client.mood.MoodChartData;
+import com.mechanitis.demo.sense.client.user.LeaderboardData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +12,11 @@ public class Dashboard extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // all models created in advance
+        LeaderboardData leaderboardData = new LeaderboardData();
+        MoodChartData moodChartData = new MoodChartData();
+        HappinessChartData happinessChartData = new HappinessChartData();
+
         // TODO: wire up the models to the services they're getting the data from
 
         // initialise the UI
@@ -17,8 +25,11 @@ public class Dashboard extends Application {
         Scene scene = new Scene(loader.load(), 1024, 1024);
         scene.getStylesheets().add("dashboard.css");
 
-        // TODO: get each of the controllers and wire up the models
+        // wire up the models to the controllers
         DashboardController dashboardController = loader.getController();
+        dashboardController.getLeaderboardController().setData(leaderboardData);
+        dashboardController.getMoodController().setData(moodChartData);
+        dashboardController.getHappinessController().setData(happinessChartData);
 
         // let's go!
         primaryStage.setScene(scene);
