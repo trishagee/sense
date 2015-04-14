@@ -11,25 +11,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.net.URI;
-
-import static java.net.URI.create;
-
 public class Dashboard extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // wire up the models to the services they're getting the data from
+        // all models created in advance
         LeaderboardData leaderboardData = new LeaderboardData();
-        ClientEndpoint<String> userClientEndpoint = new ClientEndpoint<>("ws://localhost:8083/users/", message -> message);
-        userClientEndpoint.addListener(leaderboardData);
-        userClientEndpoint.connect();
+        MoodChartData moodChartData = new MoodChartData();
+        HappinessChartData happinessChartData = new HappinessChartData();
 
-        MoodChartData moodData = new MoodChartData();
-        HappinessChartData happinessData = new HappinessChartData();
+        // wire up the models to the services they're getting the data from
+        ClientEndpoint<String> clientEndpoint = ClientEndpoint.createPassthroughEndpoint("ws://localhost:8083/users/");
+        clientEndpoint.addListener(leaderboardData);
+        clientEndpoint.connect();
+
         ClientEndpoint<TweetMood> moodClientEndpoint = new ClientEndpoint<>("ws://localhost:8082/moods/", MoodsParser::parse);
-        moodClientEndpoint.addListener(moodData);
-        moodClientEndpoint.addListener(happinessData);
+        moodClientEndpoint.addListener(moodChartData);
+        moodClientEndpoint.addListener(happinessChartData);
         moodClientEndpoint.connect();
 
         // initialise the UI
@@ -38,11 +36,11 @@ public class Dashboard extends Application {
         Scene scene = new Scene(loader.load(), 1024, 1024);
         scene.getStylesheets().add("dashboard.css");
 
-        // wire up the models and the controllers
+        // wire up the models to the controllers
         DashboardController dashboardController = loader.getController();
-        dashboardController.getMoodController().setData(moodData);
-        dashboardController.getHappinessController().setData(happinessData);
         dashboardController.getLeaderboardController().setData(leaderboardData);
+        dashboardController.getMoodController().setData(moodChartData);
+        dashboardController.getHappinessController().setData(happinessChartData);
 
         // let's go!
         primaryStage.setScene(scene);

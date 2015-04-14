@@ -9,9 +9,8 @@ public class MoodService implements Runnable {
     private final Service<MoodyMessage> service;
 
     public MoodService() {
-        this.service = new Service<>("ws://localhost:8081/tweets/",
-                                     "/moods/", 8082,
-                                     MoodAnalyser::analyseMood);
+        service = new Service<>("ws://localhost:8081/tweets/",
+                                "/moods/", 8082, MoodAnalyser::analyseMood);
     }
 
     @Override

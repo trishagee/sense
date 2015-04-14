@@ -5,7 +5,9 @@ import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.junit.Test;
 
-import javax.websocket.*;
+import javax.websocket.ContainerProvider;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
