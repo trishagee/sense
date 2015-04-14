@@ -2,7 +2,6 @@ package com.mechanitis.demo.sense.infrastructure;
 
 import javax.websocket.DeploymentException;
 import java.io.IOException;
-import java.net.URI;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.FINE;
@@ -10,7 +9,7 @@ import static java.util.logging.Level.FINE;
 public class Service<T> implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(Service.class.getName());
 
-    private final URI endpointToConnectTo;
+    private final String endpointToConnectTo;
     private final String serviceEndpointPath;
     private final int servicePort;
 
@@ -19,7 +18,7 @@ public class Service<T> implements Runnable {
     private MessageHandler<T> messageHandler;
 
     public Service(String endpointToConnectTo, String serviceEndpointPath, int servicePort, MessageHandler<T> messageHandler) {
-        this.endpointToConnectTo = URI.create(endpointToConnectTo);
+        this.endpointToConnectTo = endpointToConnectTo;
         this.messageHandler = messageHandler;
         this.serviceEndpointPath = serviceEndpointPath;
         this.servicePort = servicePort;
