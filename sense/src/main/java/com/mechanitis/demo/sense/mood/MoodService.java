@@ -9,9 +9,9 @@ public class MoodService implements Runnable {
     private final Service<MoodyMessage> service;
 
     public MoodService() {
+        // TODO: create a new service that connects to twitter,
+        // and serves stuff at port 8082 and uri /moods/
         service = null;
-        // TODO: create a new service that connects to twitter, and serves stuff at port 8082 and uri /moods/
-
     }
 
     @Override
