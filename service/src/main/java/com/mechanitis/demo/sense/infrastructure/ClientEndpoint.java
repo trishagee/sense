@@ -17,8 +17,8 @@ public class ClientEndpoint<T> {
     private final MessageHandler<T> messageHandler;
     private Session session;
 
-    public ClientEndpoint(URI serverEndpoint, MessageHandler<T> messageHandler) {
-        this.serverEndpoint = serverEndpoint;
+    public ClientEndpoint(String serverEndpoint, MessageHandler<T> messageHandler) {
+        this.serverEndpoint = URI.create(serverEndpoint);
         this.messageHandler = messageHandler;
     }
 

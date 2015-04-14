@@ -21,13 +21,13 @@ public class Dashboard extends Application {
     public void start(Stage primaryStage) throws Exception {
         // wire up the models to the services they're getting the data from
         LeaderboardData leaderboardData = new LeaderboardData();
-        ClientEndpoint<String> userClientEndpoint = new ClientEndpoint<>(URI.create("ws://localhost:8083/users/"), message -> message);
+        ClientEndpoint<String> userClientEndpoint = new ClientEndpoint<>("ws://localhost:8083/users/", message -> message);
         userClientEndpoint.addListener(leaderboardData);
         userClientEndpoint.connect();
 
         MoodChartData moodData = new MoodChartData();
         HappinessChartData happinessData = new HappinessChartData();
-        ClientEndpoint<TweetMood> moodClientEndpoint = new ClientEndpoint<TweetMood>(create("ws://localhost:8082/moods/"), MoodsParser::parse);
+        ClientEndpoint<TweetMood> moodClientEndpoint = new ClientEndpoint<>("ws://localhost:8082/moods/", MoodsParser::parse);
         moodClientEndpoint.addListener(moodData);
         moodClientEndpoint.addListener(happinessData);
         moodClientEndpoint.connect();
