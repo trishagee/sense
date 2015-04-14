@@ -18,15 +18,15 @@ public class Service<T> implements Runnable {
     private ClientEndpoint<T> clientEndpoint;
     private MessageHandler<T> messageHandler;
 
-    public Service(URI endpointToConnectTo, String serviceEndpointPath, int servicePort, MessageHandler<T> messageHandler) {
-        this.endpointToConnectTo = endpointToConnectTo;
+    public Service(String endpointToConnectTo, String serviceEndpointPath, int servicePort, MessageHandler<T> messageHandler) {
+        this.endpointToConnectTo = URI.create(endpointToConnectTo);
         this.messageHandler = messageHandler;
         this.serviceEndpointPath = serviceEndpointPath;
         this.servicePort = servicePort;
     }
 
     public static void main(String[] args) throws IOException, DeploymentException {
-        new Service<>(URI.create("ws://localhost:8081/tweets/"), "/testing/", 8090, originalText -> originalText).run();
+        new Service<>("ws://localhost:8081/tweets/", "/testing/", 8090, originalText -> originalText).run();
     }
 
     @Override

@@ -10,9 +10,9 @@ public class UserService implements Runnable {
     private final Service<TwitterUser> service;
 
     public UserService() {
-        this.service = new Service<>(URI.create("ws://localhost:8081/tweets/"),
+        this.service = new Service<>("ws://localhost:8081/tweets/",
                                      "/users/", 8083,
-                                     originalText -> new TwitterUser(getTwitterHandleFrom(originalText)));
+                                     fullTweet -> new TwitterUser(getTwitterHandleFrom(fullTweet)));
     }
 
     @Override

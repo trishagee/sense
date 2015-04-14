@@ -4,13 +4,12 @@ import com.mechanitis.demo.sense.infrastructure.Service;
 
 import javax.websocket.DeploymentException;
 import java.io.IOException;
-import java.net.URI;
 
 public class MoodService implements Runnable {
     private final Service<MoodyMessage> service;
 
     public MoodService() {
-        this.service = new Service<>(URI.create("ws://localhost:8081/tweets/"),
+        this.service = new Service<>("ws://localhost:8081/tweets/",
                                      "/moods/", 8082,
                                      MoodAnalyser::analyseMood);
     }
