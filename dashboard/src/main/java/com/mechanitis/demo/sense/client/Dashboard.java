@@ -27,9 +27,9 @@ public class Dashboard extends Application {
 
         // wire up the models to the controllers
         DashboardController dashboardController = loader.getController();
-        dashboardController.getLeaderboardController().setData(leaderboardData);
-        dashboardController.getMoodController().setData(moodChartData);
-        dashboardController.getHappinessController().setData(happinessChartData);
+//        dashboardController.getLeaderboardController().setData(leaderboardData);
+//        dashboardController.getMoodController().setData(moodChartData);
+//        dashboardController.getHappinessController().setData(happinessChartData);
 
         // let's go!
         primaryStage.setScene(scene);
