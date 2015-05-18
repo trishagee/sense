@@ -4,6 +4,8 @@ import com.mechanitis.demo.sense.infrastructure.MessageListener;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 
+import java.util.List;
+
 import static javafx.collections.FXCollections.observableArrayList;
 
 public class MoodChartData implements MessageListener<TweetMood> {
@@ -18,14 +20,14 @@ public class MoodChartData implements MessageListener<TweetMood> {
 
     @Override
     public void onMessage(final TweetMood message) {
-        incrementPie(message.isHappy(), happyPortion);
-        incrementPie(message.isConfused(), confusedPortion);
-        incrementPie(message.isSad(), sadPortion);
+        incrementPie(message.isHappy(), () -> happyPortion.setPieValue(happyPortion.getPieValue() + 1));
+        incrementPie(message.isConfused(), () -> confusedPortion.setPieValue(confusedPortion.getPieValue() + 1));
+        incrementPie(message.isSad(), () -> sadPortion.setPieValue(sadPortion.getPieValue() + 1));
     }
 
-    private void incrementPie(final boolean criteria, final PieChart.Data portion) {
+    private void incrementPie(final boolean criteria, final Runnable doThis) {
         if (criteria) {
-            portion.setPieValue(portion.getPieValue() + 1);
+            doThis.run();
         }
     }
 }
