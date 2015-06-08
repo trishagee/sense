@@ -3,10 +3,13 @@ package com.mechanitis.demo.sense.client;
 import com.mechanitis.demo.sense.client.mood.HappinessChartData;
 import com.mechanitis.demo.sense.client.mood.MoodChartData;
 import com.mechanitis.demo.sense.client.user.LeaderboardData;
+import com.mechanitis.demo.sense.infrastructure.ClientEndpoint;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import static com.mechanitis.demo.sense.infrastructure.ClientEndpoint.createPassthroughEndpoint;
 
 public class Dashboard extends Application {
 
@@ -18,6 +21,9 @@ public class Dashboard extends Application {
         HappinessChartData happinessChartData = new HappinessChartData();
 
         // TODO: wire up the models to the services they're getting the data from
+        ClientEndpoint<String> userEndpoint = createPassthroughEndpoint("ws://localhost:8083/users/");
+        userEndpoint.addListener(leaderboardData);
+        userEndpoint.connect();
 
         // initialise the UI
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
@@ -27,7 +33,7 @@ public class Dashboard extends Application {
 
         // wire up the models to the controllers
         DashboardController dashboardController = loader.getController();
-//        dashboardController.getLeaderboardController().setData(leaderboardData);
+        dashboardController.getLeaderboardController().setData(leaderboardData);
 //        dashboardController.getMoodController().setData(moodChartData);
 //        dashboardController.getHappinessController().setData(happinessChartData);
 
