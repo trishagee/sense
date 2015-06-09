@@ -17,7 +17,8 @@ public class Dashboard extends Application {
         MoodChartData moodChartData = new MoodChartData();
         HappinessChartData happinessChartData = new HappinessChartData();
 
-        // TODO: wire up the models to the services they're getting the data from
+        // TODO: wire up the models to the services they're getting the
+        // data from
 
         // initialise the UI
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
