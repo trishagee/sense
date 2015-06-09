@@ -9,6 +9,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.FINE;
+import static java.util.logging.Level.INFO;
 import static java.util.logging.Logger.getLogger;
 
 @ClientEndpoint
@@ -30,7 +31,7 @@ public class MessageReceivedEndpoint {
     public void onWebSocketText(String message) throws IOException {
         this.message = message;
         latch.countDown();
-        LOGGER.log(FINE, "Received TEXT message: " + message);
+        LOGGER.log(INFO, "Received TEXT message: " + message);
     }
 
     public String getMessage() {
