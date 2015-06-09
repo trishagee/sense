@@ -1,6 +1,9 @@
 package com.mechanitis.demo.sense.mood;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 public class MoodyMessage {
     private final Set<Mood> moods;
@@ -15,6 +18,7 @@ public class MoodyMessage {
 
     @Override
     public String toString() {
-        return super.toString();
+        return moods.stream().map(Enum::toString)
+                .collect(joining(","));
     }
 }
