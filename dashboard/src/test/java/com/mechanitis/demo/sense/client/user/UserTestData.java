@@ -1,5 +1,7 @@
 package com.mechanitis.demo.sense.client.user;
 
+import com.mechanitis.demo.sense.client.StubService;
+
 import java.util.Random;
 
 public class UserTestData {
@@ -10,7 +12,8 @@ public class UserTestData {
 
     public static void main(String[] args) {
         Random random = new Random();
-        // TODO: create stub service running at /users/ on port 8083
-        // and run it
+        new StubService("/users/", 8083,
+                        () -> EXAMPLE_HANDLES[random.nextInt(27)]
+        );
     }
 }
