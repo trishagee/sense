@@ -11,6 +11,6 @@ public class UserTestData {
 
     public static void main(String[] args) {
         Random random = new Random();
-        new StubService("/users/", 8083, () -> EXAMPLE_HANDLES[random.nextInt(27)]).run();
+        new StubService("/users/", 8083, () -> EXAMPLE_HANDLES[random.nextInt(EXAMPLE_HANDLES.length)]).run();
     }
 }
