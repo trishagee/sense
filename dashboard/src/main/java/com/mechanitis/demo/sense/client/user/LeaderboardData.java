@@ -3,6 +3,7 @@ package com.mechanitis.demo.sense.client.user;
 import com.mechanitis.demo.sense.infrastructure.MessageListener;
 import javafx.collections.ObservableList;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,8 @@ public class LeaderboardData implements MessageListener<String> {
 
     private ObservableList<TwitterUser> items = observableArrayList();
 
+    private static final Comparator<TwitterUser> BY_DESCENDING_TWEET_COUNT = comparing(TwitterUser::getTweets).reversed();
+
     @Override
     public void onMessage(String twitterHandle) {
         TwitterUser twitterUser = allTwitterUsers.computeIfAbsent(twitterHandle, TwitterUser::new);
@@ -27,7 +30,7 @@ public class LeaderboardData implements MessageListener<String> {
 
         List<TwitterUser> topTweeters =
                 allTwitterUsers.values().stream()
-                               .sorted(comparing(TwitterUser::getTweets).reversed())
+                               .sorted(BY_DESCENDING_TWEET_COUNT)
                                .limit(NUMBER_OF_LEADERS)
                                .collect(toList());
 
