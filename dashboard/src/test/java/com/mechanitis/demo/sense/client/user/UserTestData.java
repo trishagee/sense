@@ -10,9 +10,9 @@ public class UserTestData {
             "hhh", "iii", "jjj", "kkk", "lll", "mmm", "nnn", "ooo", "ppp", "qqq", "rrr", "sss", "ttt", "uuu", "vvv",
             "www", "xxx", "yyy", "zzz"};
 
-    private static final Supplier<String> RANDOM_SAMPLE_TWITTER_HANDLE = () -> EXAMPLE_HANDLES[new Random().nextInt(EXAMPLE_HANDLES.length)];
+    private static final Supplier<String> TWITTER_HANDLE_GENERATOR = () -> EXAMPLE_HANDLES[new Random().nextInt(EXAMPLE_HANDLES.length)];
 
     public static void main(String[] args) {
-        new StubService("/users/", 8083, RANDOM_SAMPLE_TWITTER_HANDLE).run();
+        new StubService("/users/", 8083, TWITTER_HANDLE_GENERATOR).run();
     }
 }
