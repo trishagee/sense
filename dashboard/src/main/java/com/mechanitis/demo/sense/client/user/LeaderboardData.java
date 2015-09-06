@@ -21,7 +21,7 @@ public class LeaderboardData implements MessageListener<String> {
 
     private ObservableList<TwitterUser> items = observableArrayList();
 
-    private static final Comparator<TwitterUser> BY_DESCENDING_TWEET_COUNT = comparing(TwitterUser::getTweets).reversed();
+    private static final Comparator<TwitterUser> HIGHER_TWEET_COUNTS_FIRST = comparing(TwitterUser::getTweets).reversed();
 
     @Override
     public void onMessage(String twitterHandle) {
@@ -30,7 +30,7 @@ public class LeaderboardData implements MessageListener<String> {
 
         List<TwitterUser> topTweeters =
                 allTwitterUsers.values().stream()
-                               .sorted(BY_DESCENDING_TWEET_COUNT)
+                               .sorted(HIGHER_TWEET_COUNTS_FIRST)
                                .limit(NUMBER_OF_LEADERS)
                                .collect(toList());
 
