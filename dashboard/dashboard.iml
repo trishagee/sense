@@ -17,18 +17,18 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="service" exported="" />
-    <orderEntry type="library" exported="" name="Gradle: javax.websocket:javax.websocket-api:1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: javax.json:javax.json-api:1.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.glassfish:javax.json:1.0.4" level="project" />
     <orderEntry type="module-library" exported="">
       <library name="Gradle: jfxrt">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_40/jre/lib/ext/jfxrt.jar!/" />
+          <root url="jar://C:/Program Files/Java/jdk1.8.0_45/jre/lib/ext/jfxrt.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="Gradle: javax.websocket:javax.websocket-api:1.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: javax.json:javax.json-api:1.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.glassfish:javax.json:1.0.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.spockframework:spock-core:0.7-groovy-2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: cglib:cglib-nodep:3.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.objenesis:objenesis:2.1" level="project" />

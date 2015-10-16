@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/dashboard/dashboard.iml" filepath="$PROJECT_DIR$/dashboard/dashboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sense.iml" filepath="$PROJECT_DIR$/sense.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sense/sense-sense.iml" filepath="$PROJECT_DIR$/sense/sense-sense.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
+    </modules>
+  </component>
+</project>
