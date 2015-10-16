@@ -1,11 +1,12 @@
 package com.mechanitis.demo.sense.client.mood;
 
+import com.mechanitis.demo.sense.infrastructure.MessageListener;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
-public class MoodChartData {
+public class MoodChartData implements MessageListener<TweetMood> {
     private final PieChart.Data sadPortion = new PieChart.Data("Sad", 0);
     private final PieChart.Data happyPortion = new PieChart.Data("Happy", 0);
     private final PieChart.Data confusedPortion = new PieChart.Data("Errr...", 0);
@@ -13,5 +14,22 @@ public class MoodChartData {
 
     public ObservableList<PieChart.Data> getPieChartData() {
         return pieChartData;
+    }
+
+    @Override
+    public void onMessage(TweetMood message) {
+        if (message.isHappy()) {
+            incrementPie(happyPortion);
+        }
+        if (message.isSad()) {
+            incrementPie(sadPortion);
+        }
+        if (message.isConfused()) {
+            incrementPie(confusedPortion);
+        }
+    }
+
+    private void incrementPie(PieChart.Data portion) {
+        portion.setPieValue(portion.getPieValue() + 1);
     }
 }
