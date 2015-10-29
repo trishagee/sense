@@ -8,7 +8,7 @@ import java.util.Map;
 import static javafx.collections.FXCollections.observableArrayList;
 
 public class LeaderboardData {
-    private static final int NUMBER_OF_LEADERS = 18;
+    private static final int NUMBER_OF_LEADERS = 17;
     private final Map<String, TwitterUser> allTwitterUsers = new HashMap<>();
 
     private ObservableList<TwitterUser> items = observableArrayList();
