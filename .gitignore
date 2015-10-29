@@ -1,5 +1,7 @@
 .gradle
 .idea/libraries
+.idea/uiDesigner.xml
+.idea/workspace.xml
 build
 tweetdata60-mins.txt
 oauth.properties
