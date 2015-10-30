@@ -3,6 +3,8 @@ package com.mechanitis.demo.sense.mood;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.mechanitis.demo.sense.mood.Mood.HAPPY;
 import static com.mechanitis.demo.sense.mood.Mood.SAD;
@@ -36,7 +38,11 @@ public class MoodAnalyser {
     public static MoodyMessage analyseMood(String fullMessage) {
         String[] wordsInMessage = getTweetMessageFrom(fullMessage).split(" ");
         //TODO: figure out the moods in this message
-        Set<Mood> moods = null;
+        Set<Mood> moods = Stream.of(wordsInMessage)
+                .map(String::toLowerCase)
+                .map(WORD_TO_MOOD::get)
+                .filter(mood -> mood != null)
+                .collect(Collectors.toSet());
         return new MoodyMessage(moods);
     }
 }
