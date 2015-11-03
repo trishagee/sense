@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TwitterUser {
     private final SimpleStringProperty twitterHandle = new SimpleStringProperty();
-    private final SimpleIntegerProperty tweets = new SimpleIntegerProperty(0);
+    private final SimpleIntegerProperty tweetCount = new SimpleIntegerProperty(0);
     private AtomicInteger count = new AtomicInteger(0);
 
     public TwitterUser(String twitterHandle) {
@@ -22,17 +22,17 @@ public class TwitterUser {
         return twitterHandle;
     }
 
-    public int getTweets() {
-        return tweets.get();
+    public int getTweetCount() {
+        return tweetCount.get();
     }
 
-    public SimpleIntegerProperty tweetsProperty() {
-        return tweets;
+    public SimpleIntegerProperty tweetCountProperty() {
+        return tweetCount;
     }
 
     public int incrementCount() {
         int newValue = count.incrementAndGet();
-        tweets.set(newValue);
+        tweetCount.set(newValue);
         return newValue;
     }
 

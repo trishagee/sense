@@ -33,10 +33,10 @@ class LeaderboardDataSpecification extends Specification {
         then:
         waitFor(2, { expectedValue -> leaderboardData.getItems().size() == expectedValue });
 
-        leaderboardData.items[0].tweets == 2
+        leaderboardData.items[0].tweetCount == 2
         leaderboardData.items[0].twitterHandle == 'Trisha'
 
-        leaderboardData.items[1].tweets == 1
+        leaderboardData.items[1].tweetCount == 1
         leaderboardData.items[1].twitterHandle == 'Someone else'
     }
 
