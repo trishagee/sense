@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 import static java.util.logging.Level.FINE;
 
-public class Service<T> implements Runnable {
+public class Service implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(Service.class.getName());
 
     private final String endpointToConnectTo;
@@ -14,10 +14,11 @@ public class Service<T> implements Runnable {
     private final int servicePort;
 
     private WebSocketServer webSocketServer;
-    private ClientEndpoint<T> clientEndpoint;
-    private MessageHandler<T> messageHandler;
+    private ClientEndpoint<String> clientEndpoint;
+    private MessageHandler<String> messageHandler;
 
-    public Service(String endpointToConnectTo, String serviceEndpointPath, int servicePort, MessageHandler<T> messageHandler) {
+    public Service(String endpointToConnectTo, String serviceEndpointPath, int servicePort,
+                   MessageHandler<String> messageHandler) {
         this.endpointToConnectTo = endpointToConnectTo;
         this.messageHandler = messageHandler;
         this.serviceEndpointPath = serviceEndpointPath;
@@ -25,14 +26,14 @@ public class Service<T> implements Runnable {
     }
 
     public static void main(String[] args) throws IOException, DeploymentException {
-        new Service<>("ws://localhost:8081/tweets/", "/testing/", 8090, originalText -> originalText).run();
+        new Service("ws://localhost:8081/tweets/", "/testing/", 8090, originalText -> originalText).run();
     }
 
     @Override
     public void run() {
         LOGGER.setLevel(FINE);
         try {
-            BroadcastingServerEndpoint<T> broadcastingServerEndpoint = new BroadcastingServerEndpoint<>();
+            BroadcastingServerEndpoint<String> broadcastingServerEndpoint = new BroadcastingServerEndpoint<>();
 
             // create a client endpoint that connects to the given server endpoint and puts all messages through the message handler
             clientEndpoint = new ClientEndpoint<>(endpointToConnectTo, messageHandler);

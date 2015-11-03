@@ -3,13 +3,9 @@ package com.mechanitis.demo.sense.user;
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 import com.mechanitis.demo.sense.twitter.CannedTweetsService;
-import org.eclipse.jetty.util.component.LifeCycle;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import javax.websocket.ContainerProvider;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -17,8 +13,8 @@ import java.nio.file.Paths;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
+import static com.mechanitis.demo.sense.ServiceFixture.connectAndWaitForSuccess;
 import static java.lang.ClassLoader.getSystemResource;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -57,18 +53,4 @@ public class UserServiceTest {
         return service;
     }
 
-    private boolean connectAndWaitForSuccess(URI path, Object endpointInstance, CountDownLatch latch) throws Exception {
-        boolean success;
-        WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-        try {
-            Session session = container.connectToServer(endpointInstance, path);
-            success = latch.await(10, TimeUnit.SECONDS);
-            session.close();
-        } finally {
-            if (container instanceof LifeCycle) {
-                ((LifeCycle) container).stop();
-            }
-        }
-        return success;
-    }
 }

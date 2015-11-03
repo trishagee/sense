@@ -3,11 +3,10 @@ package com.mechanitis.demo.sense.user;
 import com.mechanitis.demo.sense.infrastructure.Service;
 
 public class UserService implements Runnable {
-    private final Service<TwitterUser> service;
+    private static final int PORT = 8083;
+    private final Service service;
 
     public UserService() {
-        // TODO: create a new service that points to the twitter service,
-        // and serves its own data at on port 8083 and uri /users/
         service = null;
     }
 

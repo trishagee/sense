@@ -2,7 +2,6 @@ package com.mechanitis.demo.sense.mood;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static com.mechanitis.demo.sense.mood.Mood.HAPPY;
 import static com.mechanitis.demo.sense.mood.Mood.SAD;
@@ -33,10 +32,9 @@ public class MoodAnalyser {
     private MoodAnalyser() {
     }
 
-    public static MoodyMessage analyseMood(String fullMessage) {
-        String[] wordsInMessage = getTweetMessageFrom(fullMessage).split(" ");
-        //TODO: figure out the moods in this message
-        Set<Mood> moods = null;
-        return new MoodyMessage(moods);
+    public static String analyseMood(String fullMessage) {
+        String[] wordsInMessage = getTweetMessageFrom(fullMessage).split("\\s");
+        //TODO: figure out the unique moods in this message and return as CSV
+        return null;
     }
 }
