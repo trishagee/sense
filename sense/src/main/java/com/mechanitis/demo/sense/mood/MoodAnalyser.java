@@ -2,6 +2,8 @@ package com.mechanitis.demo.sense.mood;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.mechanitis.demo.sense.mood.Mood.HAPPY;
 import static com.mechanitis.demo.sense.mood.Mood.SAD;
@@ -35,6 +37,15 @@ public class MoodAnalyser {
     public static String analyseMood(String fullMessage) {
         String[] wordsInMessage = getTweetMessageFrom(fullMessage).split("\\s");
         //TODO: figure out the unique moods in this message and return as CSV
-        return null;
+        String moodsAsCsv = Stream.of(wordsInMessage)
+                               .distinct()
+                               .map(String::toLowerCase)
+                               .map(WORD_TO_MOOD::get)
+                               .filter(mood -> mood != null)
+                               .distinct()
+                               .map(Mood::name)
+                               .collect(Collectors.joining(","));
+
+        return moodsAsCsv;
     }
 }
