@@ -2,8 +2,6 @@
 .idea/libraries
 .idea/uiDesigner.xml
 .idea/workspace.xml
-.idea/dictionaries
-build
 tweetdata60-mins.txt
 oauth.properties
 patches
