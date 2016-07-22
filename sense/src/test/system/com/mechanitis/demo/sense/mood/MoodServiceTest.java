@@ -23,7 +23,6 @@ public class MoodServiceTest {
     private final ExecutorService executor = Executors.newFixedThreadPool(2, new DaemonThreadFactory());
 
     @Test
-    @Ignore("3")
     public void shouldStartupAndAllowAClientToConnectAndReceiveAMessage() throws Exception {
         CannedTweetsService tweetsService = startCannedTweetsService();
 
