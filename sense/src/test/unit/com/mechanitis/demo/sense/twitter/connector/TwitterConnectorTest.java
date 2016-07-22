@@ -20,11 +20,10 @@ public class TwitterConnectorTest {
     void testTweetsComeInOrder() {
         connection.processTweets(Stream.of("first", "second"));
 
-        assertAll(
-                () -> {
-                    assertEquals("first", receivedTweets.get(0));
-                    assertEquals("second", receivedTweets.get(1));
-                }
+        assertAll(() -> {
+                      assertEquals("first", receivedTweets.get(0));
+                      assertEquals("second", receivedTweets.get(1));
+                  }
         );
     }
 
@@ -40,11 +39,10 @@ public class TwitterConnectorTest {
 //        when:
         connection.processTweets(Stream.of(deletedTweet, createdTweet));
 
-        assertAll(
-                () -> {
-                    assertEquals(createdTweet, receivedTweets.get(0));
-                    assertEquals(1, receivedTweets.size());
-                }
+        assertAll(() -> {
+                      assertEquals(createdTweet, receivedTweets.get(0));
+                      assertEquals(1, receivedTweets.size());
+                  }
         );
     }
 }
