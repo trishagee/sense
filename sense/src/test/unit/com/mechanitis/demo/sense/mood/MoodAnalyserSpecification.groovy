@@ -1,6 +1,5 @@
 package com.mechanitis.demo.sense.mood
 
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import static java.lang.String.format
