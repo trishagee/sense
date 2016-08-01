@@ -1,18 +1,33 @@
 package com.mechanitis.demo.sense.twitter;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TweetParserTest {
+    @Test
+    @DisplayName("should return the tweet itself from the full Twitter JSON")
+    void testGetTweetContent () {
+        String tweetContent = TweetParser.getTweetMessageFrom(EXAMPLE_INPUT);
+        assertEquals("This is the content of the Tweet", tweetContent);
+    }
+
+
+    @Test
+    @DisplayName("should return the user's twitter handle")
+    void testGetTwitterHandle () {
+        String twitterHandle = TweetParser.getTwitterHandleFromTweet(EXAMPLE_INPUT);
+        assertEquals("trisha_gee", twitterHandle);
+    }
+
     private static final String EXAMPLE_INPUT = "tweet = {\"created_at\":\"Tue Jan 27 12:37:11 +0000 2015\"," +
                                                 "\"id\":560053908144275456,\"id_str\":\"560053908144275456\"," +
-                                                "\"text\":\"A simplistic approach to your life is a healthy antidote to yo... More for Sagittarius http:\\/\\/t.co\\/cRS9M0bneh\",\"source\":\"\\u003ca href=\\\"http:\\/\\/www.twittascope.com\\\" rel=\\\"nofollow\\\"\\u003eTwittascope\\u003c\\/a\\u003e\"," +
+                                                "\"text\":\"This is the content of the Tweet\",\"source\":\"\\u003ca href=\\\"http:\\/\\/www.twittascope.com\\\" rel=\\\"nofollow\\\"\\u003eTwittascope\\u003c\\/a\\u003e\"," +
                                                 "\"truncated\":false,\"in_reply_to_status_id\":null,\"in_reply_to_status_id_str\":null,\"in_reply_to_user_id\":null,\"in_reply_to_user_id_str\":null," +
                                                 "\"in_reply_to_screen_name\":null," +
-                                                "\"user\":{\"id\":36075321,\"id_str\":\"36075321\",\"name\":\"Toni Alexander\",\"screen_name\":\"cupcakecutie07\"," +
+                                                "\"user\":{\"id\":36075321,\"id_str\":\"36075321\",\"name\":\"Toni Alexander\"," +
+                                                "\"screen_name\":\"trisha_gee\"," +
                                                 "\"location\":\"ATL, GA\",\"url\":null,\"description\":\"I'm a laid back chick who loves to have fun\",\"protected\":false,\"verified\":false," +
                                                 "\"followers_count\":41,\"friends_count\":118,\"listed_count\":1,\"favourites_count\":5,\"statuses_count\":2555,\"created_at\":\"Tue Apr 28 14:17:20 +0000 2009\"," +
                                                 "\"utc_offset\":-18000,\"time_zone\":\"Eastern Time (US & Canada)\",\"geo_enabled\":false,\"lang\":\"en\",\"contributors_enabled\":false,\"is_translator\":false," +
@@ -26,21 +41,5 @@ public class TweetParserTest {
                                                 "\"contributors\":null,\"retweet_count\":0,\"favorite_count\":0,\"entities\":{\"hashtags\":[],\"trends\":[],\"urls\":[{\"url\":\"http:\\/\\/t.co\\/cRS9M0bneh\"," +
                                                 "\"expanded_url\":\"http:\\/\\/bit.ly\\/yibOac\",\"display_url\":\"bit.ly\\/yibOac\",\"indices\":[87,109]}],\"user_mentions\":[],\"symbols\":[]},\"favorited\":false," +
                                                 "\"retweeted\":false,\"possibly_sensitive\":false,\"filter_level\":\"low\",\"lang\":\"en\",\"timestamp_ms\":\"1422362231657\"}";
-
-
-    @Test
-    @DisplayName("should return the tweet itself from the full Twitter content")
-    void testGetTweetContent () {
-        String tweetContent = TweetParser.getTweetMessageFrom(EXAMPLE_INPUT);
-        assertEquals("A simplistic approach to your life is a healthy antidote to yo... More for Sagittarius " +
-                      "http:\\/\\/t.co\\/cRS9M0bneh", tweetContent);
-    }
-
-    @Test
-    @DisplayName("should return the user twitter handle")
-    void testGetTwitterHandle () {
-        String twitterHandle = TweetParser.getTwitterHandleFromTweet(EXAMPLE_INPUT);
-        assertEquals("cupcakecutie07", twitterHandle);
-    }
 
 }
