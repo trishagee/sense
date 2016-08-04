@@ -10,7 +10,7 @@ class TwitterConnectionSpecification extends Specification {
     def 'should alert a listener of tweets in order'() {
         given:
         def receivedTweets = []
-        @Subject def connection = new TwitterConnection({tweet -> receivedTweets.add(tweet)})
+        @Subject def connection = new TwitterConnection({ tweet -> receivedTweets.add(tweet) })
 
         when:
         connection.processTweets(Stream.of('first', 'second'))
@@ -20,10 +20,21 @@ class TwitterConnectionSpecification extends Specification {
         receivedTweets[1] == 'second'
     }
 
+    def 'should run all assertions even if one fails'() {
+        when:
+        List<String> numbersAsStrings = ["1", "2", "3"];
+
+        then:
+        "this is wrong" == numbersAsStrings.get(0)
+        "this is also wrong" == numbersAsStrings.get(1)
+        "and this is not right either" == numbersAsStrings.get(2)
+    }
+
+
     def 'should not pass on deleted tweets'() {
         given:
         def receivedTweets = []
-        @Subject def connection = new TwitterConnection({tweet -> receivedTweets.add(tweet)})
+        @Subject def connection = new TwitterConnection({ tweet -> receivedTweets.add(tweet) })
 
         def deletedTweet = "{\"delete\":{\"status\":{\"id\":545654287926190080,\"user_id\":954217777},\"timestamp_ms\":\"1421930220668\"}}\n"
         def createdTweet = "{\"created_at\":\"Thu Jan 22 12:37:00 +0000 2015\",\"id\":558241922696089600,\"text\":\"Bom diaa\", \"user\":{\"id\":2860570708}\n"

@@ -1,7 +1,7 @@
 dependencies {
     compile project(':service')
     compile 'org.eclipse.jetty.websocket:javax-websocket-server-impl:9.2.6.v20141205'
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.0-M1'
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.0-M2'
 }
 
 sourceSets {

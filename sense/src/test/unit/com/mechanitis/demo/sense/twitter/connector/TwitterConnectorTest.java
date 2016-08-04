@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -21,10 +22,21 @@ public class TwitterConnectorTest {
         connection.processTweets(Stream.of("first", "second"));
 
         assertAll(() -> {
-                      assertEquals("first", receivedTweets.get(0));
-                      assertEquals("second", receivedTweets.get(1));
+                      assertEquals("1", receivedTweets.get(0));
+                      assertEquals("2", receivedTweets.get(1));
+                      assertEquals("3", receivedTweets.get(2));
                   }
         );
+    }
+
+    @Test
+    @DisplayName("should run all assertions even if one fails")
+    void shouldSupportAssertAllCorrect() {
+        List<String> numbersAsStrings = Arrays.asList("1", "2", "3");
+
+        assertAll(() -> assertEquals("this is wrong", numbersAsStrings.get(0)),
+                  () -> assertEquals("this is also wrong", numbersAsStrings.get(1)),
+                  () -> assertEquals("and this is not right either", numbersAsStrings.get(2)));
     }
 
     @Test

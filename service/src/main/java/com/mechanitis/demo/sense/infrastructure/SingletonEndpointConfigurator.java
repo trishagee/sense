@@ -14,11 +14,13 @@ public final class SingletonEndpointConfigurator extends ServerEndpointConfig.Co
     @SuppressWarnings("unchecked") //yep, we need an unchecked cast here
     public <T> T getEndpointInstance(Class<T> endpointClass) throws InstantiationException {
         if (endpointClass != this.singletonInstance.getClass()) {
-            throw new UnsupportedOperationException("This SingletonEndpointConfigurator only creates " +
+            throw new ConfigException("This SingletonEndpointConfigurator only creates " +
                                                     "endpoints of class " + this.singletonInstance.getClass()+ ", "
-                                                    + endpointClass + " is not supported");
+                                                    + endpointClass + " is not supported", 4359);
         }
         return (T) singletonInstance;
     }
+
+
 }
 

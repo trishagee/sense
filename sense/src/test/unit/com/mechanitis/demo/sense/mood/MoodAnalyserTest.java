@@ -19,20 +19,14 @@ public class MoodAnalyserTest {
         @Test
         @DisplayName("should identify messages with a single happy sentiment that is all lower case")
         void checkHappyMessages() {
-            //when
             String moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so happy today"));
-
-            //then
             assertEquals("HAPPY", moodyMessage);
         }
 
         @Test
         @DisplayName("should identify messages with a single happy sentiment that is not lower case")
         void checkMixedCaseMessages() {
-            //when:
             String moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so Awesome today"));
-
-            //then:
             assertEquals("HAPPY", moodyMessage);
         }
     }

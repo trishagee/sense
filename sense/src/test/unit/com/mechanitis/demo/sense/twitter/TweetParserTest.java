@@ -13,13 +13,13 @@ public class TweetParserTest {
         assertEquals("This is the content of the Tweet", tweetContent);
     }
 
-
-    @Test
-    @DisplayName("should return the user's twitter handle")
-    void testGetTwitterHandle () {
-        String twitterHandle = TweetParser.getTwitterHandleFromTweet(EXAMPLE_INPUT);
-        assertEquals("trisha_gee", twitterHandle);
-    }
+//    @Test
+//    @DisplayName("should return the user's twitter handle")
+//    @Disabled
+//    void testGetTwitterHandle () {
+//        String twitterHandle = TweetParser.getTwitterHandleFromTweet(EXAMPLE_INPUT);
+//        assertEquals("trisha_gee", twitterHandle);
+//    }
 
     private static final String EXAMPLE_INPUT = "tweet = {\"created_at\":\"Tue Jan 27 12:37:11 +0000 2015\"," +
                                                 "\"id\":560053908144275456,\"id_str\":\"560053908144275456\"," +

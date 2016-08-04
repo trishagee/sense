@@ -3,7 +3,6 @@ package com.mechanitis.demo.sense.mood;
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 import com.mechanitis.demo.sense.twitter.CannedTweetsService;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.net.URI;
