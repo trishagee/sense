@@ -5,5 +5,18 @@
 <VBox xmlns:fx="http://javafx.com/fxml"
       spacing="10" alignment="CENTER"
       fx:controller="com.mechanitis.demo.sense.client.user.LeaderboardController">
-
+<TableView fx:id="leaders" prefHeight="1000">
+    <columns>
+        <TableColumn text="Twitter Handle" prefWidth="300">
+            <cellValueFactory>
+                <PropertyValueFactory property="twitterHandle"/>
+            </cellValueFactory>
+        </TableColumn>
+        <TableColumn text="Count" prefWidth="190">
+            <cellValueFactory>
+                <PropertyValueFactory property="tweetCount"/>
+            </cellValueFactory>
+        </TableColumn>
+    </columns>
+</TableView>
 </VBox>
