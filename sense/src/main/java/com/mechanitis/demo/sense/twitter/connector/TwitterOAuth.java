@@ -19,6 +19,7 @@ public class TwitterOAuth {
     private static final String HMAC_SHA1 = "HMAC-SHA1";
     private long nonce;
     private long timestampInSeconds;
+    private long _ = 0L;
 
     //from properties file
     private String accessTokenSecret;
