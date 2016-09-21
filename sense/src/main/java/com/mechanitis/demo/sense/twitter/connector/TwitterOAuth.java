@@ -1,6 +1,6 @@
 package com.mechanitis.demo.sense.twitter.connector;
 
-import sun.misc.BASE64Encoder;
+import java.util.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -19,7 +19,7 @@ public class TwitterOAuth {
     private static final String HMAC_SHA1 = "HMAC-SHA1";
     private long nonce;
     private long timestampInSeconds;
-    private long _ = 0L;
+    private long muchBetterName = 0L;
 
     //from properties file
     private String accessTokenSecret;
@@ -110,7 +110,7 @@ public class TwitterOAuth {
             SecretKeySpec spec = new SecretKeySpec(oauthSignature.getBytes(), HMAC_SHA1);
             mac.init(spec);
             byteHMAC = mac.doFinal(getBaseString().getBytes());
-            return encode(new BASE64Encoder().encode(byteHMAC), "UTF-8");
+            return encode(new String(Base64.getEncoder().encode(byteHMAC)), "UTF-8");
         } catch (InvalidKeyException | NoSuchAlgorithmException | UnsupportedEncodingException e) {
             throw new RuntimeException("Failed to authenticate against Twitter", e);
         }
