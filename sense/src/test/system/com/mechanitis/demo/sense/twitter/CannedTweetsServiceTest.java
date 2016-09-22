@@ -3,7 +3,6 @@ package com.mechanitis.demo.sense.twitter;
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.websocket.ContainerProvider;
@@ -25,7 +24,6 @@ public class CannedTweetsServiceTest {
     private final ExecutorService executor = Executors.newFixedThreadPool(5, new DaemonThreadFactory());
 
     @Test
-    @Ignore("1")
     public void shouldMessageClientsWithTweetsReceived() throws Exception {
         // start service
         Path path = Paths.get(getSystemResource("./tweetdata-for-testing.txt").toURI());
@@ -40,6 +38,16 @@ public class CannedTweetsServiceTest {
 
         // finally
         service.stop();
+    }
+
+    @Test
+    public void shouldStop() throws Exception {
+        Path path = Paths.get(getSystemResource("./tweetdata-for-testing.txt").toURI());
+        CannedTweetsService service = new CannedTweetsService(path);
+        executor.submit(service);
+
+        service.stop();
+        assertThat("Should actually reach this and not wait forever", true, is(true));
     }
 
     private void connectAndAssertMessageReceived(URI path, Object endpointInstance, CountDownLatch latch) throws Exception {

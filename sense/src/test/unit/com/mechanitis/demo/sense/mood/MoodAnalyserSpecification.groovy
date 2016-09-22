@@ -1,6 +1,5 @@
 package com.mechanitis.demo.sense.mood
 
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import static java.lang.String.format
@@ -10,8 +9,6 @@ class MoodAnalyserSpecification extends Specification {
             "\"id\":560053908144275456,\"id_str\":\"560053908144275456\"," +
             "\"text\":\"%s\",\"source\":\"twitter\"}";
 
-
-    @Ignore("4")
     def 'should correctly identify happy messages'() {
         when:
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so happy today"))
@@ -20,7 +17,6 @@ class MoodAnalyserSpecification extends Specification {
         moodyMessage == "HAPPY"
     }
 
-    @Ignore("4")
     def 'should correctly identify happy messages that are not lower case'() {
         when:
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so Awesome today"))
@@ -29,7 +25,6 @@ class MoodAnalyserSpecification extends Specification {
         moodyMessage == "HAPPY"
     }
 
-    @Ignore("4")
     def 'should correctly identify sad messages'() {
         when:
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so sad today"))
@@ -38,7 +33,6 @@ class MoodAnalyserSpecification extends Specification {
         moodyMessage == "SAD"
     }
 
-    @Ignore("4")
     def 'should correctly identify mixed messages'() {
         when:
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I am so sad today it almost makes me happy"))
@@ -47,7 +41,6 @@ class MoodAnalyserSpecification extends Specification {
         moodyMessage == "SAD,HAPPY"
     }
 
-    @Ignore("4")
     def 'should correctly identify mixed messages with multiple moods'() {
         when:
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "Yesterday I was sad sad sad, but today is awesome"))
@@ -56,7 +49,6 @@ class MoodAnalyserSpecification extends Specification {
         moodyMessage == "SAD,HAPPY"
     }
 
-    @Ignore("4")
     def 'should not have any mood for messages that are neither happy or sad'() {
         when:
         def moodyMessage = MoodAnalyser.analyseMood(format(TWITTER_MESSAGE_TEMPLATE, "I don't care"))
