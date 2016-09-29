@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+@SuppressWarnings("deprecation")
 public class UserTestDataTest {
     @Test
     public void shouldUSeDeprecatedProperly() {

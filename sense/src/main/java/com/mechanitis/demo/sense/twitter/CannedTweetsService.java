@@ -16,7 +16,6 @@ import static java.nio.file.Files.lines;
 import static java.nio.file.Paths.get;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
@@ -32,6 +31,7 @@ public class CannedTweetsService implements Runnable {
     private final WebSocketServer server
             = new WebSocketServer("/tweets/", 8081, tweetsEndpoint);
     private final Path filePath;
+    private boolean running = true;
 
     public CannedTweetsService(Path filePath) {
         this.filePath = filePath;
@@ -45,7 +45,8 @@ public class CannedTweetsService implements Runnable {
     public void run() {
         executor.submit(server);
         try (Stream<String> lines = lines(filePath)) {
-            lines.filter(message -> !message.equals("OK"))
+            lines.dropWhile(s -> running)
+                 .filter(message -> !message.equals("OK"))
                  .peek(s -> addArtificialDelay())
                  .forEach(tweetsEndpoint::onMessage);
         } catch (IOException e) {
@@ -63,6 +64,7 @@ public class CannedTweetsService implements Runnable {
     }
 
     public void stop() throws Exception {
+        running = false;
         server.stop();
         executor.shutdownNow();
     }
