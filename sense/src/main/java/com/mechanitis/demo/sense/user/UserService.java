@@ -6,7 +6,7 @@ public class UserService implements Runnable {
     private static final int PORT = 8083;
     private final Service service;
 
-    public UserService() {
+    UserService() {
         service = null;
     }
 

@@ -9,7 +9,7 @@ public class MoodService implements Runnable {
     private static final int PORT = 8082;
     private final Service service;
 
-    public MoodService() {
+    MoodService() {
         service = null;
     }
 

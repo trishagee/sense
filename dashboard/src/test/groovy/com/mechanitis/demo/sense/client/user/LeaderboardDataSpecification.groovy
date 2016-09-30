@@ -1,6 +1,5 @@
-package com.mechanitis.demo.sense.client.mood
+package com.mechanitis.demo.sense.client.user
 
-import com.mechanitis.demo.sense.client.user.LeaderboardData
 import javafx.application.Application
 import javafx.stage.Stage
 import spock.lang.Ignore

@@ -11,7 +11,7 @@ public class MoodChartData {
     private final PieChart.Data confusedPortion = new PieChart.Data("Errr...", 0);
     private final ObservableList<PieChart.Data> pieChartData = observableArrayList(sadPortion, happyPortion, confusedPortion);
 
-    public ObservableList<PieChart.Data> getPieChartData() {
+    ObservableList<PieChart.Data> getPieChartData() {
         return pieChartData;
     }
 }

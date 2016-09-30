@@ -30,7 +30,7 @@ public class HappinessChartData implements MessageListener<TweetMood> {
         }
     }
 
-    public XYChart.Series<String, Double> getDataSeries() {
+    XYChart.Series<String, Double> getDataSeries() {
         return dataSeries;
     }
 

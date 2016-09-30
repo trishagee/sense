@@ -13,7 +13,7 @@ public class LeaderboardData {
 
     private ObservableList<TwitterUser> items = observableArrayList();
 
-    public ObservableList<TwitterUser> getItems() {
+    ObservableList<TwitterUser> getItems() {
         return items;
     }
 }
