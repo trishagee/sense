@@ -25,6 +25,7 @@ public class ClientEndpoint<T> {
     private final MessageHandler<T> messageHandler;
     private Session session;
 
+    @SuppressWarnings("WeakerAccess")
     public ClientEndpoint(String serverEndpoint, MessageHandler<T> messageHandler) {
         this.serverEndpoint = URI.create(serverEndpoint);
         this.messageHandler = messageHandler;
@@ -33,8 +34,7 @@ public class ClientEndpoint<T> {
     @OnMessage
     public void onWebSocketText(String fullTweet) throws IOException {
         T message = messageHandler.processMessage(fullTweet);
-        listeners.stream()
-                 .forEach(messageListener -> messageListener.onMessage(message));
+        listeners.forEach(messageListener -> messageListener.onMessage(message));
     }
 
     @OnError
@@ -50,10 +50,12 @@ public class ClientEndpoint<T> {
         naiveReconnectRetry();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void addListener(MessageListener<T> listener) {
         listeners.add(listener);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void connect() {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         try {
@@ -65,6 +67,7 @@ public class ClientEndpoint<T> {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void close() {
         if (session != null) {
             try {
@@ -75,6 +78,7 @@ public class ClientEndpoint<T> {
         }
     }
 
+    @SuppressWarnings("unused")
     public static ClientEndpoint<String> createPassthroughEndpoint(String serverEndpoint) {
         return new ClientEndpoint<>(serverEndpoint, originalText -> originalText);
     }
