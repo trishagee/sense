@@ -7,6 +7,7 @@ import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -33,6 +34,8 @@ public class CannedTweetsService implements Runnable {
             = new WebSocketServer("/tweets/", 8081, tweetsEndpoint);
     private final Path filePath;
 
+    private CountDownLatch stopped = new CountDownLatch(1);
+
     public CannedTweetsService(Path filePath) {
         this.filePath = filePath;
     }
@@ -48,6 +51,7 @@ public class CannedTweetsService implements Runnable {
             lines.filter(message -> !message.equals("OK"))
                  .peek(s -> addArtificialDelay())
                  .forEach(tweetsEndpoint::onMessage);
+            stopped.countDown();
         } catch (IOException e) {
             LOGGER.log(SEVERE, e.getMessage(), e);
         }
@@ -63,6 +67,7 @@ public class CannedTweetsService implements Runnable {
     }
 
     public void stop() throws Exception {
+        stopped.await();
         server.stop();
         executor.shutdownNow();
     }
