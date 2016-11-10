@@ -5,9 +5,8 @@ public interface TweetParser {
     static String getTweetMessageFrom(String fullTweet) {
         //very crude
         String textFieldName = "\"text\":\"";
-        String nextFieldName = "\",\"source\":\"";
         int indexOfTextField = fullTweet.indexOf(textFieldName) + textFieldName.length();
-        int indexOfEndOfText = fullTweet.indexOf(nextFieldName);
+        int indexOfEndOfText = fullTweet.indexOf("\"", indexOfTextField);
         return fullTweet.substring(indexOfTextField, indexOfEndOfText);
     }
 
