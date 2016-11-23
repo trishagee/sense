@@ -28,6 +28,10 @@ public class Dashboard extends Application {
         userEndpoint.addListener(leaderboardData);
         userEndpoint.connect();
 
+        ClientEndpoint<TweetMood> moodEndpoint = new ClientEndpoint<>
+                ("ws://localhost:8082/moods/", MoodsParser::parse);
+        moodEndpoint.addListener(moodChartData);
+        moodEndpoint.connect();
 
         // initialise the UI
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
@@ -38,7 +42,7 @@ public class Dashboard extends Application {
         // wire up the models to the controllers
         DashboardController dashboardController = loader.getController();
         dashboardController.getLeaderboardController().setData(leaderboardData);
-//        dashboardController.getMoodController().setData(moodChartData);
+        dashboardController.getMoodController().setData(moodChartData);
 //        dashboardController.getHappinessController().setData(happinessChartData);
 
         // let's go!
