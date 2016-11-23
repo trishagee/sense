@@ -12,8 +12,12 @@ public class MoodTestData {
             = of("HAPPY", "SAD", "HAPPY,SAD");
 
     public static void main(String[] args) {
-        Random random = new Random();
         new StubService("/moods/", 8082,
-                        () -> POSSIBLE_MOODS.get(random.nextInt(3))).run();
+                        MoodTestData::getRandomMood).run();
+    }
+
+    private static String getRandomMood() {
+        Random random = new Random();
+        return POSSIBLE_MOODS.get(random.nextInt(3));
     }
 }
