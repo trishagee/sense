@@ -25,7 +25,6 @@ public class CannedTweetsServiceTest {
     private final ExecutorService executor = Executors.newFixedThreadPool(5, new DaemonThreadFactory());
 
     @Test
-    @Ignore("1")
     public void shouldMessageClientsWithTweetsReceived() throws Exception {
         // start service
         Path path = Paths.get(getSystemResource("./tweetdata-for-testing.txt").toURI());
