@@ -1,6 +1,8 @@
 package com.mechanitis.demo.sense.mood;
 
+import com.mechanitis.demo.sense.infrastructure.MessageHandler;
 import com.mechanitis.demo.sense.infrastructure.Service;
+import com.mechanitis.demo.sense.twitter.TweetParser;
 
 import javax.websocket.DeploymentException;
 import java.io.IOException;
@@ -10,7 +12,8 @@ public class MoodService implements Runnable {
     private final Service service;
 
     public MoodService() {
-        service = null;
+        service = new Service("ws://localhost:8081/tweets/", "/moods/", PORT,
+                              MoodAnalyser::analyseMood);
     }
 
     @Override
