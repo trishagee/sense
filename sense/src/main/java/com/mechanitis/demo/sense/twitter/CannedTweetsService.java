@@ -7,6 +7,9 @@ import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
@@ -15,9 +18,9 @@ import java.util.stream.Stream;
 import static java.lang.ClassLoader.getSystemResource;
 import static java.nio.file.Files.lines;
 import static java.nio.file.Paths.get;
+import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
@@ -29,7 +32,8 @@ public class CannedTweetsService implements Runnable {
     private static final Logger LOGGER = getLogger(CannedTweetsService.class.getName());
 
     private final ExecutorService executor = newSingleThreadExecutor(new DaemonThreadFactory());
-    private final BroadcastingServerEndpoint<String> tweetsEndpoint = new BroadcastingServerEndpoint<>();
+    private final BroadcastingServerEndpoint<String> tweetsEndpoint = new
+            BroadcastingServerEndpoint<>();
     private final WebSocketServer server
             = new WebSocketServer("/tweets/", 8081, tweetsEndpoint);
     private final Path filePath;
@@ -71,4 +75,36 @@ public class CannedTweetsService implements Runnable {
         server.stop();
         executor.shutdownNow();
     }
+
+//    private void monitoring() throws IOException {
+//        ProcessBuilder ls = new ProcessBuilder()
+//                .command("ls")
+//                .directory(Paths.get("/")
+//                                .toFile());
+//        ProcessBuilder grepPdf = new ProcessBuilder()
+//                .command("grep", "pdf")
+//                .redirectOutput(ProcessBuilder.Redirect.INHERIT);
+//        List<Process> lsThenGrep = ProcessBuilder
+//                .startPipeline(asList(ls, grepPdf));
+//
+//        CompletableFuture[] lsThenGrepFutures = lsThenGrep.stream()
+//                                                          // onExit returns a
+//                                                          // CompletableFuture<Process>
+//                                                          .map(Process::onExit)
+//                                                          .map(processFuture -> processFuture
+//                                                                  .thenAccept(
+//                                                                          process -> System.out
+//                                                                                  .println(
+//                                                                                  "PID: " +
+//                                                                                  process.getPid
+//                                                                                          ())))
+//                                                          .toArray(CompletableFuture[]::new);
+//        // wait until all processes are finished
+//        CompletableFuture
+//                .allOf(lsThenGrepFutures)
+//                .join();
+//
+//        long pid = ProcessHandle.current()
+//                                .getPid();
+//    }
 }
