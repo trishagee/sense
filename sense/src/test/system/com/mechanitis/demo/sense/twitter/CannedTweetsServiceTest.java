@@ -42,6 +42,16 @@ public class CannedTweetsServiceTest {
         service.stop();
     }
 
+    @Test
+    public void shouldStop() throws Exception {
+        Path path = Paths.get(getSystemResource("./tweetdata-for-testing.txt").toURI());
+        CannedTweetsService service = new CannedTweetsService(path);
+        executor.submit(service);
+
+        service.stop();
+        assertThat("Should actually reach this and not wait forever", true, is(true));
+    }
+
     private void connectAndAssertMessageReceived(URI path, Object endpointInstance, CountDownLatch latch) throws Exception {
         boolean success;
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
