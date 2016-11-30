@@ -4,16 +4,16 @@ public interface TweetParser {
 
     static String getTweetMessageFrom(String fullTweet) {
         //very crude
-        String textFieldName = "\"text\":\"";
-        int indexOfTextField = fullTweet.indexOf(textFieldName) + textFieldName.length();
-        int indexOfEndOfText = fullTweet.indexOf("\"", indexOfTextField);
-        return fullTweet.substring(indexOfTextField, indexOfEndOfText);
+        return getValueForField(fullTweet, "\"text\":\"");
     }
 
     static String getTwitterHandleFromTweet(String fullTweet) {
-        String twitterHandleFieldName = "\"screen_name\":\"";
-        int indexOfTwitterHandleField = fullTweet.indexOf(twitterHandleFieldName)+ twitterHandleFieldName.length();
-        int indexOfEndOfTwitterHandle = fullTweet.indexOf("\"", indexOfTwitterHandleField);
-        return fullTweet.substring(indexOfTwitterHandleField, indexOfEndOfTwitterHandle);
+        return getValueForField(fullTweet, "\"screen_name\":\"");
+    }
+
+    private static String getValueForField(String fullTweet, String fieldName) {
+        int indexOfTextField = fullTweet.indexOf(fieldName) + fieldName.length();
+        int indexOfEndOfText = fullTweet.indexOf("\"", indexOfTextField);
+        return fullTweet.substring(indexOfTextField, indexOfEndOfText);
     }
 }

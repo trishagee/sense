@@ -39,6 +39,7 @@ public class CannedTweetsService implements Runnable {
     private final Path filePath;
 
     private CountDownLatch stopped = new CountDownLatch(1);
+    private boolean running = true;
 
     public CannedTweetsService(Path filePath) {
         this.filePath = filePath;
@@ -52,7 +53,8 @@ public class CannedTweetsService implements Runnable {
     public void run() {
         executor.submit(server);
         try (Stream<String> lines = lines(filePath)) {
-            lines.filter(message -> !message.equals("OK"))
+            lines.dropWhile(s -> running)
+                 .filter(message -> !message.equals("OK"))
                  .peek(s -> addArtificialDelay())
                  .forEach(tweetsEndpoint::onMessage);
             stopped.countDown();
@@ -71,40 +73,41 @@ public class CannedTweetsService implements Runnable {
     }
 
     public void stop() throws Exception {
+        running = false;
         stopped.await();
         server.stop();
         executor.shutdownNow();
     }
 
-//    private void monitoring() throws IOException {
-//        ProcessBuilder ls = new ProcessBuilder()
-//                .command("ls")
-//                .directory(Paths.get("/")
-//                                .toFile());
-//        ProcessBuilder grepPdf = new ProcessBuilder()
-//                .command("grep", "pdf")
-//                .redirectOutput(ProcessBuilder.Redirect.INHERIT);
-//        List<Process> lsThenGrep = ProcessBuilder
-//                .startPipeline(asList(ls, grepPdf));
-//
-//        CompletableFuture[] lsThenGrepFutures = lsThenGrep.stream()
-//                                                          // onExit returns a
-//                                                          // CompletableFuture<Process>
-//                                                          .map(Process::onExit)
-//                                                          .map(processFuture -> processFuture
-//                                                                  .thenAccept(
-//                                                                          process -> System.out
-//                                                                                  .println(
-//                                                                                  "PID: " +
-//                                                                                  process.getPid
-//                                                                                          ())))
-//                                                          .toArray(CompletableFuture[]::new);
-//        // wait until all processes are finished
-//        CompletableFuture
-//                .allOf(lsThenGrepFutures)
-//                .join();
-//
-//        long pid = ProcessHandle.current()
-//                                .getPid();
-//    }
+    private void monitoring() throws IOException {
+        ProcessBuilder ls = new ProcessBuilder()
+                .command("ls")
+                .directory(Paths.get("/")
+                                .toFile());
+        ProcessBuilder grepPdf = new ProcessBuilder()
+                .command("grep", "pdf")
+                .redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        List<Process> lsThenGrep = ProcessBuilder
+                .startPipeline(asList(ls, grepPdf));
+
+        CompletableFuture[] lsThenGrepFutures = lsThenGrep.stream()
+                                                          // onExit returns a
+                                                          // CompletableFuture<Process>
+                                                          .map(Process::onExit)
+                                                          .map(processFuture -> processFuture
+                                                                  .thenAccept(
+                                                                          process -> System.out
+                                                                                  .println(
+                                                                                  "PID: " +
+                                                                                  process.getPid
+                                                                                          ())))
+                                                          .toArray(CompletableFuture[]::new);
+        // wait until all processes are finished
+        CompletableFuture
+                .allOf(lsThenGrepFutures)
+                .join();
+
+        long pid = ProcessHandle.current()
+                                .getPid();
+    }
 }

@@ -4,7 +4,7 @@ import com.mechanitis.demo.sense.client.StubService;
 
 import java.util.Random;
 
-@Deprecated()
+@Deprecated(since = "forever", forRemoval = true)
 public class MoodTestData {
     private static final String[] POSSIBLE_MOODS
             = new String[]{"HAPPY", "SAD", "HAPPY,SAD"};

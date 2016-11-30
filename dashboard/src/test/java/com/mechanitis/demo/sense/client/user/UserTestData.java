@@ -8,12 +8,13 @@ import java.util.Random;
 import java.util.Set;
 
 public class UserTestData {
-    private static final Set<String> EXAMPLE_HANDLES = new HashSet<>(Arrays.asList("aaa", "bbb", "ccc", "ddd", "eee",
-                                                                                   "fff", "gee", "ggg", "hhh", "iii",
-                                                                                   "jjj", "kkk", "lll", "mmm", "nnn",
-                                                                                   "ooo", "ppp", "qqq", "rrr", "sss",
-                                                                                   "ttt", "uuu", "vvv", "www", "xxx",
-                                                                                   "yyy", "zzz"));
+    private static final Set<String>
+            EXAMPLE_HANDLES = new HashSet<>(Arrays.asList("aaa", "bbb", "ccc", "ddd", "eee",
+                                                          "fff", "gee", "ggg", "hhh", "iii",
+                                                          "jjj", "kkk", "lll", "mmm", "nnn",
+                                                          "ooo", "ppp", "qqq", "rrr", "sss",
+                                                          "ttt", "uuu", "vvv", "www", "xxx",
+                                                          "yyy", "zzz"));
 
     public static void main(String[] args) {
         new StubService("/users/", 8083,
