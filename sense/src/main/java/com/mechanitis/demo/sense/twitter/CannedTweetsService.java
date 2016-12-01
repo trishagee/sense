@@ -4,11 +4,14 @@ import com.mechanitis.demo.sense.infrastructure.BroadcastingServerEndpoint;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import static java.lang.ClassLoader.getSystemResource;
 import static java.nio.file.Paths.get;
@@ -24,12 +27,14 @@ public class CannedTweetsService implements Runnable {
     private static final Logger LOGGER = getLogger(CannedTweetsService.class.getName());
 
     private final ExecutorService executor = newSingleThreadExecutor(new DaemonThreadFactory());
-    private final BroadcastingServerEndpoint<String> tweetsEndpoint = new BroadcastingServerEndpoint<>();
+    private final BroadcastingServerEndpoint<String> tweetsEndpoint = new
+            BroadcastingServerEndpoint<>();
     private final WebSocketServer server
             = new WebSocketServer("/tweets/", 8081, tweetsEndpoint);
     private final Path filePath;
 
     private CountDownLatch stopped = new CountDownLatch(1);
+    private boolean running = true;
 
     public CannedTweetsService(Path filePath) {
         this.filePath = filePath;
@@ -44,6 +49,16 @@ public class CannedTweetsService implements Runnable {
         executor.submit(server);
 
         // TODO: get a stream of lines in the file
+        try (Stream<String> lines = Files.lines(filePath)) {
+            lines.takeWhile(s -> running)
+                 .filter(s -> !"OK".equals(s))
+                 .peek(s -> addArtificialDelay())
+                 .forEach(tweetsEndpoint::onMessage);
+            stopped.countDown();
+        } catch (IOException e) {
+            //TODO: real error handling here!!!
+        }
+
         // TODO: filter out "OK" noise
         // TODO: send each line to be broadcast via websockets
 
@@ -59,6 +74,7 @@ public class CannedTweetsService implements Runnable {
     }
 
     public void stop() throws Exception {
+        running = false;
         stopped.await();
         server.stop();
         executor.shutdownNow();
