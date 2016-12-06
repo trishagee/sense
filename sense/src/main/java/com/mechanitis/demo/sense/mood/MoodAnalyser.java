@@ -27,12 +27,12 @@ public class MoodAnalyser {
                       entry("bad", SAD),
                       entry("awful", SAD));
 
-    private MoodAnalyser() {
-    }
-
     public static String analyseMood(String fullMessage) {
         String[] wordsInMessage = getTweetMessageFrom(fullMessage).split("\\s");
         //TODO: figure out the unique moods in this message and return as CSV
         return null;
+    }
+
+    private MoodAnalyser() {
     }
 }
