@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/dashboard/dashboard.iml" filepath="$PROJECT_DIR$/dashboard/dashboard.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sense.iml" filepath="$PROJECT_DIR$/sense.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sense/sense-sense.iml" filepath="$PROJECT_DIR$/sense/sense-sense.iml" />
-      <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dashboard/dashboard.iml" filepath="$PROJECT_DIR$/.idea/modules/dashboard/dashboard.iml" group="dashboard" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dashboard/dashboard_main.iml" filepath="$PROJECT_DIR$/.idea/modules/dashboard/dashboard_main.iml" group="dashboard" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dashboard/dashboard_test.iml" filepath="$PROJECT_DIR$/.idea/modules/dashboard/dashboard_test.iml" group="dashboard" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sense.iml" filepath="$PROJECT_DIR$/.idea/modules/sense.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sense/sense-sense.iml" filepath="$PROJECT_DIR$/.idea/modules/sense/sense-sense.iml" group="sense" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sense/sense-sense_main.iml" filepath="$PROJECT_DIR$/.idea/modules/sense/sense-sense_main.iml" group="sense" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sense/sense-sense_test.iml" filepath="$PROJECT_DIR$/.idea/modules/sense/sense-sense_test.iml" group="sense" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service/service.iml" filepath="$PROJECT_DIR$/.idea/modules/service/service.iml" group="service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service/service_main.iml" filepath="$PROJECT_DIR$/.idea/modules/service/service_main.iml" group="service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service/service_test.iml" filepath="$PROJECT_DIR$/.idea/modules/service/service_test.iml" group="service" />
     </modules>
   </component>
 </project>
