@@ -11,7 +11,6 @@ class BroadcastingServerEndpointSpecification extends Specification {
     @Subject
     def endpoint = new BroadcastingServerEndpoint()
 
-    @Ignore("2")
     def 'should accept messages and publish the toString() representation'() {
         given:
         def session = Mock(Session)
@@ -29,7 +28,6 @@ class BroadcastingServerEndpointSpecification extends Specification {
         1 * remoteEndpoint.sendText("StubMessage{}");
     }
 
-    @Ignore("2")
     def 'should forward messages to all open sessions'() {
         given:
         def session = Mock(Session)
@@ -48,7 +46,6 @@ class BroadcastingServerEndpointSpecification extends Specification {
         1 * remoteEndpoint.sendText(tweet);
     }
 
-    @Ignore("2")
     def 'should not try to forward messages to closed sessions'() {
         given:
         def session = Mock(Session)
