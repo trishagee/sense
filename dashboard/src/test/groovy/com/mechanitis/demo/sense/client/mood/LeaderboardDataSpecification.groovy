@@ -6,17 +6,16 @@ import javafx.stage.Stage
 import spock.lang.Specification
 
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.Executors
 import java.util.function.Predicate
 
-import static java.util.concurrent.Executors.newScheduledThreadPool
-import static java.util.concurrent.Executors.newSingleThreadExecutor
 import static java.util.concurrent.TimeUnit.MILLISECONDS
 import static java.util.concurrent.TimeUnit.SECONDS
 
 class LeaderboardDataSpecification extends Specification {
 
     def setupSpec() throws InterruptedException {
-        newSingleThreadExecutor().execute({ Application.launch(StubApplication.class) });
+        Executors.newSingleThreadExecutor().execute({ Application.launch(StubApplication.class) });
         SECONDS.sleep(1);
     }
 
@@ -32,10 +31,10 @@ class LeaderboardDataSpecification extends Specification {
         then:
         waitFor(2, { expectedValue -> leaderboardData.getItems().size() == expectedValue });
 
-        leaderboardData.items[0].tweets == 2
+        leaderboardData.items[0].tweetCount == 2
         leaderboardData.items[0].twitterHandle == 'Trisha'
 
-        leaderboardData.items[1].tweets == 1
+        leaderboardData.items[1].tweetCount == 1
         leaderboardData.items[1].twitterHandle == 'Someone else'
     }
 
@@ -51,7 +50,7 @@ class LeaderboardDataSpecification extends Specification {
                     latch.countDown();
                 }
             };
-            newScheduledThreadPool(1).scheduleWithFixedDelay(poller, 0, 10, MILLISECONDS);
+            Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(poller, 0, 10, MILLISECONDS);
             boolean succeeded = latch.await(5, SECONDS);
             assert succeeded
         } catch (InterruptedException e) {

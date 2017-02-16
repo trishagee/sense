@@ -6,11 +6,13 @@ import javax.websocket.DeploymentException;
 import java.io.IOException;
 
 public class MoodService implements Runnable {
-    private final Service<MoodyMessage> service;
+    private static final int PORT = 8082;
+    private final Service service;
 
     public MoodService() {
-        service = new Service<>("ws://localhost:8081/tweets/",
-                                "/moods/", 8082, MoodAnalyser::analyseMood);
+        service = new Service("ws://localhost:8081/tweets/",
+                              "/moods/", PORT,
+                              MoodAnalyser::analyseMood);
     }
 
     @Override

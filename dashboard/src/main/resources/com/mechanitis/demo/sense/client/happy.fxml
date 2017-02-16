@@ -5,13 +5,12 @@
 <VBox xmlns:fx="http://javafx.com/fxml"
       spacing="10" alignment="CENTER"
       fx:controller="com.mechanitis.demo.sense.client.mood.HappinessController">
-    <BarChart fx:id="happinessOverTime" title="Happiness over Time"
-              prefHeight="600" legendVisible="false" barGap="0">
+    <BarChart fx:id="happinessOverTime" title="Happiness Over Time" prefHeight="600" legendVisible="false" barGap="1">
         <xAxis>
             <CategoryAxis label="Minute" animated="false"/>
         </xAxis>
         <yAxis>
-            <NumberAxis fx:id="yAxis" label="Count" tickUnit="1" minorTickVisible="false" autoRanging="true" />
+            <NumberAxis fx:id="yAxis" label="Count" minorTickVisible="false"/>
         </yAxis>
     </BarChart>
 </VBox>

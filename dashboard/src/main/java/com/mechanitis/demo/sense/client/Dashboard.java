@@ -21,14 +21,15 @@ public class Dashboard extends Application {
         HappinessChartData happinessChartData = new HappinessChartData();
 
         // wire up the models to the services they're getting the data from
-        ClientEndpoint<String> clientEndpoint = ClientEndpoint.createPassthroughEndpoint("ws://localhost:8083/users/");
-        clientEndpoint.addListener(leaderboardData);
-        clientEndpoint.connect();
+        ClientEndpoint<String> userEndpoint = ClientEndpoint.createPassthroughEndpoint("ws://localhost:8083/users/");
+        userEndpoint.addListener(leaderboardData);
+        userEndpoint.connect();
 
-        ClientEndpoint<TweetMood> moodClientEndpoint = new ClientEndpoint<>("ws://localhost:8082/moods/", MoodsParser::parse);
-        moodClientEndpoint.addListener(moodChartData);
-        moodClientEndpoint.addListener(happinessChartData);
-        moodClientEndpoint.connect();
+        ClientEndpoint<TweetMood> moodEndpoint = new ClientEndpoint<>("ws://localhost:8082/moods/",
+                                                                                 MoodsParser::parse);
+        moodEndpoint.addListener(moodChartData);
+        moodEndpoint.addListener(happinessChartData);
+        moodEndpoint.connect();
 
         // initialise the UI
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));

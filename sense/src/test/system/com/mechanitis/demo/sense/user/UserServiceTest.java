@@ -1,15 +1,10 @@
 package com.mechanitis.demo.sense.user;
 
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
-import com.mechanitis.demo.sense.ServiceTestFixture;
-import com.mechanitis.demo.sense.twitter.CannedTweetsService;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
-import org.eclipse.jetty.util.component.LifeCycle;
+import com.mechanitis.demo.sense.twitter.CannedTweetsService;
 import org.junit.Test;
 
-import javax.websocket.ContainerProvider;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -17,9 +12,8 @@ import java.nio.file.Paths;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
-import static com.mechanitis.demo.sense.ServiceTestFixture.connectAndAssert;
+import static com.mechanitis.demo.sense.ServiceFixture.connectAndWaitForSuccess;
 import static java.lang.ClassLoader.getSystemResource;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -30,7 +24,7 @@ public class UserServiceTest {
     @Test
     public void shouldStartupAndAllowAClientToConnectAndReceiveAMessage() throws Exception {
         // start the Tweet Service Server, needed because the User Service connects to this
-        CannedTweetsService tweetsService = ServiceTestFixture.startCannedTweetsService(executor);
+        CannedTweetsService tweetsService = startCannedTweetsService();
 
         // start the mood service, the service under test
         UserService userService = new UserService();
@@ -40,18 +34,20 @@ public class UserServiceTest {
         CountDownLatch latch = new CountDownLatch(1);
         MessageReceivedEndpoint clientEndpoint = new MessageReceivedEndpoint(latch);
 
-        connectAndAssert(URI.create("ws://localhost:8083/users/"), clientEndpoint,
-                         (session) -> {
-                             try {
-                                 return latch.await(10, TimeUnit.SECONDS);
-                             } catch (InterruptedException e) {
-                                 throw new AssertionError("Interruption waiting for latch");
-                             }
-                         });
+        assertThat("Client endpoint should have received a message",
+                connectAndWaitForSuccess(URI.create("ws://localhost:8083/users/"),
+                        clientEndpoint, latch), is(true));
 
         // finally
         tweetsService.stop();
         userService.stop();
+    }
+
+    private CannedTweetsService startCannedTweetsService() throws URISyntaxException {
+        Path path = Paths.get(getSystemResource("./tweetdata-for-testing.txt").toURI());
+        CannedTweetsService service = new CannedTweetsService(path);
+        executor.submit(service);
+        return service;
     }
 
 }

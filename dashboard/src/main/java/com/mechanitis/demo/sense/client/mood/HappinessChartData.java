@@ -1,23 +1,47 @@
 package com.mechanitis.demo.sense.client.mood;
 
-import com.mechanitis.demo.sense.client.javafx.SimpleXYChartData;
 import com.mechanitis.demo.sense.infrastructure.MessageListener;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 import static java.time.LocalTime.now;
 
 public class HappinessChartData implements MessageListener<TweetMood> {
-    private final SimpleXYChartData chartData = new SimpleXYChartData(now().getMinute(), 10);
+    private final XYChart.Series<String, Double> dataSeries = new XYChart.Series<>();
+    private final Map<Integer, Integer> minuteToDataPosition = new HashMap<>();
+
+    public HappinessChartData() {
+        // get minute value for right now
+        int nowMinute = LocalDateTime.now().getMinute();
+
+        // create an empty bar for every minute for the next ten minutes
+        IntStream.range(nowMinute, nowMinute + 10)
+                 .forEach(this::initialiseBarToZero);
+    }
 
     @Override
     public void onMessage(TweetMood message) {
         if (message.isHappy()) {
-            chartData.increment(now().getMinute());
+            int x = now().getMinute();
+
+            Integer dataIndex = minuteToDataPosition.get(x);
+            Data<String, Double> barForNow = dataSeries.getData().get(dataIndex);
+            barForNow.setYValue(barForNow.getYValue() + 1);
         }
     }
 
-    public XYChart.Series<String, Number> getDataSeries() {
-        return chartData.getDataSeries();
+    public XYChart.Series<String, Double> getDataSeries() {
+        return dataSeries;
+    }
+
+    private void initialiseBarToZero(int minute) {
+        dataSeries.getData().add(new Data<>(String.valueOf(minute), 0.0));
+        minuteToDataPosition.put(minute, dataSeries.getData().size() - 1);
     }
 
 }

@@ -1,16 +1,16 @@
 package com.mechanitis.demo.sense.user;
 
 import com.mechanitis.demo.sense.infrastructure.Service;
-
-import static com.mechanitis.demo.sense.twitter.TweetParser.getTwitterHandleFrom;
+import com.mechanitis.demo.sense.twitter.TweetParser;
 
 public class UserService implements Runnable {
-    private final Service<TwitterUser> service;
+    private static final int PORT = 8083;
+    private final Service service;
 
     public UserService() {
-        service = new Service<>("ws://localhost:8081/tweets/",
-                                "/users/", 8083,
-                                message -> new TwitterUser(getTwitterHandleFrom(message)));
+        service = new Service("ws://localhost:8081/tweets/",
+                              "/users/", PORT,
+                              TweetParser::getTwitterHandleFromTweet);
     }
 
     @Override

@@ -7,6 +7,10 @@ import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainer
 
 import javax.websocket.Endpoint;
 import javax.websocket.server.ServerEndpointConfig;
+import java.util.logging.Logger;
+
+import static java.lang.String.format;
+import static java.util.logging.Logger.getLogger;
 
 /**
  * Starts a Jetty server designed to work with websockets.
@@ -14,6 +18,8 @@ import javax.websocket.server.ServerEndpointConfig;
  * This server will only create a singleton instance of any endpoint.
  */
 public class WebSocketServer implements Runnable {
+    private static final Logger LOGGER = getLogger(WebSocketServer.class.getName());
+
     private final int port;
     private final String path;
     private final Endpoint endpoint;
@@ -27,6 +33,7 @@ public class WebSocketServer implements Runnable {
     }
 
     public void run() {
+        LOGGER.info(() -> format("Starting new Web Socket Service: %s at port %d", path, port));
         ServletContextHandler context = initialiseJettyServer(port);
         try {
             // create a configuration to ensure

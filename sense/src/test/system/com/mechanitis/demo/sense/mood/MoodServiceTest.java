@@ -12,18 +12,18 @@ import java.nio.file.Paths;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
-import static com.mechanitis.demo.sense.ServiceTestFixture.connectAndAssert;
-import static com.mechanitis.demo.sense.ServiceTestFixture.startCannedTweetsService;
+import static com.mechanitis.demo.sense.ServiceFixture.connectAndWaitForSuccess;
 import static java.lang.ClassLoader.getSystemResource;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class MoodServiceTest {
     private final ExecutorService executor = Executors.newFixedThreadPool(2, new DaemonThreadFactory());
 
     @Test
     public void shouldStartupAndAllowAClientToConnectAndReceiveAMessage() throws Exception {
-        CannedTweetsService tweetsService = startCannedTweetsService(executor);
+        CannedTweetsService tweetsService = startCannedTweetsService();
 
         // start the mood service, the service under test
         MoodService moodService = new MoodService();
@@ -33,18 +33,21 @@ public class MoodServiceTest {
         CountDownLatch latch = new CountDownLatch(1);
         MessageReceivedEndpoint clientEndpoint = new MessageReceivedEndpoint(latch);
 
-        connectAndAssert(URI.create("ws://localhost:8082/moods/"), clientEndpoint,
-                         (session) -> {
-                             try {
-                                 return latch.await(10, TimeUnit.SECONDS);
-                             } catch (InterruptedException e) {
-                                 throw new AssertionError("Interruption waiting for latch");
-                             }
-                         });
+        assertThat("Client endpoint should have received a message",
+                   connectAndWaitForSuccess(URI.create("ws://localhost:8082/moods/"),
+                                            clientEndpoint,
+                                            latch), is(true));
 
         // finally
         tweetsService.stop();
         moodService.stop();
+    }
+
+    private CannedTweetsService startCannedTweetsService() throws URISyntaxException {
+        Path path = Paths.get(getSystemResource("./tweetdata-for-testing.txt").toURI());
+        CannedTweetsService service = new CannedTweetsService(path);
+        executor.submit(service);
+        return service;
     }
 
 }

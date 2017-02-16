@@ -9,9 +9,12 @@ import javafx.util.StringConverter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static java.lang.Integer.valueOf;
+import static java.lang.String.format;
+
 public class HappinessController implements Initializable {
     @FXML private NumberAxis yAxis;
-    @FXML private BarChart<String, Number> happinessOverTime;
+    @FXML private BarChart<String, Double> happinessOverTime;
 
     public void setData(HappinessChartData data) {
         happinessOverTime.getData().add(data.getDataSeries());
@@ -22,12 +25,12 @@ public class HappinessController implements Initializable {
         yAxis.setTickLabelFormatter(new StringConverter<Number>() {
             @Override
             public String toString(Number object) {
-                return String.format("%.0f", object);
+                return format("%.0f", object);
             }
 
             @Override
             public Number fromString(String string) {
-                return Integer.valueOf(string);
+                return valueOf(string);
             }
         });
     }

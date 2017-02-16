@@ -7,8 +7,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TwitterUser {
     private final SimpleStringProperty twitterHandle = new SimpleStringProperty();
-    private final SimpleIntegerProperty tweets = new SimpleIntegerProperty(0);
-    private final AtomicInteger count = new AtomicInteger(0);
+    private final SimpleIntegerProperty tweetCount = new SimpleIntegerProperty(0);
+    private AtomicInteger count = new AtomicInteger(0);
 
     public TwitterUser(String twitterHandle) {
         this.twitterHandle.set(twitterHandle);
@@ -22,16 +22,18 @@ public class TwitterUser {
         return twitterHandle;
     }
 
-    public int getTweets() {
-        return tweets.get();
+    public int getTweetCount() {
+        return tweetCount.get();
     }
 
-    public SimpleIntegerProperty tweetsProperty() {
-        return tweets;
+    public SimpleIntegerProperty tweetCountProperty() {
+        return tweetCount;
     }
 
-    public void incrementCount() {
-        tweets.set(count.incrementAndGet());
+    public int incrementCount() {
+        int newValue = count.incrementAndGet();
+        tweetCount.set(newValue);
+        return newValue;
     }
 
 }

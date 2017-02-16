@@ -14,7 +14,7 @@ class MoodChartDataSpecification extends Specification {
         moodChartData.onMessage(new TweetMood([HAPPY] as Set))
 
         then:
-        moodChartData.happyPortion.pieChartData.pieValue == 1
+        moodChartData.happyPortion.pieValue == 1
     }
 
     def 'should increment sad slice'() {
@@ -25,7 +25,7 @@ class MoodChartDataSpecification extends Specification {
         moodChartData.onMessage(new TweetMood([SAD] as Set))
 
         then:
-        moodChartData.sadPortion.pieChartData.pieValue == 1
+        moodChartData.sadPortion.pieValue == 1
     }
 
     def 'should increment all slices if all moods present'() {
@@ -36,9 +36,9 @@ class MoodChartDataSpecification extends Specification {
         moodChartData.onMessage(new TweetMood([HAPPY, SAD] as Set))
 
         then:
-        moodChartData.happyPortion.pieChartData.pieValue == 1
-        moodChartData.sadPortion.pieChartData.pieValue == 1
-        moodChartData.confusedPortion.pieChartData.pieValue == 1
+        moodChartData.happyPortion.pieValue == 1
+        moodChartData.sadPortion.pieValue == 1
+        moodChartData.confusedPortion.pieValue == 1
     }
 
 }
