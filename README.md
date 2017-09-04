@@ -8,3 +8,5 @@ There are several branches - on master, you will see the fully working applicati
 The `skeleton` branch is the start-point of the demo, so if you want to build up the application from the "beginning" (much of the infrastructure code is provided for you), this is the branch to check out.
 
 As I give the demo at various conferences, there will be branches for each conference showing the code that was implemented during that presentation.
+
+[![JetBrains team project](http://jb.gg/badges/team.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
