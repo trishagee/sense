@@ -4,5 +4,13 @@
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="dashboard_main" target="1.9" />
+      <module name="dashboard_test" target="1.9" />
+      <module name="sense-sense_main" target="1.9" />
+      <module name="sense-sense_test" target="1.9" />
+      <module name="service_main" target="1.9" />
+      <module name="service_test" target="1.9" />
+    </bytecodeTargetLevel>
   </component>
 </project>

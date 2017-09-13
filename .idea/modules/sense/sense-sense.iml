@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$/../../../sense">
       <excludeFolder url="file://$MODULE_DIR$/../../../sense/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../sense/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../sense/out" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
