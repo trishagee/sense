@@ -1,8 +1,7 @@
 dependencies {
     compile project(':service')
     compile 'javax.websocket:javax.websocket-api:1.1'
-    compile 'javax.json:javax.json-api:1.0'
-    compile 'org.glassfish:javax.json:1.0.4'
+
     // needed to work around https://issues.gradle.org/browse/GRADLE-3046
-    compile files("${System.properties['java.home']}/lib/ext/jfxrt.jar")
+//    compile files("${System.properties['java.home']}/lib/ext/jfxrt.jar")
 }

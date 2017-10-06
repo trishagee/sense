@@ -7,6 +7,7 @@ configure(subprojects.findAll()) {
 
     dependencies {
         testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
+
         testCompile 'cglib:cglib-nodep:3.2.5'
         testCompile 'org.objenesis:objenesis:2.6'
         testCompile 'org.codehaus.groovy:groovy-all:2.4.12'

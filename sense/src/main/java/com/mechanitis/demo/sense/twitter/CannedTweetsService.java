@@ -4,15 +4,19 @@ import com.mechanitis.demo.sense.infrastructure.BroadcastingServerEndpoint;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 import com.mechanitis.demo.sense.infrastructure.WebSocketServer;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import static java.lang.ClassLoader.getSystemResource;
+import static java.nio.file.Files.lines;
 import static java.nio.file.Paths.get;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
 
@@ -40,9 +44,13 @@ public class CannedTweetsService implements Runnable {
     public void run() {
         executor.submit(server);
 
-        // TODO: get a stream of lines in the file
-        // TODO: filter out "OK" noise
-        // TODO: send each line to be broadcast via websockets
+        try (Stream<String> lines = lines(filePath)) {
+            lines.filter(message -> !message.equals("OK"))
+                 .peek(s -> addArtificialDelay())
+                 .forEach(tweetsEndpoint::onMessage);
+        } catch (IOException e) {
+            LOGGER.log(SEVERE, e.getMessage(), e);
+        }
 
     }
 

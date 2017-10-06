@@ -1,9 +1,17 @@
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.chart.BarChart?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       spacing="10" alignment="CENTER"
       fx:controller="com.mechanitis.demo.sense.client.mood.HappinessController">
+    <BarChart fx:id="happinessOverTime" title="Happiness Over Time">
+        <yAxis>
+            <NumberAxis fx:id="yAxis" label="count"/>
+        </yAxis>
+        <xAxis>
+            <CategoryAxis label="Minute"/>
+        </xAxis>
 
+    </BarChart>
 </VBox>
