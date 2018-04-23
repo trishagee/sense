@@ -2,6 +2,7 @@ package com.mechanitis.demo.sense.mood;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,7 +42,7 @@ public class MoodAnalyser {
                      .distinct()
                      .map(String::toLowerCase)
                      .map(WORD_TO_MOOD::get)
-                     .filter(mood -> mood != null)
+                     .filter(Objects::nonNull)
                      .distinct()
                      .map(Mood::name)
                      .collect(Collectors.joining(","));

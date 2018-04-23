@@ -31,10 +31,9 @@ public class ClientEndpoint<T> {
     }
 
     @OnMessage
-    public void onWebSocketText(String fullTweet) throws IOException {
+    public void onWebSocketText(String fullTweet) {
         T message = messageHandler.processMessage(fullTweet);
-        listeners.stream()
-                 .forEach(messageListener -> messageListener.onMessage(message));
+        listeners.forEach(messageListener -> messageListener.onMessage(message));
     }
 
     @OnError

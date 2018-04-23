@@ -28,7 +28,7 @@ public class MessageReceivedEndpoint {
     }
 
     @OnMessage
-    public void onWebSocketText(String message) throws IOException {
+    public void onWebSocketText(String message) {
         this.message = message;
         latch.countDown();
         LOGGER.log(INFO, "Received TEXT message: " + message);

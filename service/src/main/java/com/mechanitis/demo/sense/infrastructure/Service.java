@@ -24,7 +24,7 @@ public class Service implements Runnable {
         this.servicePort = servicePort;
     }
 
-    public static void main(String[] args) throws IOException, DeploymentException {
+    public static void main(String[] args) {
         new Service("ws://localhost:8081/tweets/", "/testing/", 8090, originalText -> originalText).run();
     }
 

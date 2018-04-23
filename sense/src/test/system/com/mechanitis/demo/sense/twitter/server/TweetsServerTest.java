@@ -51,7 +51,7 @@ public class TweetsServerTest {
     @ClientEndpoint
     public static class TestEndpoint {
         @OnMessage
-        public void onWebSocketText(String message) throws IOException {
+        public void onWebSocketText(String message) {
             System.out.println("Received TEXT message: " + message);
         }
 

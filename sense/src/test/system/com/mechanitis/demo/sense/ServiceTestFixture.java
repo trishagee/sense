@@ -21,14 +21,9 @@ public class ServiceTestFixture {
     public static void connectAndAssert(URI path, Object endpointInstance,
                                         Predicate<Session> predicate) throws Exception {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-        Session session = null;
-        try {
-            session = container.connectToServer(endpointInstance, path);
+        try (Session session = container.connectToServer(endpointInstance, path)) {
             assertThat("Client endpoint should have received a message", predicate.test(session), is(true));
         } finally {
-            if (session != null) {
-                session.close();
-            }
             if (container instanceof LifeCycle) {
                 ((LifeCycle) container).stop();
             }

@@ -24,7 +24,7 @@ public class MoodService implements Runnable {
         service.stop();
     }
 
-    public static void main(String[] args) throws IOException, DeploymentException {
+    public static void main(String[] args) {
         new MoodService().run();
     }
 }

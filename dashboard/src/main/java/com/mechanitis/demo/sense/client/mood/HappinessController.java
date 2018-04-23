@@ -25,6 +25,7 @@ public class HappinessController implements Initializable {
         yAxis.setTickLabelFormatter(new StringConverter<Number>() {
             @Override
             public String toString(Number object) {
+                //noinspection MalformedFormatString
                 return format("%.0f", object);
             }
 
