@@ -1,5 +1,6 @@
 plugins {
-    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'application'
+    id "org.openjfx.javafxplugin" version "0.0.8"
 }
 
 javafx {
@@ -12,3 +13,5 @@ dependencies {
     compile 'javax.json:javax.json-api:1.0'
     compile 'org.glassfish:javax.json:1.0.4'
 }
+
+mainClassName = 'com.mechanitis.demo.sense.client.Dashboard'
