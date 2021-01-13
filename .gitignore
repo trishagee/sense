@@ -7,4 +7,4 @@ patches
 build
 out
 oauth.properties
-/sense/src/main/resources/tweetdata60-mins.txt
+tweetdata60-mins.txt

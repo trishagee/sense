@@ -35,8 +35,8 @@ public class CannedTweetsService implements Runnable {
         this.filePath = filePath;
     }
 
-    public static void main(String[] args) throws URISyntaxException {
-        new CannedTweetsService(get(getSystemResource("./tweetdata60-mins.txt").toURI())).run();
+    public static void main(String[] args) {
+        new CannedTweetsService(get("tweetdata60-mins.txt")).run();
     }
 
     @Override
