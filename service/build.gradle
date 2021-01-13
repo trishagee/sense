@@ -1,5 +1,5 @@
 dependencies {
-    compile 'org.eclipse.jetty.websocket:javax-websocket-server-impl:9.2.6.v20141205'
+    compile 'org.eclipse.jetty.websocket:javax-websocket-server-impl:9.4.35.v20201120'
 }
 
 sourceSets {
