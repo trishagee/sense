@@ -8,9 +8,6 @@ subprojects {
     dependencies {
         testImplementation 'org.spockframework:spock-core:2.3-groovy-4.0'
         testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
-        testImplementation 'cglib:cglib-nodep:3.3.0'
-        testImplementation 'org.objenesis:objenesis:3.3'
-        testImplementation 'org.apache.groovy:groovy:4.0.4'
     }
 
 }
