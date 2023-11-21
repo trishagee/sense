@@ -2,7 +2,7 @@ package com.mechanitis.demo.sense.twitter.server;
 
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.websocket.ClientEndpoint;
 import javax.websocket.ContainerProvider;

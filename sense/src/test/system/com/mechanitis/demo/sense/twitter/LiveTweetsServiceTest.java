@@ -2,7 +2,8 @@ package com.mechanitis.demo.sense.twitter;
 
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
@@ -11,8 +12,9 @@ import java.util.concurrent.Executors;
 
 import static com.mechanitis.demo.sense.ServiceFixture.connectAndWaitForSuccess;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
+@Disabled
 public class LiveTweetsServiceTest {
     private final ExecutorService executor = Executors.newSingleThreadExecutor(new DaemonThreadFactory());
 

@@ -3,7 +3,7 @@ package com.mechanitis.demo.sense.twitter;
 import com.mechanitis.demo.sense.MessageReceivedEndpoint;
 import com.mechanitis.demo.sense.ServiceTestFixture;
 import com.mechanitis.demo.sense.infrastructure.DaemonThreadFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 import java.nio.file.Path;

@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 
 import static java.lang.ClassLoader.getSystemResource;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ServiceTestFixture {
     public static void connectAndAssert(URI path, Object endpointInstance,

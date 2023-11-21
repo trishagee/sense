@@ -1,6 +1,6 @@
 dependencies {
-    compile project(':service')
-    compile 'org.eclipse.jetty.websocket:javax-websocket-server-impl:9.4.35.v20201120'
+    implementation project(':service')
+    implementation 'org.eclipse.jetty.websocket:javax-websocket-server-impl:9.4.35.v20201120'
 }
 
 sourceSets {
@@ -8,4 +8,8 @@ sourceSets {
         groovy.srcDirs = ['src/test/unit']
         java.srcDirs = ['src/test/system']
     }
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
 }
