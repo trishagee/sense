@@ -1,6 +1,11 @@
 plugins {
-    id 'application'
+    id "application"
     id "org.openjfx.javafxplugin" version "0.1.0"
+    id "groovy"
+}
+
+repositories {
+    mavenCentral()
 }
 
 javafx {
@@ -13,6 +18,10 @@ dependencies {
     implementation 'javax.websocket:javax.websocket-api:1.1'
     implementation 'javax.json:javax.json-api:1.1.4'
     implementation 'org.glassfish:javax.json:1.1.4'
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-4.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
 }
 
-mainClassName = 'com.mechanitis.demo.sense.client.Dashboard'
+application {
+    mainClass = 'com.mechanitis.demo.sense.client.Dashboard'
+}

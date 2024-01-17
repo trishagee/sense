@@ -1,5 +1,15 @@
+plugins {
+    id "groovy"
+}
+
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation 'org.eclipse.jetty.websocket:javax-websocket-server-impl:9.4.35.v20201120'
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-4.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
 }
 
 sourceSets {
